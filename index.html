@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,286 +6,488 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Social Performance GHSE Games</title>
 <style>
-:root{--purple:#6846e8;--yellow:#ffca55;--bg:#f5f2ff;--ink:#211a39}
+:root {
+ --site-primary:#6846e8;
+ --site-on-primary:#ffffff;
+ --site-secondary:#ffca55;
+ --site-on-secondary:#302000;
+ --site-background:#f5f2ff;
+ --site-on-background:#211a39;
+ --site-font-body:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ --site-font-heading:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+ --site-heading-scale:1;
+ --site-spacing-scale:1;
+ --site-radius-scale:1;
+ --site-decoration-opacity:1;
+ color-scheme:light dark;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--purple);color:white;padding:24px 5%}
-.top{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.brand{font-weight:900;font-size:20px}
-.brand span{color:var(--yellow)}
+body{margin:0;font-family:var(--site-font-body);background:var(--site-background);color:var(--site-on-background)}
+#app{min-height:100vh;width:100%;background-color:light-dark(var(--site-background),#171329);color:light-dark(var(--site-on-background),#f6f2ff);border-radius:0;overflow:hidden}
+header{background:var(--site-primary);color:var(--site-on-primary);padding:calc(22px * var(--site-spacing-scale)) max(5vw,22px);position:relative;overflow:hidden}
+header:after{content:"✦   ✧    ✦";position:absolute;right:7%;top:15px;font-size:48px;opacity:calc(.18 * var(--site-decoration-opacity));pointer-events:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;max-width:1180px;margin:auto}
+.brand{font-weight:900;letter-spacing:-.04em;font-size:20px}
+.brand span{color:var(--site-secondary)}
 nav{display:flex;gap:8px;flex-wrap:wrap}
-button{border:0;border-radius:12px;padding:12px 16px;font-weight:bold;cursor:pointer}
-nav button{background:transparent;color:white}
-nav button:hover,nav button.active{background:#ffffff30}
-.hero{max-width:1100px;margin:45px auto 20px;display:flex;justify-content:space-between;align-items:center;gap:25px}
-.hero h1{font-size:48px;margin:10px 0}
-.hero p{line-height:1.6;max-width:600px}
-.hero-art{font-size:65px;background:#ffffff20;padding:30px;border-radius:25px}
-main{max-width:1100px;margin:auto;padding:30px 20px 60px}
-section{margin-bottom:25px}
-.hidden{display:none!important}
+button,.navbtn{border:0;border-radius:14px;padding:11px 15px;font-weight:750;cursor:pointer;font:inherit}
+nav button{background:transparent;color:inherit;font-size:14px}
+nav button.active,nav button:hover{background:#ffffff25}
+.hero{max-width:1180px;margin:38px auto 12px;display:grid;grid-template-columns:1.5fr 1fr;gap:25px;align-items:center}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--site-secondary)}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:var(--site-font-heading);font-size:calc(48px * var(--site-heading-scale));line-height:1.02;letter-spacing:-.055em;margin:12px 0}
+.hero p{color:#eee9ff;max-width:620px;line-height:1.65}
+.hero-art{background:#ffffff18;border:1px solid #ffffff30;border-radius:28px;padding:22px;text-align:center;font-size:64px;box-shadow:0 18px 45px #24145a35}
+.hero-art small{display:block;font-size:14px;font-weight:800;letter-spacing:.05em}
+main{max-width:1180px;margin:auto;padding:28px 22px 60px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:18px}
+.section-head h2{font-size:calc(27px * var(--site-heading-scale));letter-spacing:-.04em;margin-bottom:5px}
+.muted{color:light-dark(#746e86,#bcb4d1)}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.card,.panel{background:white;border:1px solid #e9e3f7;border-radius:20px;padding:20px;box-shadow:0 8px 25px #29165b0b}
-.card{min-height:210px;display:flex;flex-direction:column}
-.card .emoji{font-size:38px}
-.card p{color:#746e86;line-height:1.5;flex:1}
-.pill{display:inline-block;background:#f0ebff;color:#6846e8;border-radius:30px;padding:6px 10px;font-size:11px;font-weight:bold}
-.btn{background:var(--purple);color:white}
-.btn.yellow{background:var(--yellow);color:#302000}
-.btn.light{background:#f0ebff;color:#5032bd}
-.field{margin-bottom:15px}
-label{display:block;font-weight:bold;font-size:13px;margin-bottom:7px}
-input{width:100%;padding:13px;border:1px solid #dcd4ee;border-radius:10px;font:inherit}
+.game-card,.panel,.stat{background:light-dark(#fff,#241e38);border:1px solid light-dark(#e9e3f7,#3b3156);border-radius:calc(22px * var(--site-radius-scale));padding:20px;box-shadow:0 8px 25px #29165b0b}
+.game-card{position:relative;overflow:hidden;min-height:220px;display:flex;flex-direction:column}
+.game-card .emoji{font-size:38px;margin-bottom:15px}
+.game-card h3{font-size:19px;margin-bottom:7px}
+.game-card p{font-size:13px;line-height:1.5;color:light-dark(#746e86,#bcb4d1);flex:1}
+.pill{display:inline-flex;align-self:flex-start;background:light-dark(#f0ebff,#392d58);color:light-dark(#6846e8,#d4c7ff);font-size:11px;font-weight:900;padding:6px 9px;border-radius:99px;margin-bottom:10px}
+.btn{background:var(--site-primary);color:var(--site-on-primary);padding:12px 17px;border-radius:13px;font-weight:850}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary{background:var(--site-secondary);color:var(--site-on-secondary)}
+.btn.ghost{background:light-dark(#f0ebff,#392d58);color:light-dark(#5032bd,#e1d8ff)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.hidden{display:none!important}
+.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-.stat{background:white;padding:18px;border-radius:16px}
-.stat strong{display:block;font-size:28px}
-.muted{color:#746e86}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:12px;border-bottom:1px solid #eee9f5}
+.stat strong{display:block;font-size:28px;letter-spacing:-.04em}
+.stat span{font-size:12px;color:light-dark(#746e86,#bcb4d1);font-weight:700}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:13px;font-weight:800}
+.field input,.field select{width:100%;padding:13px 14px;border:1px solid light-dark(#dcd4ee,#514568);border-radius:12px;background:light-dark(#fff,#171329);color:inherit;font:inherit}
+.note{font-size:12px;line-height:1.5;color:light-dark(#777087,#c1b9d3)}
 .table-wrap{overflow:auto}
-.game-layout{display:grid;grid-template-columns:1fr 280px;gap:15px}
-.crossword{display:grid;grid-template-columns:repeat(7,40px);gap:3px;justify-content:center;margin:20px auto}
-.cell{height:40px;background:#332b49}
-.cell input{height:40px;text-align:center;text-transform:uppercase;font-weight:bold;padding:0}
-.wordgrid{display:grid;grid-template-columns:repeat(10,35px);gap:4px;justify-content:center;margin:20px auto}
-.letter{padding:0;height:35px;background:#f0ebff;color:#302000}
-.letter.selected{background:var(--yellow)}
-.letter.found{background:#b9efcc}
-.word-chip{display:inline-block;padding:7px 10px;background:#f0ebff;border-radius:20px;margin:4px}
-.word-chip.done{text-decoration:line-through;background:#b9efcc}
-.timer{font-weight:bold;color:var(--purple)}
-.result{text-align:center;padding:30px}
-.result .big{font-size:55px}
-footer{text-align:center;padding:25px;color:#746e86}
-@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}.game-layout{grid-template-columns:1fr}.hero-art{display:none}}
-@media(max-width:550px){.cards{grid-template-columns:1fr}.hero h1{font-size:36px}.stats{grid-template-columns:1fr 1fr}.crossword{grid-template-columns:repeat(7, minmax(30px,1fr))}.wordgrid{grid-template-columns:repeat(10,minmax(22px,1fr))}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid light-dark(#eee9f5,#3b3156);white-space:nowrap}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:light-dark(#817992,#bcb4d1)}
+.tag{font-size:11px;font-weight:900;padding:5px 8px;border-radius:99px;background:#dff8e9;color:#167143}
+.tag.lose{background:#ffe4e4;color:#a32c36}
+.game-layout{display:grid;grid-template-columns:1fr 300px;gap:18px}
+.game-top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.timer{font-weight:900;color:var(--site-primary)}
+.crossword{display:grid;grid-template-columns:repeat(7,minmax(30px,48px));gap:3px;justify-content:center;margin:20px auto}
+.cell{aspect-ratio:1;border-radius:5px;position:relative;background:#332b49;min-width:0}
+.cell input{width:100%;height:100%;border:2px solid #d8d0ea;border-radius:5px;text-align:center;text-transform:uppercase;font-weight:900;font-size:clamp(14px,2.3vw,20px);background:#fff;color:#251d3c;padding:0}
+.clues{font-size:13px;line-height:1.8}
+.clues b{display:block;margin:10px 0 4px}
+.wordgrid{display:grid;grid-template-columns:repeat(10,minmax(23px,40px));gap:4px;justify-content:center;margin:18px auto}
+.letter{aspect-ratio:1;border:1px solid light-dark(#ded6ef,#514568);background:light-dark(#faf8ff,#302744);color:inherit;border-radius:7px;font-weight:900;cursor:pointer;padding:0}
+.letter.selected{background:var(--site-secondary);color:#302000;border-color:#e7ae32}
+.letter.found{background:#d8f6e5;color:#176a3c;border-color:#8ed5a9}
+.wordlist{display:flex;gap:8px;flex-wrap:wrap}
+.word-chip{padding:7px 10px;border-radius:99px;background:light-dark(#f0ebff,#392d58);font-size:12px;font-weight:800}
+.word-chip.done{text-decoration:line-through;background:#d8f6e5;color:#176a3c}
+.result{text-align:center;padding:25px}
+.result .big{font-size:56px}
+.footer{border-top:1px solid light-dark(#e8e1f3,#3b3156);padding:20px;text-align:center;font-size:12px;color:light-dark(#817992,#bcb4d1)}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.hero-art{display:none}.game-layout,.two-col{grid-template-columns:1fr}}
+@media(max-width:560px){.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.top{align-items:flex-start;flex-direction:column}h1{font-size:38px}.crossword{grid-template-columns:repeat(7,minmax(29px,1fr));max-width:340px}.wordgrid{grid-template-columns:repeat(10,minmax(20px,1fr));gap:3px}}
 </style>
 </head>
 <body>
+<div id="app">
 <header>
-<div class="top">
-<div class="brand">SOCIAL PERFORMANCE <span>GHSE GAMES</span> ✦</div>
-<nav>
-<button class="active" data-page="home">Home</button>
-<button data-page="register">Register</button>
-<button data-page="games">Games</button>
-<button data-page="leaderboard">Leaderboard</button>
-<button data-page="admin">Admin</button>
-</nav>
-</div>
-<div class="hero">
-<div>
-<div class="pill">PLAY • THINK • WIN</div>
-<h1>Ready to make your words count?</h1>
-<p>Challenge yourself with four exciting word games. Complete the puzzles, beat the clock and climb the leaderboard!</p>
-<button class="btn yellow" onclick="go('games')">Explore games ↓</button>
-</div>
-<div class="hero-art">🧩 🔤 🏆</div>
-</div>
+ <div class="top"><div class="brand">SOCIAL PERFORMANCE <span>GHSE GAMES</span> ✦</div><nav id="nav"><button class="active" data-page="home">Home</button><button data-page="register">Register</button><button data-page="leaderboard">Leaderboard</button><button data-page="admin">Admin</button></nav></div>
+ <div class="hero"><div><div class="eyebrow">PLAY • THINK • WIN</div><h1>Ready to make<br>your words count?</h1><p>Jump into quick-fire word challenges. Pick your level, beat the clock and climb the leaderboard!</p><button class="btn secondary" onclick="go('games')">Explore games ↓</button></div><div class="hero-art">🧩 🔤 🏆<small>SOCIAL PERFORMANCE GHSE GAMES</small></div></div>
 </header>
-
 <main>
-<section id="home">
-<h2>Welcome to GHSE Games!</h2>
-<p class="muted">Choose your challenge. Each player has one attempt per game in the competition rules.</p>
-<div class="cards" id="homeCards"></div>
-<div class="stats">
-<div class="stat"><strong id="playerCount">0</strong><span>Demo players</span></div>
-<div class="stat"><strong id="attemptCount">0</strong><span>Games completed</span></div>
-<div class="stat"><strong id="winCount">0</strong><span>Wins</span></div>
-</div>
-</section>
+<section id="page-home"><div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">CHOOSE YOUR CHALLENGE</div><h2>Four ways to play</h2><div class="muted">Start easy or test your brain with hard mode.</div></div><div class="pill">4 GAMES • 2 LEVELS</div></div><div class="cards" id="gameCards"></div><div class="stats"><div class="stat"><strong id="homePlayers">0</strong><span>DEMO PLAYERS ON THIS DEVICE</span></div><div class="stat"><strong id="homeGames">0</strong><span>GAMES COMPLETED</span></div><div class="stat"><strong id="homeWins">0</strong><span>WINS RECORDED</span></div></div><div class="panel"><h3>How to play</h3><p class="muted">1. Register with your display name. 2. Choose one of the four games. 3. Complete the puzzle before time runs out. 4. Submit to see your score and result.</p><p class="note">Prototype notice: this preview stores demo results only in this browser session/device. It is not yet connected to a shared online database.</p><button class="btn" onclick="go('register')">Register to play</button></div></section>
 
-<section id="register" class="hidden">
-<div class="panel">
-<h2>Player Registration</h2>
-<form id="registerForm">
-<div class="field"><label>Display name</label><input id="name" required maxlength="30" placeholder="Your player name"></div>
-<div class="field"><label>Email address</label><input id="email" type="email" required placeholder="you@example.com"></div>
-<div class="field"><label>Organisation / Department</label><input id="organisation" placeholder="Your organisation"></div>
-<button class="btn">Register</button>
-</form>
-<p id="profile" class="muted">No player registered on this browser.</p>
-</div>
-</section>
+<section id="page-register" class="hidden"><div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">PLAYER CHECK-IN</div><h2>Create your player profile</h2><div class="muted">A quick registration before your first game.</div></div></div><div class="two-col"><div class="panel"><form id="regForm"><div class="field"><label for="playerName">Display name *</label><input id="playerName" required maxlength="24" placeholder="e.g. WordWizard" autocomplete="nickname"></div><div class="field"><label for="playerEmail">Email address *</label><input id="playerEmail" type="email" required placeholder="you@example.com" autocomplete="email"></div><div class="field"><label for="playerGroup">BD / OPU / Department *</label><input id="playerGroup" required maxlength="100" placeholder="e.g. Downstream / PRPC / HSE"></div><button class="btn" type="submit">Save registration</button></form><p class="note" style="margin-top:14px">Use a display name for public rankings. This is a demo registration form and is not yet connected to the shared online database.</p></div><div class="panel"><div style="font-size:36px">🎟️</div><h3>Player pass</h3><p class="muted">Register once on this device, then choose any game. Your demo profile appears here.</p><div id="profileCard" class="note">No player registered yet.</div></div></div></section>
 
-<section id="games" class="hidden">
-<h2>Choose Your Game</h2>
-<p id="greeting" class="muted">Please register before playing.</p>
-<div class="cards" id="gameCards"></div>
-</section>
+<section id="page-games" class="hidden"><div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">GAME CENTRE</div><h2>Pick your puzzle</h2><div class="muted" id="playerGreeting">Register before playing.</div></div><button class="btn ghost" onclick="go('register')">Player profile</button></div><div class="cards" id="gameCards2"></div></section>
 
-<section id="play" class="hidden">
-<div class="panel">
-<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-<div><h2 id="gameTitle">Your game</h2><p id="gameDescription" class="muted"></p></div>
-<div class="timer">⏱ <span id="timer">00:00</span></div>
-</div>
-<div id="gameArea"></div>
-</div>
-</section>
+<section id="page-play" class="hidden"><div class="game-top"><div><div class="eyebrow" style="color:#8a6be8">YOUR CHALLENGE</div><h2 id="playTitle">Puzzle</h2><div class="muted" id="playSub"></div></div><div class="timer">⏱ <span id="clock">00:00</span></div></div><div id="playArea"></div></section>
 
-<section id="result" class="hidden">
-<div class="panel result">
-<div class="big" id="resultEmoji">🏆</div>
-<h2 id="resultHeading">Your result</h2>
-<div style="font-size:48px;font-weight:900" id="score">0/100</div>
-<p id="resultDetails" class="muted"></p>
-<button class="btn" onclick="go('games')">Back to games</button>
-<button class="btn light" onclick="go('leaderboard')">Leaderboard</button>
-</div>
-</section>
+<section id="page-result" class="hidden"><div class="panel result"><div class="big" id="resultEmoji">🏆</div><div class="eyebrow" style="color:#8a6be8">CHALLENGE COMPLETE</div><h2 id="resultTitle">Your result</h2><div style="font-size:48px;font-weight:950;letter-spacing:-.05em" id="resultScore">0/100</div><p class="muted" id="resultInfo"></p><div class="actions" style="justify-content:center"><button class="btn" onclick="go('games')">Play another game</button><button class="btn ghost" onclick="go('leaderboard')">View leaderboard</button></div></div></section>
 
-<section id="leaderboard" class="hidden">
-<h2>🏆 Leaderboard</h2>
-<div class="panel table-wrap">
-<table>
-<thead><tr><th>Rank</th><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th></tr></thead>
-<tbody id="leaderRows"></tbody>
-</table>
-<p id="emptyLeaderboard" class="muted">No games completed yet.</p>
-</div>
-</section>
+<section id="page-leaderboard" class="hidden"><div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">TOP PLAYERS</div><h2>Leaderboard 🏆</h2><div class="muted">Ranked by score, then fastest completion time.</div></div><button class="btn ghost" onclick="renderLeaderboard()">Refresh</button></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Result</th></tr></thead><tbody id="leaderRows"></tbody></table></div><p id="leaderEmpty" class="muted">No completed games yet. Be the first to play!</p></div></section>
 
-<section id="admin" class="hidden">
-<h2>Admin Dashboard – Demo</h2>
-<p class="muted">This is a local demonstration only. It is not password-protected or connected to the shared database yet.</p>
-<div class="stats">
-<div class="stat"><strong id="adminPlayers">0</strong>Players</div>
-<div class="stat"><strong id="adminAttempts">0</strong>Attempts</div>
-<div class="stat"><strong id="adminWins">0</strong>Wins</div>
-</div>
-<div class="panel">
-<button class="btn" onclick="exportCSV()">Export CSV results</button>
-<div class="table-wrap">
-<table><thead><tr><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th></tr></thead>
-<tbody id="adminRows"></tbody></table>
-</div>
-</div>
-</section>
+<section id="page-admin" class="hidden"><div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">CONTROL ROOM</div><h2>Admin dashboard</h2><div class="muted">Local prototype overview and result export.</div></div><span class="pill">DEMO ADMIN</span></div><div class="stats"><div class="stat"><strong id="adminPlayers">0</strong><span>REGISTERED PROFILES</span></div><div class="stat"><strong id="adminAttempts">0</strong><span>COMPLETED GAMES</span></div><div class="stat"><strong id="adminWins">0</strong><span>WINS</span></div></div><div class="panel"><div class="section-head"><div><h3>All recorded results</h3><div class="note">Only this browser's demo records are shown.</div></div><div class="actions"><button class="btn" onclick="exportCSV()">Export CSV</button><button class="btn ghost" onclick="resetDemo()">Reset demo data</button></div></div><div class="table-wrap"><table><thead><tr><th>Player</th><th>Email (demo only)</th><th>BD / OPU / Department</th><th>Game</th><th>Attempt</th><th>Score</th><th>Time</th><th>Status</th><th>Date</th></tr></thead><tbody id="adminRows"></tbody></table></div></div><div class="panel" style="margin-top:16px"><h3>Production launch checklist</h3><ul class="muted"><li>Connect a real database and server-side score validation.</li><li>Use secure admin sign-in and restrict access to private player data.</li><li>Enforce the two-attempt limit in the database.</li><li>Load-test for 1,000+ concurrent players before an event.</li></ul></div></section>
 </main>
-<footer>SOCIAL PERFORMANCE GHSE GAMES • PLAY • THINK • WIN</footer>
+<div class="footer">SOCIAL PERFORMANCE GHSE GAMES • A word challenge prototype · Built for playful learning</div>
+</div>
 
 <script>
-const games=[
-{id:'cross-easy',name:'Crossword',level:'Easy',emoji:'🧩',kind:'cross',description:'Complete the easy crossword.'},
-{id:'cross-hard',name:'Crossword',level:'Hard',emoji:'🧠',kind:'cross',description:'Try the challenging crossword.'},
-{id:'search-easy',name:'Word Search',level:'Easy',emoji:'🔎',kind:'search',description:'Find hidden everyday words.'},
-{id:'search-hard',name:'Word Search',level:'Hard',emoji:'⚡',kind:'search',description:'Find longer hidden words.'}
+const GAMES=[
+ {id:'cross-easy',name:'Crossword',level:'Easy',emoji:'🧩',desc:'Fill a small word grid using friendly clues.',kind:'cross'},
+ {id:'cross-hard',name:'Crossword',level:'Hard',emoji:'🧠',desc:'A trickier grid with more challenging clues.',kind:'cross'},
+ {id:'search-easy',name:'Word Search',level:'Easy',emoji:'🔎',desc:'Find hidden everyday words in the letter grid.',kind:'search'},
+ {id:'search-hard',name:'Word Search',level:'Hard',emoji:'⚡',desc:'Hunt for longer words in a tougher grid.',kind:'search'}
 ];
-let player=null,records=[],current=null,startTime=0,timerInterval=null,found=[],selected=[];
-const el=id=>document.getElementById(id);
-function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+let player=null,records=[],started=0,timerHandle=null,current=null,selected=[],found=[],crossInputs=[];
+const $=id=>document.getElementById(id);
+
 function go(page){
-document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));
-el(page).classList.remove('hidden');
-document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
-if(page==='games')renderGames();
-if(page==='leaderboard')renderLeaderboard();
-if(page==='admin')renderAdmin();
-window.scrollTo(0,0);
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ $('page-'+page).classList.remove('hidden');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ if(page==='games')renderGameCards('gameCards2');
+ if(page==='leaderboard')renderLeaderboard();
+ if(page==='admin')renderAdmin();
+ if(page==='register')renderProfile();
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
-function cardsHTML(){return games.map(g=>`<div class="card"><div class="emoji">${g.emoji}</div><span class="pill">${g.level} MODE</span><h3>${g.name}</h3><p>${g.description}</p><button class="btn" onclick="startGame('${g.id}')">Play now</button></div>`).join('');}
-function renderGames(){
-el('gameCards').innerHTML=cardsHTML();
-el('greeting').textContent=player?'Good luck, '+player.name+'!':'Please register before playing.';
+
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+
+function renderGameCards(id){
+ $(id).innerHTML=GAMES.map(g=>`
+ <article class="game-card">
+ <div class="emoji">${g.emoji}</div>
+ <span class="pill">${g.level.toUpperCase()} MODE</span>
+ <h3>${g.name}</h3>
+ <p>${g.desc}</p>
+ <button class="btn" onclick="startGame('${g.id}')">Play now →</button>
+ </article>`).join('');
 }
-el('homeCards').innerHTML=cardsHTML();
-el('registerForm').onsubmit=e=>{
-e.preventDefault();
-player={name:el('name').value.trim(),email:el('email').value.trim(),organisation:el('organisation').value.trim()};
-localStorage.setItem('ghse_demo_player',JSON.stringify(player));
-el('profile').textContent='Registered demo player: '+player.name;
-go('games');
-};
+
 function load(){
-try{player=JSON.parse(localStorage.getItem('ghse_demo_player')||'null');records=JSON.parse(localStorage.getItem('ghse_demo_records')||'[]');}catch(e){player=null;records=[];}
-if(player){el('profile').textContent='Registered demo player: '+player.name;el('name').value=player.name;el('email').value=player.email;el('organisation').value=player.organisation||'';}
-refreshStats();
+ try{
+  records=JSON.parse(sessionStorage.getItem('ws_records')||'[]');
+  player=JSON.parse(sessionStorage.getItem('ws_player')||'null');
+ }catch(e){records=[];player=null;}
+ renderGameCards('gameCards');
+ refreshHome();
+ renderProfile();
 }
-function save(){localStorage.setItem('ghse_demo_records',JSON.stringify(records));refreshStats();}
-function refreshStats(){
-el('playerCount').textContent=player?1:0;
-el('attemptCount').textContent=records.length;
-el('winCount').textContent=records.filter(r=>r.status==='WIN').length;
+
+function persist(){
+ sessionStorage.setItem('ws_records',JSON.stringify(records));
+ sessionStorage.setItem('ws_player',JSON.stringify(player));
+ refreshHome();
 }
-function formatTime(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
-function elapsed(){return Math.floor((Date.now()-startTime)/1000);}
-function tick(){el('timer').textContent=formatTime(elapsed());}
+
+function refreshHome(){
+ $('homePlayers').textContent=player?1:0;
+ $('homeGames').textContent=records.length;
+ $('homeWins').textContent=records.filter(r=>r.status==='WIN').length;
+}
+
+$('regForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ player={
+  name:$('playerName').value.trim(),
+  email:$('playerEmail').value.trim().toLowerCase(),
+  group:$('playerGroup').value.trim()
+ };
+ persist();
+ renderProfile();
+ alert('Demo profile registered! You can now play.');
+ go('games');
+});
+
+function renderProfile(){
+ if(player){
+  $('playerName').value=player.name;
+  $('playerEmail').value=player.email;
+  $('playerGroup').value=player.group||'';
+  $('profileCard').innerHTML=`
+   <b>${esc(player.name)}</b><br>
+   ${esc(player.email)}<br>
+   ${esc(player.group||'No department added')}<br><br>
+   <span class="tag">REGISTERED · DEMO</span>`;
+ }else{
+  $('profileCard').textContent='No player registered yet.';
+ }
+ $('playerGreeting').textContent=player?
+  `Good luck, ${player.name}! Choose a game below.`:
+  'Please register before playing.';
+}
+
+function esc(s){
+ return String(s||'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+function getPlayerAttempts(gameId){
+ if(!player)return 0;
+ return records.filter(r=>
+  r.gameId===gameId &&
+  String(r.email).toLowerCase()===player.email
+ ).length;
+}
+
 function startGame(id){
-if(!player){alert('Please register first.');go('register');return;}
-if(records.some(r=>r.gameId===id)){alert('You have already completed this game on this browser.');return;}
-current=games.find(g=>g.id===id);found=[];selected=[];startTime=Date.now();
-el('gameTitle').textContent=current.name+' – '+current.level;
-el('gameDescription').textContent=current.description;
-renderPuzzle();go('play');clearInterval(timerInterval);tick();timerInterval=setInterval(tick,1000);
+ if(!player){
+  alert('Please register before playing.');
+  go('register');
+  return;
+ }
+
+ const attempts=getPlayerAttempts(id);
+
+ if(attempts>=2){
+  alert('You have used both attempts for this game.');
+  return;
+ }
+
+ current=GAMES.find(g=>g.id===id);
+ started=Date.now();
+ selected=[];
+ found=[];
+
+ $('playTitle').textContent=current.name+' · '+current.level;
+ $('playSub').textContent=
+  `Player: ${player.name} · Attempt ${attempts+1} of 2 · Complete the puzzle and submit your answers.`;
+
+ renderPuzzle();
+ go('play');
+ tick();
+ clearInterval(timerHandle);
+ timerHandle=setInterval(tick,1000);
 }
-const searchPuzzles={
-'search-easy':{rows:['CATSUNBIRD','AORANGEPLM','TIGERFISHX','DOGTREEQRS','MOONSTARAB','PENCILBOOK','HAPPYSMILE','FLOWERCAKE','GRAPEBERRY','CLOUDRAINY'],words:['CAT','SUN','BIRD','ORANGE','TIGER','FISH','DOG','TREE']},
-'search-hard':{rows:['ASTRONOMYQ','PLANETXSTAR','GALAXYNEBU','COMETORBIT','TELESCOPEZ','GRAVITYMOON','SATELLITEQX','UNIVERSEAB','METEORSHWR','COSMICDUST'],words:['ASTRONOMY','PLANET','GALAXY','NEBULA','COMET','ORBIT','TELESCOPE','GRAVITY','MOON','SATELLITE','UNIVERSE','METEOR']}
+
+function elapsed(){return Math.floor((Date.now()-started)/1000)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function tick(){$('clock').textContent=fmt(elapsed())}
+
+const crossData={
+ 'cross-easy':{
+  rows:5,cols:5,
+  words:[
+   {word:'APPLE',cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:'A crunchy fruit'},
+   {word:'PEAR',cells:[[0,1],[1,1],[2,1],[3,1]],clue:'A green or yellow fruit'},
+   {word:'ACID',cells:[[2,1],[2,2],[2,3],[2,4]],clue:'A sour or corrosive substance'}
+  ]
+ },
+ 'cross-hard':{
+  rows:7,cols:7,
+  words:[
+   {word:'PLANET',cells:[[0,0],[0,1],[0,2],[0,3],[0,4],[0,5]],clue:'A celestial body orbiting a star'},
+   {word:'NEBULA',cells:[[0,3],[1,3],[2,3],[3,3],[4,3],[5,3]],clue:'A vast cloud of gas and dust in space'},
+   {word:'ORBIT',cells:[[2,1],[2,2],[2,3],[2,4],[2,5]],clue:'The curved path around a celestial body'}
+  ]
+ }
 };
-const crosswordPuzzles={
-'cross-easy':{words:['APPLE','PEAR','ACID'],clues:['A crunchy fruit','A green or yellow fruit','A sour substance']},
-'cross-hard':{words:['PLANET','NEBULA','ORBIT'],clues:['A celestial body','A cloud of gas and dust','A path around a celestial body']}
-};
-function renderPuzzle(){
-if(current.kind==='search'){
-const d=searchPuzzles[current.id];
-el('gameArea').innerHTML=`<p class="muted">Find the words running left-to-right. Select the first and last letter.</p><div class="wordgrid">${d.rows.join('').split('').map((c,i)=>`<button class="letter" data-i="${i}" onclick="pick(${i})">${c}</button>`).join('')}</div><h3>Words to find</h3><div>${d.words.map(w=>`<span class="word-chip" id="word-${w}">${w}</span>`).join('')}</div><br><button class="btn" onclick="submitSearch()">Submit answers</button>`;
-}else{
-const d=crosswordPuzzles[current.id];
-el('gameArea').innerHTML=`<p>Enter the answer words below. Each word is checked separately.</p>${d.words.map((w,i)=>`<div class="field"><label>${d.clues[i]}</label><input id="cw-${i}" maxlength="${w.length}" placeholder="${w.length} letters"></div>`).join('')}<button class="btn" onclick="submitCross()">Submit crossword</button>`;
+
+function renderCross(){
+ let d=crossData[current.id],map={};
+ d.words.forEach(w=>w.cells.forEach(p=>map[p.join(',')]=true));
+ crossInputs=[];
+ let html='<div class="game-layout"><div class="panel"><div class="crossword">';
+
+ for(let r=0;r<d.rows;r++){
+  for(let c=0;c<d.cols;c++){
+   let key=r+','+c;
+   if(map[key]){
+    let ix=crossInputs.length;
+    crossInputs.push({r,c});
+    html+=`<div class="cell"><input maxlength="1" data-cell="${ix}" aria-label="row ${r+1} column ${c+1}" oninput="this.value=this.value.toUpperCase()"></div>`;
+   }else{
+    html+='<div class="cell"></div>';
+   }
+  }
+ }
+
+ html+='</div><div class="actions" style="justify-content:center"><button class="btn" onclick="submitCross()">Submit crossword</button></div></div><aside class="panel clues"><h3>Clues</h3><b>Across / Down</b>'+
+ d.words.map((w,i)=>`<p><strong>${i+1}.</strong> ${w.clue}</p>`).join('')+
+ '<p class="note">Fill the intersecting letters. Each correct letter earns points.</p></aside></div>';
+
+ $('playArea').innerHTML=html;
 }
-}
-function pick(i){
-if(selected.length===0){selected=[i];document.querySelector(`[data-i="${i}"]`).classList.add('selected');return;}
-const a=selected[0],b=i,start=Math.min(a,b),end=Math.max(a,b);
-const text=searchPuzzles[current.id].rows.join('').slice(start,end+1);
-const reverse=[...text].reverse().join('');
-const word=searchPuzzles[current.id].words.find(w=>!found.includes(w)&&(w===text||w===reverse));
-if(word){
-found.push(word);
-for(let n=start;n<=end;n++)document.querySelector(`[data-i="${n}"]`).classList.add('found');
-el('word-'+word).classList.add('done');
-}
-document.querySelectorAll('.letter.selected').forEach(x=>x.classList.remove('selected'));
-selected=[];
-}
-function submitSearch(){const words=searchPuzzles[current.id].words;finish(Math.round(found.length/words.length*100),found.length,words.length);}
+
 function submitCross(){
-const words=crosswordPuzzles[current.id].words;
-let correct=0;
-words.forEach((w,i)=>{if(el('cw-'+i).value.trim().toUpperCase()===w)correct++;});
-finish(Math.round(correct/words.length*100),correct,words.length);
+ let d=crossData[current.id],correct=0;
+ let total=d.words.reduce((n,w)=>n+w.word.length,0);
+ let values=crossInputs.map((_,i)=>
+  document.querySelector(`[data-cell="${i}"]`).value.toUpperCase()
+ );
+
+ d.words.forEach(w=>w.cells.forEach((p,i)=>{
+  let ix=crossInputs.findIndex(x=>x.r===p[0]&&x.c===p[1]);
+  if(values[ix]===w.word[i])correct++;
+ }));
+
+ finish(Math.round(correct/total*100),correct,total);
 }
-function finish(score,correct,total){
-clearInterval(timerInterval);
-const seconds=elapsed(),status=score>=70?'WIN':'LOSE';
-records.push({player:player.name,game:current.name+' '+current.level,gameId:current.id,score,time:seconds,status,date:new Date().toISOString()});
-save();
-el('resultEmoji').textContent=status==='WIN'?'🏆':'💪';
-el('resultHeading').textContent=status==='WIN'?'Congratulations!':'Good try!';
-el('score').textContent=score+'/100';
-el('resultDetails').textContent=correct+' of '+total+' correct • '+formatTime(seconds)+' • '+status;
-go('result');
+
+const searchData={
+ 'search-easy':{
+  grid:['CATSUNBIRD','AORANGEPLM','TIGERFISHX','DOGTREEQRS','MOONSTARAB','PENCILBOOK','HAPPYSMILE','FLOWERCAKE','GRAPEBERRY','CLOUDRAINY'],
+  words:['CAT','SUN','BIRD','ORANGE','TIGER','FISH','DOG','TREE']
+ },
+ 'search-hard':{
+  grid:['ASTRONOMYQ','PLANETXSTAR','GALAXYNEBU','COMETORBIT','TELESCOPEZ','GRAVITYMOON','SATELLITEQX','UNIVERSEAB','METEORSHWR','COSMICDUST'],
+  words:['ASTRONOMY','PLANET','GALAXY','NEBULA','COMET','ORBIT','TELESCOPE','GRAVITY','MOON','SATELLITE','UNIVERSE','METEOR']
+ }
+};
+
+function renderSearch(){
+ let d=searchData[current.id];
+ let html='<div class="game-layout"><div class="panel"><p class="muted">Tap the first letter, then tap the last letter of a hidden word. Words run left-to-right in this demo puzzle.</p><div class="wordgrid">';
+
+ [...d.grid.join('')].forEach((ch,i)=>{
+  html+=`<button class="letter" data-letter="${i}" onclick="pickLetter(${i})">${ch}</button>`;
+ });
+
+ html+='</div><div class="actions" style="justify-content:center"><button class="btn" onclick="submitSearch()">Submit word search</button><button class="btn ghost" onclick="clearSelection()">Clear selection</button></div></div><aside class="panel"><h3>Find these words</h3><div class="wordlist">'+
+ d.words.map(w=>`<span class="word-chip" id="word-${w}">${w}</span>`).join('')+
+ '</div><p class="note" style="margin-top:16px">Select the first and last letter of each word. Found words turn green.</p></aside></div>';
+
+ $('playArea').innerHTML=html;
 }
+
+function pickLetter(i){
+ let d=searchData[current.id];
+ let btn=document.querySelector(`[data-letter="${i}"]`);
+
+ if(selected.length===0){
+  selected=[i];
+  btn.classList.add('selected');
+  return;
+ }
+
+ let a=selected[0],b=i;
+ let start=Math.min(a,b),end=Math.max(a,b);
+ let candidate=d.grid.join('').slice(start,end+1);
+ let reverse=[...candidate].reverse().join('');
+
+ let word=d.words.find(w=>
+  !document.getElementById('word-'+w).classList.contains('done') &&
+  (w===candidate||w===reverse)
+ );
+
+ if(word){
+  let positions=Array.from({length:end-start+1},(_,k)=>start+k);
+  positions.forEach(p=>{
+   document.querySelector(`[data-letter="${p}"]`).classList.remove('selected');
+   document.querySelector(`[data-letter="${p}"]`).classList.add('found');
+  });
+  document.getElementById('word-'+word).classList.add('done');
+  found.push(word);
+  selected=[];
+ }else{
+  document.querySelectorAll('.letter.selected').forEach(x=>x.classList.remove('selected'));
+  selected=[i];
+  btn.classList.add('selected');
+ }
+}
+
+function clearSelection(){
+ selected=[];
+ document.querySelectorAll('.letter.selected').forEach(x=>x.classList.remove('selected'));
+}
+
+function submitSearch(){
+ let d=searchData[current.id];
+ finish(Math.round(found.length/d.words.length*100),found.length,d.words.length);
+}
+
+function renderPuzzle(){
+ if(current.kind==='cross')renderCross();
+ else renderSearch();
+}
+
+function finish(score,got,total){
+ clearInterval(timerHandle);
+
+ let secs=elapsed();
+ let status=score>=70?'WIN':'LOSE';
+ let attempt=getPlayerAttempts(current.id)+1;
+
+ let rec={
+  name:player.name,
+  email:player.email,
+  group:player.group,
+  game:current.name+' '+current.level,
+  gameId:current.id,
+  attempt:attempt,
+  score:score,
+  time:secs,
+  status:status,
+  date:new Date().toISOString()
+ };
+
+ records.push(rec);
+ persist();
+
+ $('resultEmoji').textContent=status==='WIN'?'🏆':'💪';
+ $('resultTitle').textContent=status==='WIN'?'You did it! You won!':'Good try! Keep practising.';
+ $('resultScore').textContent=score+'/100';
+ $('resultInfo').textContent=`Attempt ${attempt} of 2 · ${got} of ${total} correct · ${fmt(secs)} · ${status}`;
+
+ go('result');
+}
+
 function renderLeaderboard(){
-const sorted=[...records].sort((a,b)=>b.score-a.score||a.time-b.time);
-el('leaderRows').innerHTML=sorted.map((r,i)=>`<tr><td>${i+1}</td><td>${safe(r.player)}</td><td>${safe(r.game)}</td><td>${r.score}</td><td>${formatTime(r.time)}</td><td>${r.status}</td></tr>`).join('');
-el('emptyLeaderboard').classList.toggle('hidden',sorted.length>0);
+ let sorted=[...records].sort((a,b)=>b.score-a.score||a.time-b.time);
+
+ $('leaderRows').innerHTML=sorted.slice(0,100).map((r,i)=>`
+ <tr>
+ <td><b>${i+1}</b></td>
+ <td>${esc(r.name)}</td>
+ <td>${esc(r.game)}</td>
+ <td><b>${r.score}</b></td>
+ <td>${fmt(r.time)}</td>
+ <td><span class="tag ${r.status==='LOSE'?'lose':''}">${r.status}</span></td>
+ </tr>`).join('');
+
+ $('leaderEmpty').classList.toggle('hidden',sorted.length>0);
 }
+
 function renderAdmin(){
-el('adminPlayers').textContent=player?1:0;
-el('adminAttempts').textContent=records.length;
-el('adminWins').textContent=records.filter(r=>r.status==='WIN').length;
-el('adminRows').innerHTML=records.map(r=>`<tr><td>${safe(r.player)}</td><td>${safe(r.game)}</td><td>${r.score}</td><td>${formatTime(r.time)}</td><td>${r.status}</td></tr>`).join('');
+ $('adminPlayers').textContent=player?1:0;
+ $('adminAttempts').textContent=records.length;
+ $('adminWins').textContent=records.filter(r=>r.status==='WIN').length;
+
+ $('adminRows').innerHTML=records.map(r=>`
+ <tr>
+ <td>${esc(r.name)}</td>
+ <td>${esc(r.email)}</td>
+ <td>${esc(r.group)}</td>
+ <td>${esc(r.game)}</td>
+ <td>${r.attempt||1}</td>
+ <td>${r.score}</td>
+ <td>${fmt(r.time)}</td>
+ <td>${r.status}</td>
+ <td>${new Date(r.date).toLocaleString()}</td>
+ </tr>`).join('');
 }
+
 function exportCSV(){
-const rows=[['Player','Game','Score','Time seconds','Status','Date'],...records.map(r=>[r.player,r.game,r.score,r.time,r.status,r.date])];
-const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='GHSE-Games-Results.csv';a.click();URL.revokeObjectURL(a.href);
+ let rows=[
+  ['Player','Email','BD / OPU / Department','Game','Attempt','Score','Time seconds','Status','Date'],
+  ...records.map(r=>[
+   r.name,r.email,r.group,r.game,r.attempt,r.score,r.time,r.status,r.date
+  ])
+ ];
+
+ let csv=rows.map(r=>
+  r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')
+ ).join('\n');
+
+ let a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+ a.download='GHSE-Games-Results.csv';
+ a.click();
+ URL.revokeObjectURL(a.href);
 }
+
+function resetDemo(){
+ if(confirm('Clear this browser session demo profile and all results?')){
+  records=[];
+  player=null;
+  sessionStorage.removeItem('ws_records');
+  sessionStorage.removeItem('ws_player');
+  renderAdmin();
+  refreshHome();
+  renderProfile();
+ }
+}
+
 load();
 </script>
 </body>
