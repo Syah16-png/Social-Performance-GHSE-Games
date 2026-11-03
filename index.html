@@ -1,509 +1,362 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Social Performance GHSE Games</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root {
-  --purple:#6846e8;
-  --purple-light:#f0ebff;
-  --yellow:#ffca55;
-  --background:#f5f2ff;
-  --text:#211a39;
-  --muted:#746e86;
-  --white:#fff;
-}
+:root{--purple:#6846e8;--yellow:#ffca55;--bg:#f5f2ff;--ink:#211a39}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--background);color:var(--text)}
-header{background:var(--purple);color:white;padding:22px 5% 45px}
-.top{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.brand{font-weight:900;letter-spacing:1px}
-.brand span{color:var(--yellow)}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-button{border:0;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer;font-size:14px}
-nav button{background:transparent;color:white}
-nav button.active,nav button:hover{background:#ffffff30}
-.hero{max-width:1180px;margin:45px auto 0;display:grid;grid-template-columns:1.5fr 1fr;gap:25px;align-items:center}
-.eyebrow{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--yellow)}
-h1{font-size:48px;line-height:1.05;margin:12px 0;letter-spacing:-2px}
-.hero p{line-height:1.6;color:#eee9ff}
-.hero-art{font-size:65px;text-align:center;background:#ffffff20;border:1px solid #ffffff40;border-radius:25px;padding:30px}
-.hero-art small{display:block;font-size:13px;font-weight:bold}
-main{max-width:1180px;margin:auto;padding:30px 22px 60px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;flex-wrap:wrap;margin-bottom:20px}
-.section-head h2{margin:8px 0 5px;font-size:28px}
-.muted{color:var(--muted);line-height:1.5}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.game-card,.panel,.stat{background:white;border:1px solid #e9e3f7;border-radius:22px;padding:22px;box-shadow:0 8px 25px #29165b0b}
-.game-card{display:flex;flex-direction:column;min-height:235px}
-.emoji{font-size:38px;margin-bottom:12px}
-.pill{display:inline-block;align-self:flex-start;background:var(--purple-light);color:var(--purple);padding:7px 10px;border-radius:30px;font-size:11px;font-weight:900;margin-bottom:12px}
-.game-card h3{margin:0 0 8px}
-.game-card p{font-size:14px;color:var(--muted);line-height:1.5;flex:1}
-.btn{background:var(--purple);color:white}
-.btn:hover{filter:brightness(1.1)}
-.btn.secondary{background:var(--yellow);color:#302000}
-.btn.ghost{background:var(--purple-light);color:var(--purple)}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--purple);color:white;padding:25px 5%;text-align:center}
+header h1{margin:5px}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+button{border:0;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer}
+nav button{background:#ffffff25;color:white}
+main{max-width:1100px;margin:30px auto;padding:0 18px}
+section{background:white;padding:24px;border-radius:20px;margin-bottom:20px;box-shadow:0 5px 20px #24145a12}
 .hidden{display:none!important}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0}
-.stat strong{font-size:28px;display:block}
-.stat span{font-size:12px;color:var(--muted);font-weight:bold}
-.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-.field{display:grid;gap:7px;margin-bottom:15px}
-.field label{font-weight:bold;font-size:13px}
-.field input{width:100%;padding:13px;border:1px solid #dcd4ee;border-radius:12px;font-size:15px}
-.note{font-size:12px;line-height:1.5;color:var(--muted)}
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #eee9f5;white-space:nowrap}
-th{font-size:11px;color:var(--muted);text-transform:uppercase}
-.tag{background:#dff8e9;color:#167143;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:bold}
-.tag.lose{background:#ffe4e4;color:#a32c36}
-.game-layout{display:grid;grid-template-columns:1fr 300px;gap:18px}
-.game-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.timer{font-weight:bold;color:var(--purple)}
-.crossword{display:grid;grid-template-columns:repeat(7,minmax(30px,45px));gap:3px;justify-content:center;margin:20px auto}
-.cross-cell{aspect-ratio:1;min-width:0}
-.cross-cell input{width:100%;height:100%;border:2px solid #d8d0ea;border-radius:5px;text-align:center;text-transform:uppercase;font-size:18px;font-weight:bold;background:white;color:#211a39;padding:0}
-.cross-cell.block{background:#332b49;border-radius:5px}
-.clues{font-size:13px;line-height:1.7}
-.clues p{margin:8px 0}
-.wordgrid{display:grid;grid-template-columns:repeat(10,minmax(22px,38px));gap:4px;justify-content:center;margin:20px auto}
-.letter{aspect-ratio:1;padding:0;background:#faf8ff;color:#211a39;border:1px solid #ded6ef;border-radius:6px;font-weight:bold}
+h2{color:var(--purple)}
+input,select{width:100%;padding:13px;margin:6px 0 14px;border:1px solid #d8d0ea;border-radius:10px;font-size:15px}
+label{font-weight:bold}
+.primary{background:var(--purple);color:white}
+.secondary{background:var(--yellow);color:#302000}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:#f5f2ff;border-radius:16px;padding:20px}
+.card button{width:100%;margin-top:12px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #eee}
+.tablewrap{overflow-x:auto}
+.grid{display:grid;grid-template-columns:repeat(10,minmax(22px,40px));gap:4px;justify-content:center;margin:20px auto}
+.letter{padding:8px 0;background:#f0ebff;border:1px solid #d8d0ea}
 .letter.selected{background:var(--yellow)}
-.letter.found{background:#d8f6e5;color:#176a3c}
-.wordlist{display:flex;gap:8px;flex-wrap:wrap}
-.word-chip{background:var(--purple-light);padding:7px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.word-chip.done{text-decoration:line-through;background:#d8f6e5;color:#176a3c}
-.result{text-align:center;padding:35px}
-.result .big{font-size:55px}
-.footer{text-align:center;border-top:1px solid #e8e1f3;padding:20px;color:var(--muted);font-size:12px}
-@media(max-width:850px){.hero,.game-layout,.two-col{grid-template-columns:1fr}.hero-art{display:none}}
-@media(max-width:600px){.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}h1{font-size:38px}.top{align-items:flex-start;flex-direction:column}.wordgrid{gap:2px}.letter{font-size:11px}}
+.letter.found{background:#b9efca}
+.words{display:flex;gap:8px;flex-wrap:wrap}
+.word{background:#f0ebff;padding:8px;border-radius:20px;font-weight:bold}
+.word.done{text-decoration:line-through;background:#b9efca}
+.cross{display:grid;grid-template-columns:repeat(7,40px);gap:3px;justify-content:center;margin:20px auto}
+.cross input{width:40px;height:40px;padding:0;text-align:center;text-transform:uppercase;font-weight:bold;margin:0}
+.muted{color:#777}
 </style>
 </head>
 <body>
 <header>
-  <div class="top">
-    <div class="brand">SOCIAL PERFORMANCE <span>GHSE GAMES</span> ✦</div>
-    <nav>
-      <button class="active" data-page="home">Home</button>
-      <button data-page="register">Register</button>
-      <button data-page="leaderboard">Leaderboard</button>
-      <button data-page="admin">Admin</button>
-    </nav>
-  </div>
-  <div class="hero">
-    <div>
-      <div class="eyebrow">PLAY • THINK • WIN</div>
-      <h1>Ready to make<br>your words count?</h1>
-      <p>Jump into quick-fire word challenges. Choose a game, receive a randomly assigned puzzle and climb the leaderboard!</p>
-      <button class="btn secondary" onclick="go('games')">Explore games ↓</button>
-    </div>
-    <div class="hero-art">🧩 🔤 🏆<small>SOCIAL PERFORMANCE GHSE GAMES</small></div>
-  </div>
+<h1>SOCIAL PERFORMANCE GHSE GAMES ✦</h1>
+<p>PLAY • THINK • WIN</p>
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('register')">Register / Login</button>
+<button onclick="show('games')">Games</button>
+<button onclick="show('leaderboard')">Leaderboard</button>
+<button onclick="show('admin')">Admin</button>
+</nav>
 </header>
 
 <main>
-<section id="page-home">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow" style="color:#8a6be8">CHOOSE YOUR CHALLENGE</div>
-      <h2>Two ways to play</h2>
-      <div class="muted">Choose a game. One of four puzzle versions will be assigned randomly.</div>
-    </div>
-    <span class="pill">2 GAMES • 4 PUZZLE VERSIONS EACH</span>
-  </div>
-  <div class="cards" id="gameCards"></div>
-  <div class="stats">
-    <div class="stat"><strong id="homePlayers">0</strong><span>DEMO PLAYERS</span></div>
-    <div class="stat"><strong id="homeGames">0</strong><span>GAMES COMPLETED</span></div>
-    <div class="stat"><strong id="homeWins">0</strong><span>WINS RECORDED</span></div>
-  </div>
-  <div class="panel">
-    <h3>How to play</h3>
-    <p class="muted">1. Register your details. 2. Choose Crossword or Word Search. 3. Receive a random puzzle. 4. Complete the game and submit your score.</p>
-    <p class="note">You have one attempt for Crossword and one attempt for Word Search. This is currently a browser-based demo; online database protection will be added separately.</p>
-    <button class="btn" onclick="go('register')">Register to play</button>
-  </div>
+<section id="home">
+<h2>Ready to make your words count?</h2>
+<p>Choose a challenge, solve your puzzle and climb the leaderboard!</p>
+<div class="cards">
+<div class="card"><h3>🧩 Crossword</h3><p>Complete the crossword using the clues.</p><button class="primary" onclick="show('games')">Play now</button></div>
+<div class="card"><h3>🔎 Word Search</h3><p>Find the hidden words in the grid.</p><button class="primary" onclick="show('games')">Play now</button></div>
+</div>
+<p id="accountStatus" class="muted">You are not logged in.</p>
 </section>
 
-<section id="page-register" class="hidden">
-  <div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">PLAYER CHECK-IN</div><h2>Create your player profile</h2></div></div>
-  <div class="two-col">
-    <div class="panel">
-      <form id="regForm">
-        <div class="field"><label>Display name *</label><input id="playerName" required maxlength="24" placeholder="Your name"></div>
-        <div class="field"><label>Email address *</label><input id="playerEmail" type="email" required placeholder="you@example.com"></div>
-        <div class="field"><label>BD / OPU / Department *</label><input id="playerGroup" required placeholder="e.g. Downstream / PRPC / HSE"></div>
-        <button class="btn" type="submit">Save registration</button>
-      </form>
-      <p class="note">Your display name will be shown on the demo leaderboard.</p>
-    </div>
-    <div class="panel">
-      <div class="emoji">🎟️</div><h3>Player pass</h3>
-      <div id="profileCard" class="note">No player registered yet.</div>
-    </div>
-  </div>
+<section id="register" class="hidden">
+<h2>Player Registration / Login</h2>
+<label>Display name</label><input id="displayName" maxlength="24" placeholder="Your display name">
+<label>Email</label><input id="email" type="email" placeholder="Your email">
+<label>Password</label><input id="password" type="password" minlength="6" placeholder="At least 6 characters">
+<label>BD / OPU / Department</label><input id="organisation" placeholder="Your department">
+<button class="primary" onclick="register()">Register</button>
+<button class="secondary" onclick="login()">Login</button>
+<button onclick="logout()">Logout</button>
+<p id="authMessage" class="muted"></p>
 </section>
 
-<section id="page-games" class="hidden">
-  <div class="section-head">
-    <div><div class="eyebrow" style="color:#8a6be8">GAME CENTRE</div><h2>Pick your puzzle</h2><div class="muted" id="playerGreeting"></div></div>
-    <button class="btn ghost" onclick="go('register')">Player profile</button>
-  </div>
-  <div class="cards" id="gameCards2"></div>
+<section id="games" class="hidden">
+<h2>Choose your game</h2>
+<p id="gameGreeting" class="muted"></p>
+<div class="cards">
+<div class="card"><h3>🧩 Crossword</h3><p>One randomly assigned puzzle version.</p><button class="primary" onclick="startGame('cross')">Play Crossword</button></div>
+<div class="card"><h3>🔎 Word Search</h3><p>One randomly assigned puzzle version.</p><button class="primary" onclick="startGame('search')">Play Word Search</button></div>
+</div>
 </section>
 
-<section id="page-play" class="hidden">
-  <div class="game-top">
-    <div><div class="eyebrow" style="color:#8a6be8">YOUR CHALLENGE</div><h2 id="playTitle">Puzzle</h2><div class="muted" id="playSub"></div></div>
-    <div class="timer">⏱ <span id="clock">00:00</span></div>
-  </div>
-  <div id="playArea"></div>
+<section id="play" class="hidden">
+<h2 id="playTitle">Your Puzzle</h2>
+<p>Time: <strong id="clock">00:00</strong></p>
+<div id="playArea"></div>
 </section>
 
-<section id="page-result" class="hidden">
-  <div class="panel result">
-    <div class="big" id="resultEmoji">🏆</div>
-    <div class="eyebrow" style="color:#8a6be8">CHALLENGE COMPLETE</div>
-    <h2 id="resultTitle">Your result</h2>
-    <div style="font-size:48px;font-weight:950" id="resultScore">0/100</div>
-    <p class="muted" id="resultInfo"></p>
-    <div class="actions" style="justify-content:center">
-      <button class="btn" onclick="go('games')">Play another game</button>
-      <button class="btn ghost" onclick="go('leaderboard')">View leaderboard</button>
-    </div>
-  </div>
+<section id="result" class="hidden">
+<h2 id="resultTitle">Your result</h2>
+<h1 id="resultScore">0/100</h1>
+<p id="resultInfo"></p>
+<button class="primary" onclick="show('leaderboard')">View leaderboard</button>
+<button onclick="show('games')">Back to games</button>
 </section>
 
-<section id="page-leaderboard" class="hidden">
-  <div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">TOP PLAYERS</div><h2>Leaderboard 🏆</h2><div class="muted">Ranked by score, then fastest completion time.</div></div></div>
-  <div class="panel table-wrap">
-    <table><thead><tr><th>Rank</th><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Result</th></tr></thead><tbody id="leaderRows"></tbody></table>
-    <p id="leaderEmpty" class="muted">No completed games yet. Be the first to play!</p>
-  </div>
+<section id="leaderboard" class="hidden">
+<h2>🏆 Public Leaderboard</h2>
+<button class="primary" onclick="loadLeaderboard()">Refresh</button>
+<div class="tablewrap">
+<table><thead><tr><th>Rank</th><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th></tr></thead>
+<tbody id="leaderRows"></tbody></table>
+</div>
+<p id="leaderMessage" class="muted"></p>
 </section>
 
-<section id="page-admin" class="hidden">
-  <div class="section-head"><div><div class="eyebrow" style="color:#8a6be8">CONTROL ROOM</div><h2>Admin dashboard</h2><div class="muted">Local demo results and export.</div></div><span class="pill">DEMO ADMIN</span></div>
-  <div class="stats">
-    <div class="stat"><strong id="adminPlayers">0</strong><span>REGISTERED PROFILES</span></div>
-    <div class="stat"><strong id="adminAttempts">0</strong><span>COMPLETED GAMES</span></div>
-    <div class="stat"><strong id="adminWins">0</strong><span>WINS</span></div>
-  </div>
-  <div class="panel">
-    <div class="section-head"><h3>All recorded results</h3><div class="actions"><button class="btn" onclick="exportCSV()">Export CSV</button><button class="btn ghost" onclick="resetDemo()">Reset demo</button></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Player</th><th>Email</th><th>BD / OPU / Department</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th><th>Date</th></tr></thead><tbody id="adminRows"></tbody></table></div>
-    <p class="note">This demo dashboard is not password protected. Do not use it to store real competition data.</p>
-  </div>
+<section id="admin" class="hidden">
+<h2>Admin Dashboard</h2>
+<p class="muted">Sign in using your authorised administrator account.</p>
+<button class="primary" onclick="loadAdmin()">Load admin records</button>
+<button class="secondary" onclick="exportCSV()">Export CSV</button>
+<p id="adminMessage" class="muted"></p>
+<div class="tablewrap">
+<table><thead><tr><th>Player</th><th>Email</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th><th>Date</th></tr></thead>
+<tbody id="adminRows"></tbody></table>
+</div>
 </section>
 </main>
 
-<div class="footer">SOCIAL PERFORMANCE GHSE GAMES • A word challenge prototype</div>
-
 <script>
-const $ = id => document.getElementById(id);
+const SUPABASE_URL = "https://fvoghsyomrhxggzljvmh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Cdtma2LoVz56wwzOgyMlDA_il0WynU0";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let player = null;
-let records = [];
-let current = null;
-let started = 0;
-let timerHandle = null;
-let selected = [];
-let found = [];
-let crossInputs = [];
+let user=null, profile=null, current=null, started=0, timer=null;
+let selected=[], found=[], adminRecords=[];
 
-const games = [
-  {id:"cross-1",kind:"cross",name:"Crossword",version:"Puzzle 1"},
-  {id:"cross-2",kind:"cross",name:"Crossword",version:"Puzzle 2"},
-  {id:"cross-3",kind:"cross",name:"Crossword",version:"Puzzle 3"},
-  {id:"cross-4",kind:"cross",name:"Crossword",version:"Puzzle 4"},
-  {id:"search-1",kind:"search",name:"Word Search",version:"Puzzle 1"},
-  {id:"search-2",kind:"search",name:"Word Search",version:"Puzzle 2"},
-  {id:"search-3",kind:"search",name:"Word Search",version:"Puzzle 3"},
-  {id:"search-4",kind:"search",name:"Word Search",version:"Puzzle 4"}
-];
-
-const crossData = {
- "cross-1":{rows:5,cols:5,words:[
-  {word:"APPLE",cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:"A crunchy fruit"},
-  {word:"PEAR",cells:[[0,1],[1,1],[2,1],[3,1]],clue:"A green or yellow fruit"},
-  {word:"ACID",cells:[[2,1],[2,2],[2,3],[2,4]],clue:"A sour substance"}
- ]},
- "cross-2":{rows:7,cols:7,words:[
-  {word:"PLANET",cells:[[0,0],[0,1],[0,2],[0,3],[0,4],[0,5]],clue:"A celestial body orbiting a star"},
-  {word:"NEBULA",cells:[[0,3],[1,3],[2,3],[3,3],[4,3],[5,3]],clue:"A cloud of gas and dust in space"},
-  {word:"ORBIT",cells:[[2,1],[2,2],[2,3],[2,4],[2,5]],clue:"A path around a celestial body"}
- ]},
- "cross-3":{rows:5,cols:5,words:[
-  {word:"TIGER",cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:"A large striped wild cat"},
-  {word:"TREE",cells:[[0,2],[1,2],[2,2],[3,2]],clue:"A tall plant with a trunk"},
-  {word:"RAIN",cells:[[2,0],[2,1],[2,2],[2,3]],clue:"Water falling from clouds"}
- ]},
- "cross-4":{rows:6,cols:6,words:[
-  {word:"OCEAN",cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:"A very large body of salt water"},
-  {word:"EARTH",cells:[[0,2],[1,2],[2,2],[3,2],[4,2]],clue:"The planet we live on"},
-  {word:"HEART",cells:[[2,1],[2,2],[2,3],[2,4],[2,5]],clue:"The organ that pumps blood"}
- ]}
-};
-
-const searchData = {
- "search-1":{grid:["CATSUNBIRD","AORANGEPLM","TIGERFISHX","DOGTREEQRS","MOONSTARAB","PENCILBOOK","HAPPYSMILE","FLOWERCAKE","GRAPEBERRY","CLOUDRAINY"],words:["CAT","SUN","BIRD","ORANGE","TIGER","FISH","DOG","TREE"]},
- "search-2":{grid:["ASTRONOMYQ","PLANETXSTAR","GALAXYNEBU","COMETORBIT","TELESCOPEZ","GRAVITYMOON","SATELLITEQX","UNIVERSEAB","METEORSHWR","COSMICDUST"],words:["ASTRONOMY","PLANET","GALAXY","NEBULA","COMET","ORBIT","TELESCOPE","GRAVITY","MOON","SATELLITE","UNIVERSE","METEOR"]},
- "search-3":{grid:["FLOWERGARD","BUTTERFLYX","GARDENBIRD","SUNSHINEMN","RAINBOWABC","LEAFPLANTS","BEEHONEYQX","ROSEPETALS","GREENFIELD","SEEDGROWTH"],words:["FLOWER","GARDEN","BIRD","SUNSHINE","RAINBOW","LEAF","BEE","HONEY","ROSE","SEED"]},
- "search-4":{grid:["COMPUTERXY","KEYBOARDAB","MONITORXYZ","INTERNETQW","SOFTWAREZQ","HARDWAREXY","PRINTERABC","MOUSEPADXY","NETWORKING","DATABASEQW"],words:["COMPUTER","KEYBOARD","MONITOR","INTERNET","SOFTWARE","HARDWARE","PRINTER","MOUSE","NETWORK","DATABASE"]}
-};
-
-function go(page){
- document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
- $("page-"+page).classList.remove("hidden");
- document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
- if(page==="games")renderGameCards("gameCards2");
- if(page==="leaderboard")renderLeaderboard();
- if(page==="admin")renderAdmin();
- if(page==="register")renderProfile();
- window.scrollTo({top:0,behavior:"smooth"});
+const $=id=>document.getElementById(id);
+function show(page){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ $(''+page).classList.remove('hidden');
+ if(page==='leaderboard')loadLeaderboard();
+ if(page==='games')refreshAccount();
 }
-document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+function message(id,text){$(id).textContent=text;}
 
-function renderGameCards(id){
- $(id).innerHTML = `
- <article class="game-card">
-  <div class="emoji">🧩</div>
-  <span class="pill">4 PUZZLE VERSIONS · RANDOM</span>
-  <h3>Crossword</h3>
-  <p>Fill a word grid using clues. One of four puzzle versions is assigned automatically.</p>
-  <button class="btn" onclick="startGame('cross')">Play Crossword →</button>
- </article>
- <article class="game-card">
-  <div class="emoji">🔎</div>
-  <span class="pill">4 PUZZLE VERSIONS · RANDOM</span>
-  <h3>Word Search</h3>
-  <p>Find hidden words in the letter grid. One of four puzzle versions is assigned automatically.</p>
-  <button class="btn" onclick="startGame('search')">Play Word Search →</button>
- </article>`;
-}
-
-function load(){
- try{
-  records=JSON.parse(sessionStorage.getItem("ws_records")||"[]");
-  player=JSON.parse(sessionStorage.getItem("ws_player")||"null");
- }catch(e){records=[];player=null}
- renderGameCards("gameCards");
- refreshHome();
- renderProfile();
-}
-function persist(){
- sessionStorage.setItem("ws_records",JSON.stringify(records));
- sessionStorage.setItem("ws_player",JSON.stringify(player));
- refreshHome();
-}
-function refreshHome(){
- $("homePlayers").textContent=player?1:0;
- $("homeGames").textContent=records.length;
- $("homeWins").textContent=records.filter(r=>r.status==="WIN").length;
-}
-$("regForm").addEventListener("submit",e=>{
- e.preventDefault();
- player={
-  name:$("playerName").value.trim(),
-  email:$("playerEmail").value.trim(),
-  group:$("playerGroup").value.trim()
- };
- persist();
- renderProfile();
- alert("Registration saved on this device!");
- go("games");
-});
-function esc(s){
- return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function renderProfile(){
- if(player){
-  $("playerName").value=player.name;
-  $("playerEmail").value=player.email;
-  $("playerGroup").value=player.group||"";
-  $("profileCard").innerHTML=`<b>${esc(player.name)}</b><br>${esc(player.email)}<br>${esc(player.group)}<br><br><span class="tag">REGISTERED · DEMO</span>`;
+async function refreshAccount(){
+ const {data:{user:u}}=await db.auth.getUser();
+ user=u;
+ if(user){
+  const {data}=await db.from('players').select('*').eq('id',user.id).maybeSingle();
+  profile=data;
+  $('accountStatus').textContent='Logged in as '+(data?.display_name||user.email);
+  $('gameGreeting').textContent='Good luck, '+(data?.display_name||'player')+'!';
  }else{
-  $("profileCard").textContent="No player registered yet.";
+  profile=null;
+  $('accountStatus').textContent='You are not logged in.';
+  $('gameGreeting').textContent='Please register or log in before playing.';
  }
- $("playerGreeting").textContent=player?`Good luck, ${player.name}! Choose a game below.`:"Please register before playing.";
 }
-function hasAttempt(kind){
- return records.some(r=>r.kind===kind && r.email.toLowerCase()===player.email.toLowerCase());
-}
-function startGame(kind){
- if(!player){alert("Please register before playing.");go("register");return;}
- if(hasAttempt(kind)){
-  alert("You have already used your one attempt for "+(kind==="cross"?"Crossword":"Word Search")+".");
-  return;
+
+async function register(){
+ const name=$('displayName').value.trim();
+ const email=$('email').value.trim();
+ const password=$('password').value;
+ const organisation=$('organisation').value.trim();
+ if(!name||!email||!password||!organisation){message('authMessage','Please complete all fields.');return;}
+ if(password.length<6){message('authMessage','Password must be at least 6 characters.');return;}
+ const {data,error}=await db.auth.signUp({
+  email,password,
+  options:{data:{display_name:name,organisation}}
+ });
+ if(error){message('authMessage',error.message);return;}
+ if(data.user && data.session){
+  await db.from('players').upsert({id:data.user.id,display_name:name,organisation});
+  await refreshAccount();
+  message('authMessage','Registration successful. You can now play.');
+ }else{
+  message('authMessage','Registration submitted. Please confirm your email, then log in.');
  }
- const choices=games.filter(g=>g.kind===kind);
- current=choices[Math.floor(Math.random()*choices.length)];
- started=Date.now();
- selected=[];
- found=[];
- $("playTitle").textContent=current.name+" · "+current.version;
- $("playSub").textContent=`Player: ${player.name} · Random puzzle · One attempt`;
+}
+
+async function login(){
+ const {data,error}=await db.auth.signInWithPassword({
+  email:$('email').value.trim(),
+  password:$('password').value
+ });
+ if(error){message('authMessage',error.message);return;}
+ user=data.user;
+ await refreshAccount();
+ message('authMessage','Login successful!');
+ show('games');
+}
+
+async function logout(){
+ await db.auth.signOut();
+ user=null;profile=null;
+ message('authMessage','You have logged out.');
+ await refreshAccount();
+ show('home');
+}
+
+const crossData={
+ c1:{rows:5,cols:5,words:[
+  {word:'APPLE',cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:'A crunchy fruit'},
+  {word:'PEAR',cells:[[0,1],[1,1],[2,1],[3,1]],clue:'A green or yellow fruit'},
+  {word:'ACID',cells:[[2,1],[2,2],[2,3],[2,4]],clue:'A sour substance'}]},
+ c2:{rows:7,cols:7,words:[
+  {word:'PLANET',cells:[[0,0],[0,1],[0,2],[0,3],[0,4],[0,5]],clue:'A celestial body orbiting a star'},
+  {word:'NEBULA',cells:[[0,3],[1,3],[2,3],[3,3],[4,3],[5,3]],clue:'A cloud of gas and dust'},
+  {word:'ORBIT',cells:[[2,1],[2,2],[2,3],[2,4],[2,5]],clue:'A path around a celestial body'}]},
+ c3:{rows:5,cols:5,words:[
+  {word:'TIGER',cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:'A large striped wild cat'},
+  {word:'TREE',cells:[[0,2],[1,2],[2,2],[3,2]],clue:'A tall plant with a trunk'},
+  {word:'RAIN',cells:[[2,0],[2,1],[2,2],[2,3]],clue:'Water falling from clouds'}]},
+ c4:{rows:6,cols:6,words:[
+  {word:'OCEAN',cells:[[0,0],[0,1],[0,2],[0,3],[0,4]],clue:'A large body of salt water'},
+  {word:'EARTH',cells:[[0,2],[1,2],[2,2],[3,2],[4,2]],clue:'The planet we live on'},
+  {word:'HEART',cells:[[2,1],[2,2],[2,3],[2,4],[2,5]],clue:'The organ that pumps blood'}]}
+};
+
+const searchData={
+ s1:{grid:['CATSUNBIRD','AORANGEPLM','TIGERFISHX','DOGTREEQRS','MOONSTARAB','PENCILBOOK','HAPPYSMILE','FLOWERCAKE','GRAPEBERRY','CLOUDRAINY'],words:['CAT','SUN','BIRD','ORANGE','TIGER','FISH','DOG','TREE']},
+ s2:{grid:['ASTRONOMYQ','PLANETXSTAR','GALAXYNEBU','COMETORBIT','TELESCOPEZ','GRAVITYMOON','SATELLITEQX','UNIVERSEAB','METEORSHWR','COSMICDUST'],words:['PLANET','GALAXY','COMET','ORBIT','MOON','METEOR']},
+ s3:{grid:['FLOWERGARD','BUTTERFLYX','GARDENBIRD','SUNSHINEMN','RAINBOWABC','LEAFPLANTS','BEEHONEYQX','ROSEPETALS','GREENFIELD','SEEDGROWTH'],words:['FLOWER','GARDEN','BIRD','LEAF','BEE','HONEY','ROSE','SEED']},
+ s4:{grid:['COMPUTERXY','KEYBOARDAB','MONITORXYZ','INTERNETQW','SOFTWAREZQ','HARDWAREXY','PRINTERABC','MOUSEPADXY','NETWORKING','DATABASEQW'],words:['COMPUTER','KEYBOARD','MONITOR','INTERNET','SOFTWARE','HARDWARE','PRINTER','MOUSE','NETWORK','DATABASE']}
+};
+
+async function startGame(kind){
+ if(!user){alert('Please register or log in first.');show('register');return;}
+ const category=kind;
+ const {data:previous,error}=await db.from('game_attempts').select('id').eq('player_id',user.id).eq('game_category',category).limit(1);
+ if(error){alert(error.message);return;}
+ if(previous&&previous.length){alert('You have already used your one attempt for this game.');return;}
+ const ids=kind==='cross'?['c1','c2','c3','c4']:['s1','s2','s3','s4'];
+ const puzzle=ids[Math.floor(Math.random()*ids.length)];
+ current={kind,puzzle};
+ selected=[];found=[];started=Date.now();
+ $('playTitle').textContent=kind==='cross'?'🧩 Crossword':'🔎 Word Search';
  renderPuzzle();
- go("play");
+ show('play');
+ clearInterval(timer);
  tick();
- clearInterval(timerHandle);
- timerHandle=setInterval(tick,1000);
+ timer=setInterval(tick,1000);
 }
-function elapsed(){return Math.floor((Date.now()-started)/1000);}
-function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
-function tick(){$("clock").textContent=fmt(elapsed());}
-
-function renderCross(){
- const d=crossData[current.id];
- const map={};
- d.words.forEach(w=>w.cells.forEach(p=>map[p.join(",")]=true));
- crossInputs=[];
- let html='<div class="game-layout"><div class="panel"><div class="crossword">';
- for(let r=0;r<d.rows;r++){
-  for(let c=0;c<d.cols;c++){
-   if(map[r+","+c]){
-    const ix=crossInputs.length;
-    crossInputs.push({r,c});
-    html+=`<div class="cross-cell"><input maxlength="1" data-cell="${ix}" aria-label="Row ${r+1} column ${c+1}" oninput="this.value=this.value.toUpperCase()"></div>`;
-   }else{
-    html+='<div class="cross-cell block"></div>';
-   }
-  }
- }
- html+='</div><div class="actions" style="justify-content:center"><button class="btn" onclick="submitCross()">Submit crossword</button></div></div>';
- html+='<aside class="panel clues"><h3>Clues</h3>';
- d.words.forEach((w,i)=>html+=`<p><b>${i+1}.</b> ${w.clue}</p>`);
- html+='<p class="note">Fill in the intersecting letters. Each correct letter earns points.</p></aside></div>';
- $("playArea").innerHTML=html;
-}
-function submitCross(){
- const d=crossData[current.id];
- let correct=0;
- let total=d.words.reduce((n,w)=>n+w.word.length,0);
- const values=crossInputs.map((_,i)=>document.querySelector(`[data-cell="${i}"]`).value.toUpperCase());
- d.words.forEach(w=>{
-  w.cells.forEach((p,i)=>{
-   const ix=crossInputs.findIndex(x=>x.r===p[0]&&x.c===p[1]);
-   if(values[ix]===w.word[i])correct++;
-  });
- });
- finish(Math.round(correct/total*100),correct,total);
-}
-
-function renderSearch(){
- const d=searchData[current.id];
- let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first and last letters of each hidden word. The sample words run horizontally.</p><div class="wordgrid">';
- [...d.grid.join("")].forEach((ch,i)=>{
-  html+=`<button class="letter" data-letter="${i}" onclick="pickLetter(${i})">${ch}</button>`;
- });
- html+='</div><div class="actions" style="justify-content:center"><button class="btn" onclick="submitSearch()">Submit word search</button><button class="btn ghost" onclick="clearSelection()">Clear selection</button></div></div>';
- html+='<aside class="panel"><h3>Find these words</h3><div class="wordlist">';
- d.words.forEach(w=>html+=`<span class="word-chip" id="word-${w}">${w}</span>`);
- html+='</div><p class="note" style="margin-top:16px">Found words will turn green.</p></aside></div>';
- $("playArea").innerHTML=html;
-}
-function pickLetter(i){
- const d=searchData[current.id];
- const btn=document.querySelector(`[data-letter="${i}"]`);
- if(btn.classList.contains("found"))return;
- if(selected.length===0){
-  selected=[i];
-  btn.classList.add("selected");
-  return;
- }
- const a=selected[0],b=i;
- const start=Math.min(a,b),end=Math.max(a,b);
- const candidate=d.grid.join("").slice(start,end+1);
- const reverse=[...candidate].reverse().join("");
- const word=d.words.find(w=>!document.getElementById("word-"+w).classList.contains("done")&&(w===candidate||w===reverse));
- if(word){
-  for(let p=start;p<=end;p++){
-   const cell=document.querySelector(`[data-letter="${p}"]`);
-   cell.classList.remove("selected");
-   cell.classList.add("found");
-  }
-  document.getElementById("word-"+word).classList.add("done");
-  found.push(word);
-  selected=[];
- }else{
-  document.querySelectorAll(".letter.selected").forEach(x=>x.classList.remove("selected"));
-  selected=[i];
-  btn.classList.add("selected");
- }
-}
-function clearSelection(){
- selected=[];
- document.querySelectorAll(".letter.selected").forEach(x=>x.classList.remove("selected"));
-}
-function submitSearch(){
- const d=searchData[current.id];
- finish(Math.round(found.length/d.words.length*100),found.length,d.words.length);
+function tick(){
+ const seconds=Math.floor((Date.now()-started)/1000);
+ $('clock').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
 }
 function renderPuzzle(){
- if(current.kind==="cross")renderCross();
- else renderSearch();
+ if(current.kind==='cross')renderCross();else renderSearch();
 }
-function finish(score,got,total){
- clearInterval(timerHandle);
- const secs=elapsed();
- const status=score>=70?"WIN":"LOSE";
- const rec={
-  name:player.name,email:player.email,group:player.group,
-  game:current.name+" "+current.version,gameId:current.id,
-  kind:current.kind,score,time:secs,status,date:new Date().toISOString()
- };
- records.push(rec);
- persist();
- $("resultEmoji").textContent=status==="WIN"?"🏆":"💪";
- $("resultTitle").textContent=status==="WIN"?"You did it! You won!":"Good try! Keep practising.";
- $("resultScore").textContent=score+"/100";
- $("resultInfo").textContent=`${got} of ${total} correct · ${fmt(secs)} · ${status}`;
- go("result");
+let crossCells=[];
+function renderCross(){
+ const d=crossData[current.puzzle],active=new Set();
+ d.words.forEach(w=>w.cells.forEach(p=>active.add(p.join(','))));
+ crossCells=[];
+ let html='<div class="cards"><div><div class="cross">';
+ for(let r=0;r<d.rows;r++)for(let c=0;c<d.cols;c++){
+  if(active.has(r+','+c)){
+   const i=crossCells.length;crossCells.push({r,c});
+   html+=`<input maxlength="1" data-cross="${i}" aria-label="row ${r+1} column ${c+1}">`;
+  }else html+='<div style="width:40px;height:40px;background:#332b49;border-radius:5px"></div>';
+ }
+ html+='</div><button class="primary" onclick="submitCross()">Submit Crossword</button></div><div><h3>Clues</h3>';
+ html+=d.words.map((w,i)=>`<p><b>${i+1}.</b> ${w.clue}</p>`).join('');
+ html+='</div></div>';
+ $('playArea').innerHTML=html;
 }
-function renderLeaderboard(){
- const sorted=[...records].sort((a,b)=>b.score-a.score||a.time-b.time);
- $("leaderRows").innerHTML=sorted.map((r,i)=>`
- <tr><td><b>${i+1}</b></td><td>${esc(r.name)}</td><td>${esc(r.game)}</td><td><b>${r.score}</b></td><td>${fmt(r.time)}</td><td><span class="tag ${r.status==="LOSE"?"lose":""}">${r.status}</span></td></tr>
- `).join("");
- $("leaderEmpty").classList.toggle("hidden",sorted.length>0);
+async function submitCross(){
+ const d=crossData[current.puzzle];
+ let correct=0,total=d.words.reduce((n,w)=>n+w.word.length,0);
+ const values=crossCells.map((_,i)=>document.querySelector(`[data-cross="${i}"]`).value.toUpperCase());
+ d.words.forEach(w=>w.cells.forEach((p,i)=>{
+  const ix=crossCells.findIndex(x=>x.r===p[0]&&x.c===p[1]);
+  if(values[ix]===w.word[i])correct++;
+ }));
+ await finish(Math.round(correct/total*100),correct,total);
 }
-function renderAdmin(){
- $("adminPlayers").textContent=player?1:0;
- $("adminAttempts").textContent=records.length;
- $("adminWins").textContent=records.filter(r=>r.status==="WIN").length;
- $("adminRows").innerHTML=records.map(r=>`
- <tr><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td>${esc(r.group)}</td><td>${esc(r.game)}</td><td>${r.score}</td><td>${fmt(r.time)}</td><td>${r.status}</td><td>${new Date(r.date).toLocaleString()}</td></tr>
- `).join("");
+function renderSearch(){
+ const d=searchData[current.puzzle];
+ let html='<div class="cards"><div><p>Tap the first and last letters of each hidden word.</p><div class="grid">';
+ d.grid.join('').split('').forEach((ch,i)=>html+=`<button class="letter" id="letter-${i}" onclick="pickLetter(${i})">${ch}</button>`);
+ html+='</div><button class="primary" onclick="submitSearch()">Submit Word Search</button> <button onclick="clearPick()">Clear</button></div><div><h3>Find these words</h3><div class="words">';
+ d.words.forEach(w=>html+=`<span class="word" id="word-${w}">${w}</span>`);
+ html+='</div></div></div>';
+ $('playArea').innerHTML=html;
 }
-function exportCSV(){
- const rows=[
-  ["Player","Email","BD / OPU / Department","Game","Score","Time seconds","Status","Date"],
-  ...records.map(r=>[r.name,r.email,r.group,r.game,r.score,r.time,r.status,r.date])
- ];
- const csv=rows.map(row=>row.map(x=>'"'+String(x??"").replace(/"/g,'""')+'"').join(",")).join("\n");
- const a=document.createElement("a");
- a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
- a.download="GHSE-Games-Results.csv";
- a.click();
- URL.revokeObjectURL(a.href);
-}
-function resetDemo(){
- if(confirm("Clear this browser session's demo profile and results?")){
-  records=[];
-  player=null;
-  sessionStorage.removeItem("ws_records");
-  sessionStorage.removeItem("ws_player");
-  refreshHome();
-  renderProfile();
-  renderAdmin();
+function pickLetter(i){
+ const d=searchData[current.puzzle],flat=d.grid.join('');
+ if(selected.length===0){selected=[i];$('letter-'+i).classList.add('selected');return;}
+ const a=selected[0],start=Math.min(a,i),end=Math.max(a,i);
+ const candidate=flat.slice(start,end+1),reverse=candidate.split('').reverse().join('');
+ const word=d.words.find(w=>!found.includes(w)&&(w===candidate||w===reverse));
+ if(word){
+  for(let p=start;p<=end;p++)$('letter-'+p).classList.add('found');
+  $('word-'+word).classList.add('done');
+  found.push(word);selected=[];
+ }else{
+  clearPick();selected=[i];$('letter-'+i).classList.add('selected');
  }
 }
-load();
+function clearPick(){
+ selected=[];
+ document.querySelectorAll('.letter.selected').forEach(b=>b.classList.remove('selected'));
+}
+async function submitSearch(){
+ const d=searchData[current.puzzle];
+ await finish(Math.round(found.length/d.words.length*100),found.length,d.words.length);
+}
+
+async function finish(score,correct,total){
+ clearInterval(timer);
+ const seconds=Math.floor((Date.now()-started)/1000);
+ const status=score>=70?'WIN':'LOSE';
+ const gameId=current.kind==='cross'?'cross-easy':'search-easy';
+ const {data,error}=await db.rpc('submit_game_result',{
+  p_game_id:gameId,
+  p_game_category:current.kind,
+  p_score:score,
+  p_completion_seconds:seconds,
+  p_status:status
+ });
+ if(error){
+  alert('Could not save your result: '+error.message);
+  return;
+ }
+ $('resultTitle').textContent=status==='WIN'?'🏆 YOU WIN!':'💪 GOOD TRY!';
+ $('resultScore').textContent=score+'/100';
+ $('resultInfo').textContent=`${correct} of ${total} correct · ${seconds} seconds · ${status}`;
+ show('result');
+}
+
+async function loadLeaderboard(){
+ message('leaderMessage','Loading leaderboard...');
+ const {data,error}=await db.rpc('get_public_leaderboard');
+ if(error){message('leaderMessage','Leaderboard could not load. Please check the Supabase leaderboard function. '+error.message);return;}
+ $('leaderRows').innerHTML=(data||[]).map((r,i)=>`<tr><td>${i+1}</td><td>${escapeHTML(r.display_name)}</td><td>${r.game_category==='cross'?'Crossword':'Word Search'}</td><td>${r.score}</td><td>${r.completion_seconds}s</td><td>${r.status}</td></tr>`).join('');
+ message('leaderMessage',data?.length?'':'No results yet. Be the first to play!');
+}
+function escapeHTML(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function loadAdmin(){
+ const {data:{user:u}}=await db.auth.getUser();
+ if(!u){message('adminMessage','Please log in using the admin account first.');return;}
+ const {data:admin,error:adminError}=await db.from('admin_users').select('user_id').eq('user_id',u.id).maybeSingle();
+ if(adminError||!admin){message('adminMessage','Access denied. This account is not an authorised admin.');return;}
+ const {data,error}=await db.rpc('get_admin_results');
+ if(error){message('adminMessage','Could not load admin results: '+error.message);return;}
+ adminRecords=data||[];
+ $('adminRows').innerHTML=adminRecords.map(r=>`<tr><td>${escapeHTML(r.display_name)}</td><td>${escapeHTML(r.email)}</td><td>${r.game_category}</td><td>${r.score}</td><td>${r.completion_seconds}</td><td>${r.status}</td><td>${r.created_at}</td></tr>`).join('');
+ message('adminMessage',adminRecords.length+' records loaded.');
+}
+function exportCSV(){
+ if(!adminRecords.length){alert('Load admin records first.');return;}
+ const cols=['display_name','email','organisation','game_category','score','completion_seconds','status','created_at'];
+ const csv=[cols.join(','),...adminRecords.map(r=>cols.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(','))].join('\n');
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+ a.download='GHSE-Games-Results.csv';a.click();
+ URL.revokeObjectURL(a.href);
+}
+db.auth.onAuthStateChange(()=>refreshAccount());
+refreshAccount();
 </script>
 </body>
 </html>
