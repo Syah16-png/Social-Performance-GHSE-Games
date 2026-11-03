@@ -1,12 +1,291 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Performance GHSE Games</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social Performance GHSE Games</title>
+<style>
+:root{--purple:#6846e8;--yellow:#ffca55;--bg:#f5f2ff;--ink:#211a39}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--purple);color:white;padding:24px 5%}
+.top{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:20px}
+.brand span{color:var(--yellow)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button{border:0;border-radius:12px;padding:12px 16px;font-weight:bold;cursor:pointer}
+nav button{background:transparent;color:white}
+nav button:hover,nav button.active{background:#ffffff30}
+.hero{max-width:1100px;margin:45px auto 20px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.hero h1{font-size:48px;margin:10px 0}
+.hero p{line-height:1.6;max-width:600px}
+.hero-art{font-size:65px;background:#ffffff20;padding:30px;border-radius:25px}
+main{max-width:1100px;margin:auto;padding:30px 20px 60px}
+section{margin-bottom:25px}
+.hidden{display:none!important}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.card,.panel{background:white;border:1px solid #e9e3f7;border-radius:20px;padding:20px;box-shadow:0 8px 25px #29165b0b}
+.card{min-height:210px;display:flex;flex-direction:column}
+.card .emoji{font-size:38px}
+.card p{color:#746e86;line-height:1.5;flex:1}
+.pill{display:inline-block;background:#f0ebff;color:#6846e8;border-radius:30px;padding:6px 10px;font-size:11px;font-weight:bold}
+.btn{background:var(--purple);color:white}
+.btn.yellow{background:var(--yellow);color:#302000}
+.btn.light{background:#f0ebff;color:#5032bd}
+.field{margin-bottom:15px}
+label{display:block;font-weight:bold;font-size:13px;margin-bottom:7px}
+input{width:100%;padding:13px;border:1px solid #dcd4ee;border-radius:10px;font:inherit}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.stat{background:white;padding:18px;border-radius:16px}
+.stat strong{display:block;font-size:28px}
+.muted{color:#746e86}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px;border-bottom:1px solid #eee9f5}
+.table-wrap{overflow:auto}
+.game-layout{display:grid;grid-template-columns:1fr 280px;gap:15px}
+.crossword{display:grid;grid-template-columns:repeat(7,40px);gap:3px;justify-content:center;margin:20px auto}
+.cell{height:40px;background:#332b49}
+.cell input{height:40px;text-align:center;text-transform:uppercase;font-weight:bold;padding:0}
+.wordgrid{display:grid;grid-template-columns:repeat(10,35px);gap:4px;justify-content:center;margin:20px auto}
+.letter{padding:0;height:35px;background:#f0ebff;color:#302000}
+.letter.selected{background:var(--yellow)}
+.letter.found{background:#b9efcc}
+.word-chip{display:inline-block;padding:7px 10px;background:#f0ebff;border-radius:20px;margin:4px}
+.word-chip.done{text-decoration:line-through;background:#b9efcc}
+.timer{font-weight:bold;color:var(--purple)}
+.result{text-align:center;padding:30px}
+.result .big{font-size:55px}
+footer{text-align:center;padding:25px;color:#746e86}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,1fr)}.game-layout{grid-template-columns:1fr}.hero-art{display:none}}
+@media(max-width:550px){.cards{grid-template-columns:1fr}.hero h1{font-size:36px}.stats{grid-template-columns:1fr 1fr}.crossword{grid-template-columns:repeat(7, minmax(30px,1fr))}.wordgrid{grid-template-columns:repeat(10,minmax(22px,1fr))}}
+</style>
 </head>
 <body>
-  <h1>Welcome to Social Performance GHSE Games!</h1>
-  <p>Your online word-game competition is coming soon.</p>
+<header>
+<div class="top">
+<div class="brand">SOCIAL PERFORMANCE <span>GHSE GAMES</span> ✦</div>
+<nav>
+<button class="active" data-page="home">Home</button>
+<button data-page="register">Register</button>
+<button data-page="games">Games</button>
+<button data-page="leaderboard">Leaderboard</button>
+<button data-page="admin">Admin</button>
+</nav>
+</div>
+<div class="hero">
+<div>
+<div class="pill">PLAY • THINK • WIN</div>
+<h1>Ready to make your words count?</h1>
+<p>Challenge yourself with four exciting word games. Complete the puzzles, beat the clock and climb the leaderboard!</p>
+<button class="btn yellow" onclick="go('games')">Explore games ↓</button>
+</div>
+<div class="hero-art">🧩 🔤 🏆</div>
+</div>
+</header>
+
+<main>
+<section id="home">
+<h2>Welcome to GHSE Games!</h2>
+<p class="muted">Choose your challenge. Each player has one attempt per game in the competition rules.</p>
+<div class="cards" id="homeCards"></div>
+<div class="stats">
+<div class="stat"><strong id="playerCount">0</strong><span>Demo players</span></div>
+<div class="stat"><strong id="attemptCount">0</strong><span>Games completed</span></div>
+<div class="stat"><strong id="winCount">0</strong><span>Wins</span></div>
+</div>
+</section>
+
+<section id="register" class="hidden">
+<div class="panel">
+<h2>Player Registration</h2>
+<form id="registerForm">
+<div class="field"><label>Display name</label><input id="name" required maxlength="30" placeholder="Your player name"></div>
+<div class="field"><label>Email address</label><input id="email" type="email" required placeholder="you@example.com"></div>
+<div class="field"><label>Organisation / Department</label><input id="organisation" placeholder="Your organisation"></div>
+<button class="btn">Register</button>
+</form>
+<p id="profile" class="muted">No player registered on this browser.</p>
+</div>
+</section>
+
+<section id="games" class="hidden">
+<h2>Choose Your Game</h2>
+<p id="greeting" class="muted">Please register before playing.</p>
+<div class="cards" id="gameCards"></div>
+</section>
+
+<section id="play" class="hidden">
+<div class="panel">
+<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<div><h2 id="gameTitle">Your game</h2><p id="gameDescription" class="muted"></p></div>
+<div class="timer">⏱ <span id="timer">00:00</span></div>
+</div>
+<div id="gameArea"></div>
+</div>
+</section>
+
+<section id="result" class="hidden">
+<div class="panel result">
+<div class="big" id="resultEmoji">🏆</div>
+<h2 id="resultHeading">Your result</h2>
+<div style="font-size:48px;font-weight:900" id="score">0/100</div>
+<p id="resultDetails" class="muted"></p>
+<button class="btn" onclick="go('games')">Back to games</button>
+<button class="btn light" onclick="go('leaderboard')">Leaderboard</button>
+</div>
+</section>
+
+<section id="leaderboard" class="hidden">
+<h2>🏆 Leaderboard</h2>
+<div class="panel table-wrap">
+<table>
+<thead><tr><th>Rank</th><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th></tr></thead>
+<tbody id="leaderRows"></tbody>
+</table>
+<p id="emptyLeaderboard" class="muted">No games completed yet.</p>
+</div>
+</section>
+
+<section id="admin" class="hidden">
+<h2>Admin Dashboard – Demo</h2>
+<p class="muted">This is a local demonstration only. It is not password-protected or connected to the shared database yet.</p>
+<div class="stats">
+<div class="stat"><strong id="adminPlayers">0</strong>Players</div>
+<div class="stat"><strong id="adminAttempts">0</strong>Attempts</div>
+<div class="stat"><strong id="adminWins">0</strong>Wins</div>
+</div>
+<div class="panel">
+<button class="btn" onclick="exportCSV()">Export CSV results</button>
+<div class="table-wrap">
+<table><thead><tr><th>Player</th><th>Game</th><th>Score</th><th>Time</th><th>Status</th></tr></thead>
+<tbody id="adminRows"></tbody></table>
+</div>
+</div>
+</section>
+</main>
+<footer>SOCIAL PERFORMANCE GHSE GAMES • PLAY • THINK • WIN</footer>
+
+<script>
+const games=[
+{id:'cross-easy',name:'Crossword',level:'Easy',emoji:'🧩',kind:'cross',description:'Complete the easy crossword.'},
+{id:'cross-hard',name:'Crossword',level:'Hard',emoji:'🧠',kind:'cross',description:'Try the challenging crossword.'},
+{id:'search-easy',name:'Word Search',level:'Easy',emoji:'🔎',kind:'search',description:'Find hidden everyday words.'},
+{id:'search-hard',name:'Word Search',level:'Hard',emoji:'⚡',kind:'search',description:'Find longer hidden words.'}
+];
+let player=null,records=[],current=null,startTime=0,timerInterval=null,found=[],selected=[];
+const el=id=>document.getElementById(id);
+function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function go(page){
+document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));
+el(page).classList.remove('hidden');
+document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+if(page==='games')renderGames();
+if(page==='leaderboard')renderLeaderboard();
+if(page==='admin')renderAdmin();
+window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+function cardsHTML(){return games.map(g=>`<div class="card"><div class="emoji">${g.emoji}</div><span class="pill">${g.level} MODE</span><h3>${g.name}</h3><p>${g.description}</p><button class="btn" onclick="startGame('${g.id}')">Play now</button></div>`).join('');}
+function renderGames(){
+el('gameCards').innerHTML=cardsHTML();
+el('greeting').textContent=player?'Good luck, '+player.name+'!':'Please register before playing.';
+}
+el('homeCards').innerHTML=cardsHTML();
+el('registerForm').onsubmit=e=>{
+e.preventDefault();
+player={name:el('name').value.trim(),email:el('email').value.trim(),organisation:el('organisation').value.trim()};
+localStorage.setItem('ghse_demo_player',JSON.stringify(player));
+el('profile').textContent='Registered demo player: '+player.name;
+go('games');
+};
+function load(){
+try{player=JSON.parse(localStorage.getItem('ghse_demo_player')||'null');records=JSON.parse(localStorage.getItem('ghse_demo_records')||'[]');}catch(e){player=null;records=[];}
+if(player){el('profile').textContent='Registered demo player: '+player.name;el('name').value=player.name;el('email').value=player.email;el('organisation').value=player.organisation||'';}
+refreshStats();
+}
+function save(){localStorage.setItem('ghse_demo_records',JSON.stringify(records));refreshStats();}
+function refreshStats(){
+el('playerCount').textContent=player?1:0;
+el('attemptCount').textContent=records.length;
+el('winCount').textContent=records.filter(r=>r.status==='WIN').length;
+}
+function formatTime(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function elapsed(){return Math.floor((Date.now()-startTime)/1000);}
+function tick(){el('timer').textContent=formatTime(elapsed());}
+function startGame(id){
+if(!player){alert('Please register first.');go('register');return;}
+if(records.some(r=>r.gameId===id)){alert('You have already completed this game on this browser.');return;}
+current=games.find(g=>g.id===id);found=[];selected=[];startTime=Date.now();
+el('gameTitle').textContent=current.name+' – '+current.level;
+el('gameDescription').textContent=current.description;
+renderPuzzle();go('play');clearInterval(timerInterval);tick();timerInterval=setInterval(tick,1000);
+}
+const searchPuzzles={
+'search-easy':{rows:['CATSUNBIRD','AORANGEPLM','TIGERFISHX','DOGTREEQRS','MOONSTARAB','PENCILBOOK','HAPPYSMILE','FLOWERCAKE','GRAPEBERRY','CLOUDRAINY'],words:['CAT','SUN','BIRD','ORANGE','TIGER','FISH','DOG','TREE']},
+'search-hard':{rows:['ASTRONOMYQ','PLANETXSTAR','GALAXYNEBU','COMETORBIT','TELESCOPEZ','GRAVITYMOON','SATELLITEQX','UNIVERSEAB','METEORSHWR','COSMICDUST'],words:['ASTRONOMY','PLANET','GALAXY','NEBULA','COMET','ORBIT','TELESCOPE','GRAVITY','MOON','SATELLITE','UNIVERSE','METEOR']}
+};
+const crosswordPuzzles={
+'cross-easy':{words:['APPLE','PEAR','ACID'],clues:['A crunchy fruit','A green or yellow fruit','A sour substance']},
+'cross-hard':{words:['PLANET','NEBULA','ORBIT'],clues:['A celestial body','A cloud of gas and dust','A path around a celestial body']}
+};
+function renderPuzzle(){
+if(current.kind==='search'){
+const d=searchPuzzles[current.id];
+el('gameArea').innerHTML=`<p class="muted">Find the words running left-to-right. Select the first and last letter.</p><div class="wordgrid">${d.rows.join('').split('').map((c,i)=>`<button class="letter" data-i="${i}" onclick="pick(${i})">${c}</button>`).join('')}</div><h3>Words to find</h3><div>${d.words.map(w=>`<span class="word-chip" id="word-${w}">${w}</span>`).join('')}</div><br><button class="btn" onclick="submitSearch()">Submit answers</button>`;
+}else{
+const d=crosswordPuzzles[current.id];
+el('gameArea').innerHTML=`<p>Enter the answer words below. Each word is checked separately.</p>${d.words.map((w,i)=>`<div class="field"><label>${d.clues[i]}</label><input id="cw-${i}" maxlength="${w.length}" placeholder="${w.length} letters"></div>`).join('')}<button class="btn" onclick="submitCross()">Submit crossword</button>`;
+}
+}
+function pick(i){
+if(selected.length===0){selected=[i];document.querySelector(`[data-i="${i}"]`).classList.add('selected');return;}
+const a=selected[0],b=i,start=Math.min(a,b),end=Math.max(a,b);
+const text=searchPuzzles[current.id].rows.join('').slice(start,end+1);
+const reverse=[...text].reverse().join('');
+const word=searchPuzzles[current.id].words.find(w=>!found.includes(w)&&(w===text||w===reverse));
+if(word){
+found.push(word);
+for(let n=start;n<=end;n++)document.querySelector(`[data-i="${n}"]`).classList.add('found');
+el('word-'+word).classList.add('done');
+}
+document.querySelectorAll('.letter.selected').forEach(x=>x.classList.remove('selected'));
+selected=[];
+}
+function submitSearch(){const words=searchPuzzles[current.id].words;finish(Math.round(found.length/words.length*100),found.length,words.length);}
+function submitCross(){
+const words=crosswordPuzzles[current.id].words;
+let correct=0;
+words.forEach((w,i)=>{if(el('cw-'+i).value.trim().toUpperCase()===w)correct++;});
+finish(Math.round(correct/words.length*100),correct,words.length);
+}
+function finish(score,correct,total){
+clearInterval(timerInterval);
+const seconds=elapsed(),status=score>=70?'WIN':'LOSE';
+records.push({player:player.name,game:current.name+' '+current.level,gameId:current.id,score,time:seconds,status,date:new Date().toISOString()});
+save();
+el('resultEmoji').textContent=status==='WIN'?'🏆':'💪';
+el('resultHeading').textContent=status==='WIN'?'Congratulations!':'Good try!';
+el('score').textContent=score+'/100';
+el('resultDetails').textContent=correct+' of '+total+' correct • '+formatTime(seconds)+' • '+status;
+go('result');
+}
+function renderLeaderboard(){
+const sorted=[...records].sort((a,b)=>b.score-a.score||a.time-b.time);
+el('leaderRows').innerHTML=sorted.map((r,i)=>`<tr><td>${i+1}</td><td>${safe(r.player)}</td><td>${safe(r.game)}</td><td>${r.score}</td><td>${formatTime(r.time)}</td><td>${r.status}</td></tr>`).join('');
+el('emptyLeaderboard').classList.toggle('hidden',sorted.length>0);
+}
+function renderAdmin(){
+el('adminPlayers').textContent=player?1:0;
+el('adminAttempts').textContent=records.length;
+el('adminWins').textContent=records.filter(r=>r.status==='WIN').length;
+el('adminRows').innerHTML=records.map(r=>`<tr><td>${safe(r.player)}</td><td>${safe(r.game)}</td><td>${r.score}</td><td>${formatTime(r.time)}</td><td>${r.status}</td></tr>`).join('');
+}
+function exportCSV(){
+const rows=[['Player','Game','Score','Time seconds','Status','Date'],...records.map(r=>[r.player,r.game,r.score,r.time,r.status,r.date])];
+const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='GHSE-Games-Results.csv';a.click();URL.revokeObjectURL(a.href);
+}
+load();
+</script>
 </body>
 </html>
