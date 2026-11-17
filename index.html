@@ -55,13 +55,24 @@ footer{text-align:center;color:#66748a;padding:25px;font-size:12px}
 </section>
 
 <section id="register" class="hidden">
-<div class="panel"><div class="kicker">PLAYER PROFILE</div><h2>Player details</h2><p class="muted">Create a player account or sign in. Your email is used for account access and is not shown publicly.</p>
-<div class="clue"><label for="player">Display name</label><input id="player" placeholder="Enter your display name"></div>
-<div class="clue"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="name@example.com"></div>
-<div class="clue"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters"></div>
-<div class="clue"><label for="department">BD / OPU / Department</label><input id="department" placeholder="Enter your department"></div>
-<div class="row"><button class="btn green" onclick="registerPlayer()">CREATE ACCOUNT</button><button class="btn" onclick="loginPlayer()">LOG IN</button><button class="btn outline" onclick="logoutPlayer()">LOG OUT</button></div>
-<p id="profileMsg" class="muted"></p><p id="sessionStatus" class="notice">Checking account status…</p></div>
+<div class="panel">
+ <div class="kicker">PLAYER PROFILE</div><h2>Player details</h2>
+ <p class="muted">Players can register without a password or email verification. Administrator access requires a secure email sign-in link.</p>
+ <div class="clue"><label for="player">Display name</label><input id="player" placeholder="Enter your display name"></div>
+ <div class="clue"><label for="email">Email address (for competition records)</label><input id="email" type="email" autocomplete="email" autocapitalize="none" placeholder="name@example.com"></div>
+ <div class="clue"><label for="department">BD / OPU / Department</label><input id="department" placeholder="Enter your department"></div>
+ <div class="row">
+  <button class="btn green" onclick="registerPlayer()">CONTINUE AS PLAYER</button>
+  <button class="btn outline" onclick="logoutPlayer()">LOG OUT</button>
+ </div>
+ <p id="profileMsg" class="muted"></p>
+ <div class="panel" style="margin-top:18px;border-color:var(--purple)">
+  <div class="kicker">ADMINISTRATOR ONLY</div><h3>Administrator sign-in</h3>
+  <p class="muted">Only the authorised administrator email can request an access link.</p>
+  <button class="btn purple" onclick="adminSignIn()">SEND ADMIN SIGN-IN LINK</button>
+ </div>
+ <p id="sessionStatus" class="notice">Checking account status…</p>
+</div>
 </section>
 
 <section id="games" class="hidden">
@@ -145,31 +156,59 @@ ultimate:['JUSTTRANSITION','INDIGENOUS','HUMANRIGHTS','REGULATIONS','ENGAGEMENT'
 function show(page){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));$(''+page).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
 async function registerPlayer(){
- player=$('player').value.trim();email=$('email').value.trim();dept=$('department').value.trim();const password=$('password').value;
- if(!player||!email||!/^\S+@\S+\.\S+$/.test(email)||password.length<8){$('profileMsg').textContent='Enter your name, a valid email, department and password of at least 8 characters.';return}
- $('profileMsg').textContent='Creating your account…';
- const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{display_name:player,organisation:dept}}});
- if(error){$('profileMsg').textContent=error.message;return}
- localStorage.setItem('ghse_player',player);localStorage.setItem('ghse_dept',dept);
- if(data.session){currentUser=data.user;await savePlayerProfile();$('profileMsg').textContent='Account created and signed in. You can continue to the games.'}
- else{$('profileMsg').textContent='Registration submitted. Check your email for the confirmation link, then return here and log in.'}
+ player=$('player').value.trim();
+ email=normalizedEmail();
+ dept=$('department').value.trim();
+ if(!player || !dept){
+  $('profileMsg').textContent='Please enter your display name and BD / OPU / Department.';
+  return;
+ }
+ if(email && !/^\S+@\S+\.\S+$/.test(email)){
+  $('profileMsg').textContent='Please enter a valid email address or leave it blank.';
+  return;
+ }
+ $('profileMsg').textContent='Creating your player session…';
+ let {data,error}=await supabaseClient.auth.getSession();
+ if(!data.session){
+  const anon=await supabaseClient.auth.signInAnonymously();
+  if(anon.error){
+   $('profileMsg').textContent='Player registration failed: '+anon.error.message+'. Enable Anonymous Sign-Ins in Supabase Authentication settings.';
+   return;
+  }
+  currentUser=anon.data.user;
+ }else currentUser=data.session.user;
+ localStorage.setItem('ghse_player',player);
+ localStorage.setItem('ghse_dept',dept);
+ localStorage.setItem('ghse_email',email);
+ const saved=await savePlayerProfile();
+ if(!saved){
+  $('profileMsg').textContent='Your session started, but your player profile could not be saved. Check the players table permissions.';
+  return;
+ }
+ $('profileMsg').textContent='Player registration complete. You can now play without a password or email verification.';
  await refreshAuth();
 }
 async function loginPlayer(){
- email=normalizedEmail();const password=$('password').value;
- if(!email||!password){$('profileMsg').textContent='Enter your email and password.';return}
- $('profileMsg').textContent='Signing in…';
- const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
- if(error){$('profileMsg').textContent=error.message;return}
- currentUser=data.user;player=$('player').value.trim()||data.user.user_metadata?.display_name||'Player';dept=$('department').value.trim()||data.user.user_metadata?.organisation||'';
- localStorage.setItem('ghse_player',player);localStorage.setItem('ghse_dept',dept);
- const saved=await savePlayerProfile();
- $('profileMsg').textContent=saved?'Welcome back, '+player+'.':'Signed in, but profile could not be saved. Check your players table policies.';
- await refreshAuth();
+ $('profileMsg').textContent='Player access does not require a separate login. Click CONTINUE AS PLAYER.';
+}
+async function adminSignIn(){
+ const address=normalizedEmail();
+ if(address!=='nursyahirah1979@gmail.com'){
+  $('profileMsg').textContent='Admin access is restricted to the authorised administrator email.';
+  return;
+ }
+ $('profileMsg').textContent='Sending administrator sign-in link…';
+ const {error}=await supabaseClient.auth.signInWithOtp({
+  email:address,
+  options:{shouldCreateUser:false,emailRedirectTo:window.location.origin+window.location.pathname}
+ });
+ $('profileMsg').textContent=error
+  ? 'Admin sign-in could not be sent: '+error.message
+  : 'Administrator sign-in link sent. Open the email on this device to complete admin sign-in.';
 }
 async function savePlayerProfile(){
  if(!currentUser)return false;
- const {error}=await supabaseClient.from('players').upsert({id:currentUser.id,display_name:player,organisation:dept},{onConflict:'id'});
+ const {error}=await supabaseClient.from('players').upsert({id:currentUser.id,display_name:player,organisation:dept,email:localStorage.getItem('ghse_email')||''},{onConflict:'id'});
  if(error){console.error(error);return false}return true;
 }
 async function logoutPlayer(){
@@ -179,12 +218,12 @@ async function logoutPlayer(){
 }
 async function refreshAuth(){
  const {data:{user}}=await supabaseClient.auth.getUser();currentUser=user||null;
- $('sessionStatus').textContent=currentUser?'Signed in as '+(currentUser.email||'player')+'. Your player profile is connected to Supabase.':'Not signed in. Create an account or log in before playing.';
+ $('sessionStatus').textContent=currentUser?(currentUser.is_anonymous?'Player session active. No password or email verification required.':'Signed in as '+(currentUser.email||'user')+'.'):'Not signed in. Continue as a player to play.';
  if(currentUser){
-  $('email').value=(currentUser.email||'').toLowerCase();
+  $('email').value=(currentUser.email||localStorage.getItem('ghse_email')||'').toLowerCase();
   $('player').value=player||currentUser.user_metadata?.display_name||'';
   $('department').value=dept||currentUser.user_metadata?.organisation||'';
-  const adminCheck = await supabaseClient.rpc('get_admin_results');
+  const adminCheck = currentUser.email==='nursyahirah1979@gmail.com' ? await supabaseClient.rpc('get_admin_results') : {error:true};
   $('adminNav').classList.toggle('hidden', !!adminCheck.error);
  } else {
   $('adminNav').classList.add('hidden');
@@ -255,7 +294,6 @@ function renderCross(){
 }
 function norm(s){return String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
 function normalizedEmail(){return $('email').value.trim().toLowerCase()}
-function togglePassword(){const field=$('password'),button=event.currentTarget;const show=field.type==='password';field.type=show?'text':'password';button.textContent=show?'HIDE':'SHOW'}
 function submitCross(){let b=window.crossBoard,answers={};b.placed.forEach(w=>{let value='';for(let k=0;k<w.answer.length;k++){let r=w.r+w.dr*k,c=w.c+w.dc*k;value+=($('C'+r+'_'+c)?.value||'')}answers[String(w.id)]=norm(value)});finish({answers,total:b.placed.length})}
 function makeGrid(words){const N=18,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[],dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];for(const word of [...words].sort((a,b)=>b.length-a.length)){let options=[];for(let tries=0;tries<1800;tries++){let [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)],r=Math.floor(Math.random()*N),c=Math.floor(Math.random()*N),er=r+dr*(word.length-1),ec=c+dc*(word.length-1);if(er<0||ec<0||er>=N||ec>=N)continue;let ok=true;for(let k=0;k<word.length;k++){let ch=grid[r+dr*k][c+dc*k];if(ch&&ch!==word[k]){ok=false;break}}if(ok){options.push({r,c,dr,dc});if(options.length>8)break}}if(!options.length)continue;let p=options[Math.floor(Math.random()*options.length)];for(let k=0;k<word.length;k++)grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];placements.push({word,cells:Array.from({length:word.length},(_,k)=>(p.r+p.dr*k)*N+p.c+p.dc*k)})}const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];return{grid,placements,N}}
 function renderWordSearch(){let words=wordsets[active.version];wordPuzzle=makeGrid(words);let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first letter, then the last letter of a hidden word. Words may run horizontally, vertically or diagonally (slanted), forwards or backwards.</p><div class="letter-grid">';wordPuzzle.grid.flat().forEach((ch,i)=>html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`);html+='</div><div class="row" style="justify-content:center"><button class="btn green" onclick="clearPick()">CLEAR SELECTION</button><button class="btn" onclick="finishWordSearch()">SUBMIT FOUND WORDS</button></div></div><aside class="panel"><div class="kicker">WORDS TO FIND</div><h3>'+(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt')+'</h3><div class="wordbank">'+words.map(w=>`<span class="wordtag" id="W${w}">${w}</span>`).join('')+'</div><p class="muted" style="margin-top:15px"><b id="foundCount">0</b> / ${words.length} found</p></aside></div>';$('gameArea').innerHTML=html}
@@ -332,8 +370,19 @@ show = function(page){
  if(page==='admin') loadAdminResults();
 };
 
+
 setupPlayer();
-supabaseClient.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;refreshAuth();if(!currentUser){$('adminNav').classList.add('hidden');adminResults=[];}});
+supabaseClient.auth.onAuthStateChange((_event,session)=>{
+ currentUser=session?.user||null;
+ if(currentUser){
+  player=player||currentUser.user_metadata?.display_name||'Player';
+  dept=dept||currentUser.user_metadata?.organisation||'';
+  localStorage.setItem('ghse_player',player);
+  localStorage.setItem('ghse_dept',dept);
+ }
+ refreshAuth();
+ if(!currentUser){$('adminNav').classList.add('hidden');adminResults=[];}
+});
 </script>
 </body>
 </html>
