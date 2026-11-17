@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,30 +11,71 @@
 <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@300;500;700;900&family=Nunito+Sans:wght@300;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--emerald:#00A499;--white:#FFFFFF;--blue:#20419A;--purple:#763F98;--yellow:#FDB924;--lime:#BFD730;--ink:#18243b;--pale:#e8f5f3;--line:#c9d9d7;--font:'Nunito Sans',Arial,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font-family:var(--font)}button,input{font:inherit}button{cursor:pointer}#email{text-transform:none!important}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pale);color:var(--ink);font-family:var(--font)}
+button,input{font:inherit}
+button{cursor:pointer}
+#email{text-transform:none!important}
 .topbar{background:var(--emerald);color:#fff;padding:22px 5vw 18px;border-bottom:8px solid var(--yellow)}
 .top-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.brand{font-size:clamp(19px,3vw,29px);font-weight:900;letter-spacing:.02em;line-height:1.05}.brand small{display:block;font-size:11px;letter-spacing:.22em;font-weight:700;margin-top:8px}
-nav{display:flex;gap:8px;flex-wrap:wrap}nav button{border:1px solid #ffffff70;background:#ffffff18;color:white;border-radius:999px;padding:10px 16px;font-weight:900}nav button:hover,nav button.active{background:#fff;color:var(--emerald)}
+.brand{font-size:clamp(19px,3vw,29px);font-weight:900;letter-spacing:.02em;line-height:1.05}
+.brand small{display:block;font-size:11px;letter-spacing:.22em;font-weight:700;margin-top:8px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav button{border:1px solid #ffffff70;background:#ffffff18;color:white;border-radius:999px;padding:10px 16px;font-weight:900}
+nav button:hover,nav button.active{background:#fff;color:var(--emerald)}
 main{max-width:1180px;margin:28px auto;padding:0 20px 50px}
 .hero{background:#fff;border:3px solid var(--emerald);border-radius:34px;padding:clamp(24px,5vw,58px);display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;position:relative;overflow:hidden}
-.hero:after{content:"✦";position:absolute;right:20px;bottom:-55px;font-size:190px;color:#e6f3f1;z-index:0}.hero-copy,.hero-art{position:relative;z-index:1}
+.hero:after{content:"✦";position:absolute;right:20px;bottom:-55px;font-size:190px;color:#e6f3f1;z-index:0}
+.hero-copy,.hero-art{position:relative;z-index:1}
 .kicker{color:var(--purple);font-size:12px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
-h1,h2,h3{font-family:'Nunito Sans',var(--font);margin:0 0 12px}h1{font-size:clamp(36px,5vw,62px);line-height:1.02;font-weight:900;color:var(--blue)}h2{font-size:clamp(25px,3vw,34px);color:var(--blue)}h3{font-size:21px;color:var(--blue)}
-p{line-height:1.6}.hero p{max-width:600px;color:#4d5b70}
-.hero-art{background:var(--blue);border-radius:26px;padding:28px;text-align:center;color:#fff;box-shadow:10px 10px 0 var(--yellow)}.hero-art .symbols{font-size:64px;letter-spacing:8px}.hero-art strong{display:block;font-size:16px;letter-spacing:.13em;margin-top:12px}
-.btn{border:0;border-radius:12px;padding:12px 19px;font-weight:900;background:var(--blue);color:#fff}.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.btn.yellow{background:var(--yellow);color:#302000}.btn.green{background:var(--emerald)}.btn.purple{background:var(--purple)}.btn.outline{background:#fff;color:var(--blue);border:2px solid var(--blue)}
-.section{margin-top:28px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px;flex-wrap:wrap}
+h1,h2,h3{font-family:'Nunito Sans',var(--font);margin:0 0 12px}
+h1{font-size:clamp(36px,5vw,62px);line-height:1.02;font-weight:900;color:var(--blue)}
+h2{font-size:clamp(25px,3vw,34px);color:var(--blue)}
+h3{font-size:21px;color:var(--blue)}
+p{line-height:1.6}
+.hero p{max-width:600px;color:#4d5b70}
+.hero-art{background:var(--blue);border-radius:26px;padding:28px;text-align:center;color:#fff;box-shadow:10px 10px 0 var(--yellow)}
+.hero-art .symbols{font-size:64px;letter-spacing:8px}
+.hero-art strong{display:block;font-size:16px;letter-spacing:.13em;margin-top:12px}
+.btn{border:0;border-radius:12px;padding:12px 19px;font-weight:900;background:var(--blue);color:#fff}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn.yellow{background:var(--yellow);color:#302000}
+.btn.green{background:var(--emerald)}
+.btn.purple{background:var(--purple)}
+.btn.outline{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+.section{margin-top:28px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px;flex-wrap:wrap}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .game-card{background:#fff;border:2px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;min-height:235px;box-shadow:0 8px 22px #20419a10}
-.game-card .emoji{font-size:40px}.game-card p{color:#58677c;flex:1}.chip{display:inline-block;background:#e8f5f3;color:#007c73;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:900;letter-spacing:.08em;align-self:flex-start;margin:10px 0}
-.panel{background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px}.hidden{display:none!important}
+.game-card .emoji{font-size:40px}
+.game-card p{color:#58677c;flex:1}
+.chip{display:inline-block;background:#e8f5f3;color:#007c73;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:900;letter-spacing:.08em;align-self:flex-start;margin:10px 0}
+.panel{background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px}
+.hidden{display:none!important}
 .notice{background:#fff8e7;border-left:5px solid var(--yellow);padding:12px 15px;border-radius:8px;color:#57431a;font-size:13px}
-.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px}.gamebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}.timer{font-size:19px;font-weight:900;color:var(--purple);font-variant-numeric:tabular-nums}
-.clue-list{display:grid;gap:10px}.clue{border:1px solid var(--emerald);border-radius:10px;padding:11px}.clue label{display:block;font-size:13px;font-weight:900;margin-bottom:7px}.clue input{width:100%;padding:10px;border:1px solid #b8c9c7;border-radius:8px;text-transform:uppercase}
-.wordbank{display:flex;gap:7px;flex-wrap:wrap}.wordtag{border-radius:99px;background:#e9eef9;color:var(--blue);font-size:12px;font-weight:900;padding:7px 10px}.wordtag.found{background:#dcf4e5;color:#167143;text-decoration:line-through}
-.letter-grid{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));gap:3px;max-width:680px;margin:18px auto}.cross-grid{display:grid;gap:2px;justify-content:center;margin:18px auto;overflow-x:auto}.cross-cell{position:relative;aspect-ratio:1;min-width:18px;max-width:34px;background:#fff;border:1px solid #aebbc9}.cross-cell.block{background:#25344b;border-color:#25344b}.cross-cell input{width:100%;height:100%;border:0;background:transparent;text-align:center;text-transform:uppercase;font-weight:900;font-size:clamp(10px,1.5vw,16px);padding:0;color:#17243a}.cross-cell .num{position:absolute;top:1px;left:2px;font-size:8px;color:#64748b;pointer-events:none}.letter{aspect-ratio:1;border:1px solid #c6d3e7;border-radius:5px;background:#f5f7fc;color:var(--blue);font-weight:900;padding:0;font-size:clamp(10px,1.8vw,16px)}.letter.pick{background:var(--yellow);color:#222}.letter.hit{background:#c9efd5;color:#176a3c}
-.result{text-align:center;padding:35px}.score{font-size:58px;font-weight:900;color:var(--purple)}.muted{color:#66748a}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px}
+.gamebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+.timer{font-size:19px;font-weight:900;color:var(--purple);font-variant-numeric:tabular-nums}
+.clue-list{display:grid;gap:10px}
+.clue{border:1px solid var(--emerald);border-radius:10px;padding:11px}
+.clue label{display:block;font-size:13px;font-weight:900;margin-bottom:7px}
+.clue input{width:100%;padding:10px;border:1px solid #b8c9c7;border-radius:8px;text-transform:uppercase}
+.wordbank{display:flex;gap:7px;flex-wrap:wrap}
+.wordtag{border-radius:99px;background:#e9eef9;color:var(--blue);font-size:12px;font-weight:900;padding:7px 10px}
+.wordtag.found{background:#dcf4e5;color:#167143;text-decoration:line-through}
+.letter-grid{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));gap:3px;max-width:680px;margin:18px auto}
+.cross-grid{display:grid;gap:2px;justify-content:center;margin:18px auto;overflow-x:auto}
+.cross-cell{position:relative;aspect-ratio:1;min-width:18px;max-width:34px;background:#fff;border:1px solid #aebbc9}
+.cross-cell.block{background:#25344b;border-color:#25344b}
+.cross-cell input{width:100%;height:100%;border:0;background:transparent;text-align:center;text-transform:uppercase;font-weight:900;font-size:clamp(10px,1.5vw,16px);padding:0;color:#17243a}
+.cross-cell .num{position:absolute;top:1px;left:2px;font-size:8px;color:#64748b;pointer-events:none}
+.letter{aspect-ratio:1;border:1px solid #c6d3e7;border-radius:5px;background:#f5f7fc;color:var(--blue);font-weight:900;padding:0;font-size:clamp(10px,1.8vw,16px)}
+.letter.pick{background:var(--yellow);color:#222}
+.letter.hit{background:#c9efd5;color:#176a3c}
+.result{text-align:center;padding:35px}
+.score{font-size:58px;font-weight:900;color:var(--purple)}
+.muted{color:#66748a}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 footer{text-align:center;color:#66748a;padding:25px;font-size:12px}
 @media(max-width:800px){.hero{grid-template-columns:1fr}.hero-art{display:none}.game-layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
 @media(max-width:480px){main{padding:0 12px 35px}.letter-grid{gap:2px}.letter{border-radius:3px}.panel{padding:15px}}
@@ -80,55 +122,76 @@ footer{text-align:center;color:#66748a;padding:25px;font-size:12px}
 <div class="cards"><article class="game-card"><div class="emoji">🧩</div><h3>Crossword</h3><p>Cross & Conquer OR ILO – 11 Forced Labour Indicators.</p><button class="btn purple" onclick="begin('cross')">START CROSSWORD</button></article><article class="game-card"><div class="emoji">🔎</div><h3>Word Search</h3><p>A Journey Through Words OR The Ultimate Word Hunt.</p><button class="btn green" onclick="begin('search')">START WORD SEARCH</button></article></div>
 </section>
 
-
 <section id="admin" class="hidden">
- <div class="section-head">
-  <div><div class="kicker">RESTRICTED ACCESS</div><h2>Private Admin Dashboard</h2>
-  <p class="muted">Competition results are visible only to authorised administrators.</p></div>
-  <div class="row"><button class="btn green" onclick="loadAdminResults()">REFRESH RESULTS</button><button class="btn yellow" onclick="exportAdminCSV()">EXPORT CSV</button></div>
- </div>
- <div id="adminMessage" class="notice">Checking administrator access…</div>
- <div id="adminContent" class="hidden">
-  <div class="cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0">
-   <div class="panel"><div class="kicker">TOTAL SUBMISSIONS</div><div class="score" style="font-size:34px" id="adminTotal">0</div></div>
-   <div class="panel"><div class="kicker">UNIQUE PLAYERS</div><div class="score" style="font-size:34px" id="adminPlayers">0</div></div>
-   <div class="panel"><div class="kicker">WINS</div><div class="score" style="font-size:34px" id="adminWins">0</div></div>
-  </div>
-  <div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0">
-   <div class="panel"><div class="kicker">CROSSWORD LEADERBOARD</div><div id="crossRanking" class="muted">No submissions yet.</div></div>
-   <div class="panel"><div class="kicker">WORD SEARCH LEADERBOARD</div><div id="searchRanking" class="muted">No submissions yet.</div></div>
-  </div>
-  <div class="panel">
-   <div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap">
-    <h3>Player submissions</h3>
-    <input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:320px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
-    <select id="adminDepartmentFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All departments</option></select>
-    <select id="adminGameFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All games</option><option value="cross">Crossword</option><option value="search">Word Search</option></select>
-   </div>
-   <div style="overflow-x:auto;margin-top:14px">
-    <table style="width:100%;border-collapse:collapse;min-width:1000px;font-size:13px">
-     <thead><tr style="background:#e8f5f3;text-align:left">
-      <th style="padding:11px">Player</th><th style="padding:11px">Email</th><th style="padding:11px">BD / OPU / Department</th><th style="padding:11px">Game</th><th style="padding:11px">Puzzle version</th><th style="padding:11px">Score</th><th style="padding:11px">Time</th><th style="padding:11px">Status</th><th style="padding:11px">Submitted</th>
-     </tr></thead><tbody id="adminRows"><tr><td colspan="9" style="padding:16px">No results loaded.</td></tr></tbody>
-    </table>
-   </div>
-  </div>
- </div>
+<div class="section-head">
+<div><div class="kicker">RESTRICTED ACCESS</div><h2>Private Admin Dashboard</h2><p class="muted">Competition results are visible only to authorised administrators.</p></div>
+<div class="row"><button class="btn green" onclick="loadAdminResults()">REFRESH RESULTS</button><button class="btn yellow" onclick="exportAdminCSV()">EXPORT CSV</button></div>
+</div>
+<div id="adminMessage" class="notice">Checking administrator access…</div>
+<div id="adminContent" class="hidden">
+<div class="cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0">
+<div class="panel"><div class="kicker">TOTAL SUBMISSIONS</div><div class="score" style="font-size:34px" id="adminTotal">0</div></div>
+<div class="panel"><div class="kicker">UNIQUE PLAYERS</div><div class="score" style="font-size:34px" id="adminPlayers">0</div></div>
+<div class="panel"><div class="kicker">WINS</div><div class="score" style="font-size:34px" id="adminWins">0</div></div>
+</div>
+<div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0">
+<div class="panel"><div class="kicker">CROSSWORD LEADERBOARD</div><div id="crossRanking" class="muted">No submissions yet.</div></div>
+<div class="panel"><div class="kicker">WORD SEARCH LEADERBOARD</div><div id="searchRanking" class="muted">No submissions yet.</div></div>
+</div>
+<div class="panel">
+<div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap">
+<h3>Player submissions</h3>
+<input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:320px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
+<select id="adminDepartmentFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All departments</option></select>
+<select id="adminGameFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All games</option><option value="cross">Crossword</option><option value="search">Word Search</option></select>
+</div>
+<div style="overflow-x:auto;margin-top:14px">
+<table style="width:100%;border-collapse:collapse;min-width:1000px;font-size:13px">
+<thead><tr style="background:#e8f5f3;text-align:left">
+<th style="padding:11px">Player</th><th style="padding:11px">Email</th><th style="padding:11px">BD / OPU / Department</th><th style="padding:11px">Game</th><th style="padding:11px">Puzzle version</th><th style="padding:11px">Score</th><th style="padding:11px">Time</th><th style="padding:11px">Status</th><th style="padding:11px">Submitted</th>
+</tr></thead><tbody id="adminRows"><tr><td colspan="9" style="padding:16px">No results loaded.</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
 </section>
 
 <section id="play" class="hidden">
-<div class="gamebar"><div><div class="kicker" id="gameKind">CHALLENGE</div><h2 id="puzzleTitle">Puzzle title</h2><p class="muted" id="puzzleSubtitle">One randomly assigned puzzle</p></div><div class="timer">⏱ <span id="clock">00:00</span></div></div>
-<div id="gameArea"></div>
+  <div class="gamebar">
+    <div>
+      <div class="kicker" id="gameKind">CHALLENGE</div>
+      <h2 id="puzzleTitle">Puzzle title</h2>
+      <p class="muted" id="puzzleSubtitle">One randomly assigned puzzle</p>
+    </div>
+    <div class="timer">⏱ <span id="clock">00:00</span></div>
+  </div>
+  <div id="gameArea"></div>
 </section>
-<section id="result" class="hidden"><div class="panel result"><div style="font-size:48px">🏆</div><div class="kicker">CHALLENGE COMPLETE</div><h2 id="resultTitle">Your result</h2><div class="score" id="score">0%</div><p id="resultDetails" class="muted"></p><div class="row" style="justify-content:center"><button class="btn" onclick="show('games')">BACK TO GAMES</button><button class="btn outline" onclick="show('home')">HOME</button></div></div></section>
+
+<section id="result" class="hidden">
+  <div class="panel result">
+    <div style="font-size:48px">🏆</div>
+    <div class="kicker">CHALLENGE COMPLETE</div>
+    <h2 id="resultTitle">Your result</h2>
+    <div class="score" id="score">0%</div>
+    <p id="resultDetails" class="muted"></p>
+    <div class="row" style="justify-content:center">
+      <button class="btn" onclick="show('games')">BACK TO GAMES</button>
+      <button class="btn outline" onclick="show('home')">HOME</button>
+    </div>
+  </div>
+</section>
 </main>
 <footer>SOCIAL PERFORMANCE GHSE GAMES · PETRONAS COLOUR PALETTE</footer>
 <script>
+
 const SUPABASE_URL = "https://fvoghsyomrhxggzljvmh.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Cdtma2LoVz56wwzOgyMlDA_il0WynU0";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const $=id=>document.getElementById(id);
 let player=localStorage.getItem('ghse_player')||'',email='',dept=localStorage.getItem('ghse_dept')||'',currentUser=null,active=null,startAt=0,clockHandle=null,selected=[],found=[],pickedLetters=[];
+
 const cross={
 cochr:{title:'Cross & Conquer',clues:[
 ['Across 2','Stakeholders who should be considered in Grievance Mechanism are employee, contractor & ___.','FIVE'],
@@ -155,16 +218,25 @@ ilo:{title:'ILO – 11 Forced Labour Indicators',clues:[
 ['Down 7','___ of movement: Forced labourers may be locked up and guarded.','RESTRICTION']
 ]}
 };
+
 const wordsets={
 journey:['DISCRIMINATION','STAKEHOLDERS','HUMANRIGHTS','TRAFFICKING','REMEDIATION','SUPPLYCHAIN','COMMUNITIES','GOVERNANCE','DIVERSITY','INCLUSION','DILIGENCE','SECURITY','RESPECT','LABOUR'],
 ultimate:['JUSTTRANSITION','INDIGENOUS','HUMANRIGHTS','REGULATIONS','ENGAGEMENT','LIVELIHOOD','VULNERABLE','GRIEVANCE','WELLBEING','WORKFORCE','COMMUNITY','SECURITY','SUPPLIER','RISKS']
 };
-function show(page){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));$(''+page).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'})}
+
+function show(page){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ $(page).classList.remove('hidden');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
+
 async function registerPlayer(){
  player=$('player').value.trim();
  email=normalizedEmail();
  dept=$('department').value.trim();
+
  if(!player || !dept){
   $('profileMsg').textContent='Please enter your display name and BD / OPU / Department.';
   return;
@@ -173,8 +245,10 @@ async function registerPlayer(){
   $('profileMsg').textContent='Please enter a valid email address or leave it blank.';
   return;
  }
+
  $('profileMsg').textContent='Creating your player session…';
  let {data,error}=await supabaseClient.auth.getSession();
+
  if(!data.session){
   const anon=await supabaseClient.auth.signInAnonymously();
   if(anon.error){
@@ -183,72 +257,150 @@ async function registerPlayer(){
   }
   currentUser=anon.data.user;
  }else currentUser=data.session.user;
+
  localStorage.setItem('ghse_player',player);
  localStorage.setItem('ghse_dept',dept);
  localStorage.setItem('ghse_email',email);
+
  const saved=await savePlayerProfile();
  if(!saved){
   $('profileMsg').textContent='Your session started, but your player profile could not be saved. Check the players table permissions.';
   return;
  }
+
  $('profileMsg').textContent='Player registration complete. You can now play without a password or email verification.';
  await refreshAuth();
 }
+
 async function loginPlayer(){
  $('profileMsg').textContent='Player access does not require a separate login. Click CONTINUE AS PLAYER.';
 }
+
 async function adminSignIn(){
  const address=normalizedEmail();
  if(address!=='nursyahirah1979@gmail.com'){
   $('profileMsg').textContent='Admin access is restricted to the authorised administrator email.';
   return;
  }
+
  $('profileMsg').textContent='Sending administrator sign-in link…';
  const {error}=await supabaseClient.auth.signInWithOtp({
   email:address,
   options:{shouldCreateUser:false,emailRedirectTo:window.location.origin+window.location.pathname}
  });
+
  $('profileMsg').textContent=error
   ? 'Admin sign-in could not be sent: '+error.message
   : 'Administrator sign-in link sent. Open the email on this device to complete admin sign-in.';
 }
+
 async function savePlayerProfile(){
  if(!currentUser)return false;
- const {error}=await supabaseClient.from('players').upsert({id:currentUser.id,display_name:player,organisation:dept,email:localStorage.getItem('ghse_email')||''},{onConflict:'id'});
- if(error){console.error(error);return false}return true;
+ const {error}=await supabaseClient.from('players').upsert({
+  id:currentUser.id,
+  display_name:player,
+  organisation:dept,
+  email:normalizedEmail()
+ },{onConflict:'id'});
+ if(error){console.error(error);return false}
+ return true;
 }
+
 async function logoutPlayer(){
  const {error}=await supabaseClient.auth.signOut();
  if(error){$('profileMsg').textContent=error.message;return}
- currentUser=null;$('profileMsg').textContent='You have signed out.';await refreshAuth();
+ currentUser=null;
+ $('profileMsg').textContent='You have signed out.';
+ await refreshAuth();
 }
+
 async function refreshAuth(){
- const {data:{user}}=await supabaseClient.auth.getUser();currentUser=user||null;
- $('sessionStatus').textContent=currentUser?(currentUser.is_anonymous?'Player session active. No password or email verification required.':'Signed in as '+(currentUser.email||'user')+'.'):'Not signed in. Continue as a player to play.';
+ const {data:{user}}=await supabaseClient.auth.getUser();
+ currentUser=user||null;
+
+ $('sessionStatus').textContent=currentUser
+  ?(currentUser.is_anonymous?'Player session active. No password or email verification required.':'Signed in as '+(currentUser.email||'user')+'.')
+  :'Not signed in. Continue as a player to play.';
+
  if(currentUser){
   $('email').value=(currentUser.email||localStorage.getItem('ghse_email')||'').toLowerCase();
   $('player').value=player||currentUser.user_metadata?.display_name||'';
   $('department').value=dept||currentUser.user_metadata?.organisation||'';
-  const adminCheck = currentUser.email==='nursyahirah1979@gmail.com' ? await supabaseClient.rpc('get_admin_results') : {error:true};
-  $('adminNav').classList.toggle('hidden', !!adminCheck.error);
- } else {
+
+  const adminCheck=currentUser.email==='nursyahirah1979@gmail.com'
+   ?await supabaseClient.rpc('get_admin_results')
+   :{error:true};
+
+  $('adminNav').classList.toggle('hidden',!!adminCheck.error);
+ }else{
   $('adminNav').classList.add('hidden');
  }
 }
-function setupPlayer(){if(player)$('player').value=player;if(email)$('email').value=email;if(dept)$('department').value=dept;refreshAuth()}
-async function begin(kind){await refreshAuth();if(!currentUser){alert('Please create an account or log in before playing.');show('register');return}active={kind,version:kind==='cross'?(Math.random()<.5?'cochr':'ilo'):(Math.random()<.5?'journey':'ultimate')};selected=[];found=[];pickedLetters=[];startAt=Date.now();$('gameKind').textContent=kind==='cross'?'CROSSWORD CHALLENGE':'WORD SEARCH CHALLENGE';$('puzzleTitle').textContent=kind==='cross'?cross[active.version].title:(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt');$('puzzleSubtitle').textContent='Randomly assigned puzzle · Player: '+player;renderGame();show('play');clearInterval(clockHandle);tick();clockHandle=setInterval(tick,1000)}
-function tick(){let s=Math.floor((Date.now()-startAt)/1000);$('clock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
-function renderGame(){if(active.kind==='cross')renderCross();else renderWordSearch()}
+
+function setupPlayer(){
+ if(player)$('player').value=player;
+ if(email)$('email').value=email;
+ if(dept)$('department').value=dept;
+ refreshAuth();
+}
+
+async function begin(kind){
+ await refreshAuth();
+ if(!currentUser){
+  alert('Please create an account or log in before playing.');
+  show('register');
+  return;
+ }
+
+ active={
+  kind,
+  version:kind==='cross'
+   ?(Math.random()<.5?'cochr':'ilo')
+   :(Math.random()<.5?'journey':'ultimate')
+ };
+
+ selected=[];
+ found=[];
+ pickedLetters=[];
+ startAt=Date.now();
+
+ $('gameKind').textContent=kind==='cross'?'CROSSWORD CHALLENGE':'WORD SEARCH CHALLENGE';
+ $('puzzleTitle').textContent=kind==='cross'?cross[active.version].title:(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt');
+ $('puzzleSubtitle').textContent='Randomly assigned puzzle · Player: '+player;
+
+ renderGame();
+ show('play');
+ clearInterval(clockHandle);
+ tick();
+ clockHandle=setInterval(tick,1000);
+}
+
+function tick(){
+ let s=Math.floor((Date.now()-startAt)/1000);
+ $('clock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+}
+
+function renderGame(){
+ if(active.kind==='cross')renderCross();
+ else renderWordSearch();
+}
+
 function renderCross(){
- const puzzle=cross[active.version],words=puzzle.clues.map((c,i)=>({label:c[0],clue:c[1],answer:norm(c[2]),dir:c[0].startsWith('Across')?'H':'V',id:i}));
+ const puzzle=cross[active.version];
+ const words=puzzle.clues.map((c,i)=>({label:c[0],clue:c[1],answer:norm(c[2]),dir:c[0].startsWith('Across')?'H':'V',id:i}));
  const N=21,grid=Array.from({length:N},()=>Array(N).fill(null)),placed=[];
+
  function canPlace(w,r,c,dir){
   let dr=dir==='V'?1:0,dc=dir==='H'?1:0,intersections=0;
   if(r-dr>=0&&c-dc>=0&&grid[r-dr][c-dc])return null;
   if(r+dr*w.answer.length<N&&c+dc*w.answer.length<N&&grid[r+dr*w.answer.length][c+dc*w.answer.length])return null;
+
   for(let k=0;k<w.answer.length;k++){
-   let rr=r+dr*k,cc=c+dc*k;if(rr<0||cc<0||rr>=N||cc>=N)return null;
-   let old=grid[rr][cc];if(old&&old.ch!==w.answer[k])return null;if(old)intersections++;
+   let rr=r+dr*k,cc=c+dc*k;
+   if(rr<0||cc<0||rr>=N||cc>=N)return null;
+   let old=grid[rr][cc];
+   if(old&&old.ch!==w.answer[k])return null;
+   if(old)intersections++;
    if(!old){
     if(dir==='H'){
      if((rr>0&&grid[rr-1][cc])||(rr<N-1&&grid[rr+1][cc]))return null;
@@ -259,126 +411,331 @@ function renderCross(){
   }
   return intersections;
  }
- // Place the longest answer first, then favour placements that cross existing answers.
+
  let ordered=[...words].sort((a,b)=>b.answer.length-a.answer.length);
+
  for(let wi=0;wi<ordered.length;wi++){
   let w=ordered[wi],best=null;
-  if(wi===0){best={r:10,c:Math.max(0,Math.floor((N-w.answer.length)/2)),dir:'H',score:0}}
-  else{
+
+  if(wi===0){
+   best={r:10,c:Math.max(0,Math.floor((N-w.answer.length)/2)),dir:'H',score:0};
+  }else{
    for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(let dir of ['H','V']){
-    let intersections=canPlace(w,r,c,dir);if(intersections===null||intersections===0)continue;
+    let intersections=canPlace(w,r,c,dir);
+    if(intersections===null||intersections===0)continue;
     let score=intersections*100+Math.random()*5;
     if(!best||score>best.score)best={r,c,dir,score};
    }
   }
+
   if(!best){
-   // fallback: place a non-intersecting answer in an available row/column, preserving a crossword-style board
    outer:for(let dir of ['H','V'])for(let r=1;r<N-1;r++)for(let c=1;c<N-1;c++){
     if(canPlace(w,r,c,dir)!==null){best={r,c,dir,score:0};break outer}
    }
   }
+
   if(!best)continue;
   let dr=best.dir==='V'?1:0,dc=best.dir==='H'?1:0;
-  for(let k=0;k<w.answer.length;k++){let rr=best.r+dr*k,cc=best.c+dc*k;if(!grid[rr][cc])grid[rr][cc]={ch:w.answer[k],answers:[]};grid[rr][cc].answers.push(w.id)}
+
+  for(let k=0;k<w.answer.length;k++){
+   let rr=best.r+dr*k,cc=best.c+dc*k;
+   if(!grid[rr][cc])grid[rr][cc]={ch:w.answer[k],answers:[]};
+   grid[rr][cc].answers.push(w.id);
+  }
   placed.push({...w,r:best.r,c:best.c,dr,dc});
  }
+
  let minR=N,minC=N,maxR=0,maxC=0;
- grid.forEach((row,r)=>row.forEach((cell,c)=>{if(cell){minR=Math.min(minR,r);minC=Math.min(minC,c);maxR=Math.max(maxR,r);maxC=Math.max(maxC,c)}}));
- let nums={},num=1;placed.sort((a,b)=>a.id-b.id).forEach(w=>{nums[w.r+','+w.c]=num++});
+ grid.forEach((row,r)=>row.forEach((cell,c)=>{
+  if(cell){minR=Math.min(minR,r);minC=Math.min(minC,c);maxR=Math.max(maxR,r);maxC=Math.max(maxC,c)}
+ }));
+
+ let nums={},num=1;
+ placed.sort((a,b)=>a.id-b.id).forEach(w=>{nums[w.r+','+w.c]=num++});
+
  let html='<div class="game-layout"><div class="panel"><h3>Fill in the crossword</h3><p class="muted">Enter letters directly into the numbered crossword squares. Crossing answers share the same squares.</p><div class="cross-grid" id="crossGrid" style="grid-template-columns:repeat('+(maxC-minC+1)+',minmax(18px,1fr));max-width: min(100%, '+((maxC-minC+1)*34)+'px)">';
+
  for(let r=minR;r<=maxR;r++)for(let c=minC;c<=maxC;c++){
   let cell=grid[r][c],id='C'+r+'_'+c;
   if(!cell)html+='<div class="cross-cell block"></div>';
   else html+='<div class="cross-cell"><span class="num">'+(nums[r+','+c]||'')+'</span><input maxlength="1" id="'+id+'" aria-label="Crossword letter"></div>';
  }
- html+='</div><button class="btn purple" onclick="submitCross()">CHECK CROSSWORD</button></div><aside class="panel"><div class="kicker">CLUES</div><h3>Across</h3><div class="clue-list">';
- placed.filter(w=>w.dir==='H').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
- html+='</div><h3 style="margin-top:18px">Down</h3><div class="clue-list">';
- placed.filter(w=>w.dir==='V').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
- html+='</div></aside></div>';
- $('gameArea').innerHTML=html;window.crossBoard={grid,placed,minR,minC};
-}
-function norm(s){return String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
-function normalizedEmail(){return $('email').value.trim().toLowerCase()}
-function submitCross(){let b=window.crossBoard,answers={};b.placed.forEach(w=>{let value='';for(let k=0;k<w.answer.length;k++){let r=w.r+w.dr*k,c=w.c+w.dc*k;value+=($('C'+r+'_'+c)?.value||'')}answers[String(w.id)]=norm(value)});finish({answers,total:b.placed.length})}
-function makeGrid(words){const N=18,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[],dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];for(const word of [...words].sort((a,b)=>b.length-a.length)){let options=[];for(let tries=0;tries<1800;tries++){let [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)],r=Math.floor(Math.random()*N),c=Math.floor(Math.random()*N),er=r+dr*(word.length-1),ec=c+dc*(word.length-1);if(er<0||ec<0||er>=N||ec>=N)continue;let ok=true;for(let k=0;k<word.length;k++){let ch=grid[r+dr*k][c+dc*k];if(ch&&ch!==word[k]){ok=false;break}}if(ok){options.push({r,c,dr,dc});if(options.length>8)break}}if(!options.length)continue;let p=options[Math.floor(Math.random()*options.length)];for(let k=0;k<word.length;k++)grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];placements.push({word,cells:Array.from({length:word.length},(_,k)=>(p.r+p.dr*k)*N+p.c+p.dc*k)})}const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];return{grid,placements,N}}
-function renderWordSearch(){let words=wordsets[active.version];wordPuzzle=makeGrid(words);let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first letter, then the last letter of a hidden word. Words may run horizontally, vertically or diagonally (slanted), forwards or backwards.</p><div class="letter-grid">';wordPuzzle.grid.flat().forEach((ch,i)=>html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`);html+='</div><div class="row" style="justify-content:center"><button class="btn green" onclick="clearPick()">CLEAR SELECTION</button><button class="btn" onclick="finishWordSearch()">SUBMIT FOUND WORDS</button></div></div><aside class="panel"><div class="kicker">WORDS TO FIND</div><h3>'+(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt')+'</h3><div class="wordbank">'+words.map(w=>`<span class="wordtag" id="W${w}">${w}</span>`).join('')+'</div><p class="muted" style="margin-top:15px"><b id="foundCount">0</b> / ${words.length} found</p></aside></div>';$('gameArea').innerHTML=html}
-function pick(i){const N=wordPuzzle.N;if(pickedLetters.length===0){pickedLetters=[i];$('L'+i).classList.add('pick');return}let a=pickedLetters[0],b=i,ar=Math.floor(a/N),ac=a%N,br=Math.floor(b/N),bc=b%N,dr=br-ar,dc=bc-ac;if(!(dr===0||dc===0||Math.abs(dr)===Math.abs(dc))){clearPick();pickedLetters=[i];$('L'+i).classList.add('pick');return}let sr=Math.sign(dr),sc=Math.sign(dc),len=Math.max(Math.abs(dr),Math.abs(dc))+1,cells=Array.from({length:len},(_,k)=>(ar+sr*k)*N+(ac+sc*k)),str=cells.map(x=>wordPuzzle.grid[Math.floor(x/N)][x%N]).join(''),rev=str.split('').reverse().join(''),hit=wordPuzzle.placements.find(p=>!found.includes(p.word)&&((p.word===str&&sameCells(p.cells,cells))||(p.word===rev&&sameCells(p.cells,[...cells].reverse()))));if(hit){found.push(hit.word);hit.cells.forEach(x=>$('L'+x).classList.add('hit'));$('W'+hit.word).classList.add('found');$('foundCount').textContent=found.length;clearPick()}else{clearPick();pickedLetters=[i];$('L'+i).classList.add('pick')}}
-function sameCells(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i])}
-function clearPick(){pickedLetters.forEach(i=>$('L'+i)?.classList.remove('pick'));pickedLetters=[]}
-function finishWordSearch(){finish({answers:found,total:wordsets[active.version].length})}
-async function finish(payload){clearInterval(clockHandle);const seconds=Math.max(0,Math.floor((Date.now()-startAt)/1000));$('resultTitle').textContent='Submitting your result…';$('score').textContent='…';$('resultDetails').textContent='Your answers are being checked securely.';show('result');const gameId=(active.kind==='cross'?'cross':'search')+'-'+(active.version==='cochr'||active.version==='journey'?'easy':'hard');const {data,error}=await supabaseClient.rpc('submit_ghse_attempt',{p_game_id:gameId,p_game_category:active.kind,p_puzzle_version:active.version,p_answers:payload.answers,p_completion_seconds:seconds});if(error){$('resultTitle').textContent='Result not submitted';$('score').textContent='—';$('resultDetails').textContent=error.message+' Please contact the competition administrator. If this category was already submitted, another attempt is not allowed.';return}const row=Array.isArray(data)?data[0]:data;const score=Number(row?.score||0),correct=Number(row?.correct_count||0),total=Number(row?.total_count||payload.total||0),status=row?.status||'LOSE';$('resultTitle').textContent=status==='WIN'?'Challenge completed — WIN!':'Challenge completed — LOSE';$('score').textContent=score+'%';$('resultDetails').textContent=`${correct} of ${total} correct · ${seconds} seconds · ${status}. Your result has been saved privately.`}
 
-let adminResults = [];
+ html+='</div><button class="btn purple" onclick="submitCross()">CHECK CROSSWORD</button></div><aside class="panel"><div class="kicker">CLUES</div><h3>Across</h3><div class="clue-list">';
+
+ placed.filter(w=>w.dir==='H').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
+
+ html+='</div><h3 style="margin-top:18px">Down</h3><div class="clue-list">';
+
+ placed.filter(w=>w.dir==='V').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
+
+ html+='</div></aside></div>';
+ $('gameArea').innerHTML=html;
+ window.crossBoard={grid,placed,minR,minC};
+}
+
+function norm(s){
+ return String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+}
+
+function normalizedEmail(){
+ return $('email').value.trim().toLowerCase();
+}
+
+function submitCross(){
+ let b=window.crossBoard,answers={};
+ b.placed.forEach(w=>{
+  let value='';
+  for(let k=0;k<w.answer.length;k++){
+   let r=w.r+w.dr*k,c=w.c+w.dc*k;
+   value+=($('C'+r+'_'+c)?.value||'');
+  }
+  answers[String(w.id)]=norm(value);
+ });
+ finish({answers,total:b.placed.length});
+}
+
+function makeGrid(words){
+ const N=18,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[];
+ const dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+
+ for(const word of [...words].sort((a,b)=>b.length-a.length)){
+  let options=[];
+  for(let tries=0;tries<1800;tries++){
+   let [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)];
+   let r=Math.floor(Math.random()*N),c=Math.floor(Math.random()*N);
+   let er=r+dr*(word.length-1),ec=c+dc*(word.length-1);
+   if(er<0||ec<0||er>=N||ec>=N)continue;
+
+   let ok=true;
+   for(let k=0;k<word.length;k++){
+    let ch=grid[r+dr*k][c+dc*k];
+    if(ch&&ch!==word[k]){ok=false;break}
+   }
+   if(ok){
+    options.push({r,c,dr,dc});
+    if(options.length>8)break;
+   }
+  }
+
+  if(!options.length)continue;
+  let p=options[Math.floor(Math.random()*options.length)];
+
+  for(let k=0;k<word.length;k++)grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];
+
+  placements.push({
+   word,
+   cells:Array.from({length:word.length},(_,k)=>(p.r+p.dr*k)*N+p.c+p.dc*k)
+  });
+ }
+
+ const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];
+
+ return{grid,placements,N};
+}
+
+function renderWordSearch(){
+ let words=wordsets[active.version];
+ wordPuzzle=makeGrid(words);
+
+ let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first letter, then the last letter of a hidden word. Words may run horizontally, vertically or diagonally (slanted), forwards or backwards.</p><div class="letter-grid">';
+
+ wordPuzzle.grid.flat().forEach((ch,i)=>html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`);
+
+ html+='</div><div class="row" style="justify-content:center"><button class="btn green" onclick="clearPick()">CLEAR SELECTION</button><button class="btn" onclick="finishWordSearch()">SUBMIT FOUND WORDS</button></div></div><aside class="panel"><div class="kicker">WORDS TO FIND</div><h3>'+(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt')+'</h3><div class="wordbank">'+words.map(w=>`<span class="wordtag" id="W${w}">${w}</span>`).join('')+'</div><p class="muted" style="margin-top:15px"><b id="foundCount">0</b> / '+words.length+' found</p></aside></div>';
+
+ $('gameArea').innerHTML=html;
+}
+
+function pick(i){
+ const N=wordPuzzle.N;
+ if(pickedLetters.length===0){
+  pickedLetters=[i];
+  $('L'+i).classList.add('pick');
+  return;
+ }
+
+ let a=pickedLetters[0],b=i;
+ let ar=Math.floor(a/N),ac=a%N,br=Math.floor(b/N),bc=b%N;
+ let dr=br-ar,dc=bc-ac;
+
+ if(!(dr===0||dc===0||Math.abs(dr)===Math.abs(dc))){
+  clearPick();
+  pickedLetters=[i];
+  $('L'+i).classList.add('pick');
+  return;
+ }
+
+ let sr=Math.sign(dr),sc=Math.sign(dc);
+ let len=Math.max(Math.abs(dr),Math.abs(dc))+1;
+ let cells=Array.from({length:len},(_,k)=>(ar+sr*k)*N+(ac+sc*k));
+ let str=cells.map(x=>wordPuzzle.grid[Math.floor(x/N)][x%N]).join('');
+ let rev=str.split('').reverse().join('');
+
+ let hit=wordPuzzle.placements.find(p=>!found.includes(p.word)&&((p.word===str&&sameCells(p.cells,cells))||(p.word===rev&&sameCells(p.cells,[...cells].reverse()))));
+
+ if(hit){
+  found.push(hit.word);
+  hit.cells.forEach(x=>$('L'+x).classList.add('hit'));
+  $('W'+hit.word).classList.add('found');
+  $('foundCount').textContent=found.length;
+  clearPick();
+ }else{
+  clearPick();
+  pickedLetters=[i];
+  $('L'+i).classList.add('pick');
+ }
+}
+
+function sameCells(a,b){
+ return a.length===b.length&&a.every((v,i)=>v===b[i]);
+}
+
+function clearPick(){
+ pickedLetters.forEach(i=>$('L'+i)?.classList.remove('pick'));
+ pickedLetters=[];
+}
+
+function finishWordSearch(){
+ finish({answers:found,total:wordsets[active.version].length});
+}
+
+async function finish(payload){
+ clearInterval(clockHandle);
+ const seconds=Math.max(0,Math.floor((Date.now()-startAt)/1000));
+
+ $('resultTitle').textContent='Submitting your result…';
+ $('score').textContent='…';
+ $('resultDetails').textContent='Your answers are being checked securely.';
+ show('result');
+
+ const gameId=(active.kind==='cross'?'cross':'search')+'-'+(active.version==='cochr'||active.version==='journey'?'easy':'hard');
+
+ const {data,error}=await supabaseClient.rpc('submit_ghse_attempt',{
+  p_game_id:gameId,
+  p_game_category:active.kind,
+  p_puzzle_version:active.version,
+  p_answers:payload.answers,
+  p_completion_seconds:seconds
+ });
+
+ if(error){
+  $('resultTitle').textContent='Result not submitted';
+  $('score').textContent='—';
+  $('resultDetails').textContent=error.message+' Please contact the competition administrator. If this category was already submitted, another attempt is not allowed.';
+  return;
+ }
+
+ const row=Array.isArray(data)?data[0]:data;
+ const score=Number(row?.score||0);
+ const correct=Number(row?.correct_count||0);
+ const total=Number(row?.total_count||payload.total||0);
+ const status=row?.status||'LOSE';
+
+ $('resultTitle').textContent=status==='WIN'?'Challenge completed — WIN!':'Challenge completed — LOSE';
+ $('score').textContent=score+'%';
+ $('resultDetails').textContent=`${correct} of ${total} correct · ${seconds} seconds · ${status}. Your result has been saved privately.`;
+}
+
+let adminResults=[];
+
 function escHTML(value){
- return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
+
 function prettyGame(row){
- const cat = row.game_category === 'cross' ? 'Crossword' : 'Word Search';
- return cat;
+ return row.game_category==='cross'?'Crossword':'Word Search';
 }
+
 function prettyVersion(value){
- return ({cochr:'Cross & Conquer',ilo:'ILO – 11 Forced Labour Indicators',journey:'A Journey Through Words',ultimate:'The Ultimate Word Hunt'})[value] || value || '—';
+ return ({cochr:'Cross & Conquer',ilo:'ILO – 11 Forced Labour Indicators',journey:'A Journey Through Words',ultimate:'The Ultimate Word Hunt'})[value]||value||'—';
 }
+
 function formatDuration(value){
- const s = Number(value || 0);
+ const s=Number(value||0);
  return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
 }
+
 async function loadAdminResults(){
- const message = $('adminMessage');
- message.textContent = 'Checking administrator permissions and loading results…';
+ const message=$('adminMessage');
+ message.textContent='Checking administrator permissions and loading results…';
  $('adminContent').classList.add('hidden');
- if(!currentUser || currentUser.email!=='nursyahirah1979@gmail.com'){
+
+ if(!currentUser||currentUser.email!=='nursyahirah1979@gmail.com'){
   message.textContent='Access denied. Sign in using the authorised administrator account.';
   $('adminNav').classList.add('hidden');
   return false;
  }
- const {data,error} = await supabaseClient.rpc('get_admin_results');
+
+ const {data,error}=await supabaseClient.rpc('get_admin_results');
+
  if(error){
-  message.textContent = 'Administrator access not available: '+error.message+'. Check the admin SQL function and sign-in session.';
+  message.textContent='Administrator access not available: '+error.message+'. Check the admin SQL function and sign-in session.';
   $('adminNav').classList.add('hidden');
   return false;
  }
- adminResults = Array.isArray(data) ? data : [];
+
+ adminResults=Array.isArray(data)?data:[];
  $('adminNav').classList.remove('hidden');
  $('adminContent').classList.remove('hidden');
- message.textContent = 'Authorised administrator session. These results are private and are not displayed to players.';
- $('adminTotal').textContent = adminResults.length;
- $('adminPlayers').textContent = new Set(adminResults.map(r=>r.player_id || r.email)).size;
- $('adminWins').textContent = adminResults.filter(r=>String(r.status).toUpperCase()==='WIN').length;
+ message.textContent='Authorised administrator session. These results are private and are not displayed to players.';
+
+ $('adminTotal').textContent=adminResults.length;
+ $('adminPlayers').textContent=new Set(adminResults.map(r=>r.player_id||r.email)).size;
+ $('adminWins').textContent=adminResults.filter(r=>String(r.status).toUpperCase()==='WIN').length;
+
  const departments=[...new Set(adminResults.map(r=>String(r.organisation||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
  const depSelect=$('adminDepartmentFilter');
  const prior=depSelect.value;
+
  depSelect.innerHTML='<option value="">All departments</option>'+departments.map(d=>'<option value="'+escHTML(d)+'">'+escHTML(d)+'</option>').join('');
  if(departments.includes(prior))depSelect.value=prior;
+
  renderAdminRankings();
  renderAdminRows();
  return true;
 }
+
 function rankRows(category){
  const rows=adminResults.filter(r=>r.game_category===category);
  const bestByPlayer=new Map();
+
  for(const r of rows){
   const key=r.player_id||r.email||r.display_name;
   const old=bestByPlayer.get(key);
   const score=Number(r.score)||0,seconds=Number(r.completion_seconds)||86401;
-  if(!old || score>(Number(old.score)||0) || (score===(Number(old.score)||0) && seconds<(Number(old.completion_seconds)||86401))) bestByPlayer.set(key,r);
+
+  if(!old||score>(Number(old.score)||0)||(score===(Number(old.score)||0)&&seconds<(Number(old.completion_seconds)||86401)))bestByPlayer.set(key,r);
  }
+
  return [...bestByPlayer.values()].sort((a,b)=>(Number(b.score)||0)-(Number(a.score)||0)||(Number(a.completion_seconds)||0)-(Number(b.completion_seconds)||0));
 }
+
 function renderAdminRankings(){
- const make=(category)=>{const rows=rankRows(category);if(!rows.length)return '<p class="muted">No submissions yet.</p>';return '<ol style="padding-left:22px;margin:12px 0">'+rows.slice(0,10).map((r,i)=>'<li style="padding:7px 0;border-bottom:1px solid #e3ecea"><b>'+escHTML(r.display_name||'Player')+'</b> — '+escHTML(r.score)+'% <span class="muted">('+escHTML(formatDuration(r.completion_seconds))+')</span></li>').join('')+'</ol><small class="muted">Ranked by highest score, then fastest completion. Best result per player.</small>'};
+ const make=(category)=>{
+  const rows=rankRows(category);
+  if(!rows.length)return '<p class="muted">No submissions yet.</p>';
+
+  return '<ol style="padding-left:22px;margin:12px 0">'+rows.slice(0,10).map(r=>'<li style="padding:7px 0;border-bottom:1px solid #e3ecea"><b>'+escHTML(r.display_name||'Player')+'</b> — '+escHTML(r.score)+'% <span class="muted">('+escHTML(formatDuration(r.completion_seconds))+')</span></li>').join('')+'</ol><small class="muted">Ranked by highest score, then fastest completion. Best result per player.</small>';
+ };
+
  $('crossRanking').innerHTML=make('cross');
  $('searchRanking').innerHTML=make('search');
 }
+
 function renderAdminRows(){
- const filter = ($('adminFilter')?.value || '').trim().toLowerCase();
+ const filter=($('adminFilter')?.value||'').trim().toLowerCase();
  const department=$('adminDepartmentFilter')?.value||'';
  const game=$('adminGameFilter')?.value||'';
- const rows = adminResults.filter(r => (!department||String(r.organisation||'')===department) && (!game||r.game_category===game) && [
-  r.display_name,r.email,r.organisation,r.game_category,r.game_id,r.puzzle_version,r.status
- ].some(v=>String(v||'').toLowerCase().includes(filter)));
- $('adminRows').innerHTML = rows.length ? rows.map(r=>`<tr style="border-bottom:1px solid #dce5e4">
+
+ const rows=adminResults.filter(r=>
+  (!department||String(r.organisation||'')===department)&&
+  (!game||r.game_category===game)&&
+  [r.display_name,r.email,r.organisation,r.game_category,r.game_id,r.puzzle_version,r.status].some(v=>String(v||'').toLowerCase().includes(filter))
+ );
+
+ $('adminRows').innerHTML=rows.length?rows.map(r=>`<tr style="border-bottom:1px solid #dce5e4">
   <td style="padding:11px">${escHTML(r.display_name)}</td>
   <td style="padding:11px">${escHTML(r.email)}</td>
   <td style="padding:11px">${escHTML(r.organisation)}</td>
@@ -387,36 +744,49 @@ function renderAdminRows(){
   <td style="padding:11px;font-weight:900">${escHTML(r.score)}%</td>
   <td style="padding:11px">${escHTML(formatDuration(r.completion_seconds))}</td>
   <td style="padding:11px"><b style="color:${String(r.status).toUpperCase()==='WIN'?'#167143':'#a34b26'}">${escHTML(r.status)}</b></td>
-  <td style="padding:11px">${escHTML(r.created_at ? new Date(r.created_at).toLocaleString() : '—')}</td>
- </tr>`).join('') : '<tr><td colspan="9" style="padding:16px">No matching submissions.</td></tr>';
+  <td style="padding:11px">${escHTML(r.created_at?new Date(r.created_at).toLocaleString():'—')}</td>
+ </tr>`).join(''):'<tr><td colspan="9" style="padding:16px">No matching submissions.</td></tr>';
 }
+
 function exportAdminCSV(){
  if(!adminResults.length){alert('There are no results to export yet.');return}
- const columns = ['display_name','email','organisation','game_category','game_id','puzzle_version','score','completion_seconds','status','created_at'];
- const quote = v => '"'+String(v ?? '').replace(/"/g,'""')+'"';
- const csv = [columns.join(','),...adminResults.map(r=>columns.map(k=>quote(r[k])).join(','))].join('\r\n');
- const blob = new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
- const url = URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download='GHSE_Games_Private_Results.csv';a.click();URL.revokeObjectURL(url);
+
+ const columns=['display_name','email','organisation','game_category','game_id','puzzle_version','score','completion_seconds','status','created_at'];
+ const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const csv=[columns.join(','),...adminResults.map(r=>columns.map(k=>quote(r[k])).join(','))].join('\r\n');
+
+ const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;
+ a.download='GHSE_Games_Private_Results.csv';
+ a.click();
+ URL.revokeObjectURL(url);
 }
-const originalShow = show;
-show = function(page){
+
+const originalShow=show;
+show=function(page){
  originalShow(page);
- if(page==='admin') loadAdminResults();
+ if(page==='admin')loadAdminResults();
 };
 
-
 setupPlayer();
+
 supabaseClient.auth.onAuthStateChange((_event,session)=>{
  currentUser=session?.user||null;
+
  if(currentUser){
   player=player||currentUser.user_metadata?.display_name||'Player';
   dept=dept||currentUser.user_metadata?.organisation||'';
   localStorage.setItem('ghse_player',player);
   localStorage.setItem('ghse_dept',dept);
  }
+
  refreshAuth();
- if(!currentUser){$('adminNav').classList.add('hidden');adminResults=[];}
+
+ if(!currentUser){
+  $('adminNav').classList.add('hidden');
+  adminResults=[];
+ }
 });
 </script>
 </body>
