@@ -200,7 +200,7 @@ async function adminSignIn(){
  $('profileMsg').textContent='Sending administrator sign-in link…';
  const {error}=await supabaseClient.auth.signInWithOtp({
   email:address,
-  options:{shouldCreateUser:false,emailRedirectTo:window.location.origin+window.location.pathname}
+  options:{shouldCreateUser:false,emailRedirectTo:'https://social-performance-ghse-games.nursyahirah1979.workers.dev/'}
  });
  $('profileMsg').textContent=error
   ? 'Admin sign-in could not be sent: '+error.message
