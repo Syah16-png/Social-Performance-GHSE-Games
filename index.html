@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@300;500;700;900&family=Nunito+Sans:wght@300;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--emerald:#00A499;--white:#FFFFFF;--blue:#20419A;--purple:#763F98;--yellow:#FDB924;--lime:#BFD730;--ink:#18243b;--pale:#e8f5f3;--line:#c9d9d7;--font:'Nunito Sans',Arial,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font-family:var(--font)}button,input{font:inherit}button{cursor:pointer}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font-family:var(--font)}button,input{font:inherit}button{cursor:pointer}#email{text-transform:none!important}
 .topbar{background:var(--emerald);color:#fff;padding:22px 5vw 18px;border-bottom:8px solid var(--yellow)}
 .top-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .brand{font-size:clamp(19px,3vw,29px);font-weight:900;letter-spacing:.02em;line-height:1.05}.brand small{display:block;font-size:11px;letter-spacing:.22em;font-weight:700;margin-top:8px}
@@ -156,7 +156,7 @@ async function registerPlayer(){
  await refreshAuth();
 }
 async function loginPlayer(){
- email=$('email').value.trim();const password=$('password').value;
+ email=normalizedEmail();const password=$('password').value;
  if(!email||!password){$('profileMsg').textContent='Enter your email and password.';return}
  $('profileMsg').textContent='Signing in…';
  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
@@ -181,7 +181,7 @@ async function refreshAuth(){
  const {data:{user}}=await supabaseClient.auth.getUser();currentUser=user||null;
  $('sessionStatus').textContent=currentUser?'Signed in as '+(currentUser.email||'player')+'. Your player profile is connected to Supabase.':'Not signed in. Create an account or log in before playing.';
  if(currentUser){
-  $('email').value=currentUser.email||'';
+  $('email').value=(currentUser.email||'').toLowerCase();
   $('player').value=player||currentUser.user_metadata?.display_name||'';
   $('department').value=dept||currentUser.user_metadata?.organisation||'';
   const adminCheck = await supabaseClient.rpc('get_admin_results');
@@ -254,6 +254,8 @@ function renderCross(){
  $('gameArea').innerHTML=html;window.crossBoard={grid,placed,minR,minC};
 }
 function norm(s){return String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
+function normalizedEmail(){return $('email').value.trim().toLowerCase()}
+function togglePassword(){const field=$('password'),button=event.currentTarget;const show=field.type==='password';field.type=show?'text':'password';button.textContent=show?'HIDE':'SHOW'}
 function submitCross(){let b=window.crossBoard,answers={};b.placed.forEach(w=>{let value='';for(let k=0;k<w.answer.length;k++){let r=w.r+w.dr*k,c=w.c+w.dc*k;value+=($('C'+r+'_'+c)?.value||'')}answers[String(w.id)]=norm(value)});finish({answers,total:b.placed.length})}
 function makeGrid(words){const N=18,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[],dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];for(const word of [...words].sort((a,b)=>b.length-a.length)){let options=[];for(let tries=0;tries<1800;tries++){let [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)],r=Math.floor(Math.random()*N),c=Math.floor(Math.random()*N),er=r+dr*(word.length-1),ec=c+dc*(word.length-1);if(er<0||ec<0||er>=N||ec>=N)continue;let ok=true;for(let k=0;k<word.length;k++){let ch=grid[r+dr*k][c+dc*k];if(ch&&ch!==word[k]){ok=false;break}}if(ok){options.push({r,c,dr,dc});if(options.length>8)break}}if(!options.length)continue;let p=options[Math.floor(Math.random()*options.length)];for(let k=0;k<word.length;k++)grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];placements.push({word,cells:Array.from({length:word.length},(_,k)=>(p.r+p.dr*k)*N+p.c+p.dc*k)})}const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];return{grid,placements,N}}
 function renderWordSearch(){let words=wordsets[active.version];wordPuzzle=makeGrid(words);let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first letter, then the last letter of a hidden word. Words may run horizontally, vertically or diagonally (slanted), forwards or backwards.</p><div class="letter-grid">';wordPuzzle.grid.flat().forEach((ch,i)=>html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`);html+='</div><div class="row" style="justify-content:center"><button class="btn green" onclick="clearPick()">CLEAR SELECTION</button><button class="btn" onclick="finishWordSearch()">SUBMIT FOUND WORDS</button></div></div><aside class="panel"><div class="kicker">WORDS TO FIND</div><h3>'+(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt')+'</h3><div class="wordbank">'+words.map(w=>`<span class="wordtag" id="W${w}">${w}</span>`).join('')+'</div><p class="muted" style="margin-top:15px"><b id="foundCount">0</b> / ${words.length} found</p></aside></div>';$('gameArea').innerHTML=html}
