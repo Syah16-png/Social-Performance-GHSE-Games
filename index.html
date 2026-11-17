@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -76,151 +77,255 @@ p{line-height:1.6}
 .muted{color:#66748a}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 footer{text-align:center;color:#66748a;padding:25px;font-size:12px}
-@media(max-width:800px){.hero{grid-template-columns:1fr}.hero-art{display:none}.game-layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
-@media(max-width:480px){main{padding:0 12px 35px}.letter-grid{gap:2px}.letter{border-radius:3px}.panel{padding:15px}}
+@media(max-width:800px){
+ .hero{grid-template-columns:1fr}
+ .hero-art{display:none}
+ .game-layout{grid-template-columns:1fr}
+ .cards{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+ main{padding:0 12px 35px}
+ .letter-grid{gap:2px}
+ .letter{border-radius:3px}
+ .panel{padding:15px}
+}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="top-inner">
-<div class="brand">SOCIAL PERFORMANCE<br>GHSE GAMES ✦<small>PLAY · THINK · WIN</small></div>
-<nav><button class="active" data-page="home">HOME</button><button data-page="games">GAMES</button><button data-page="register">PLAYER</button><button id="adminNav" data-page="admin" class="hidden">ADMIN</button></nav>
-</div></header>
+
+<header class="topbar">
+ <div class="top-inner">
+  <div class="brand">SOCIAL PERFORMANCE<br>GHSE GAMES ✦<small>PLAY · THINK · WIN</small></div>
+  <nav>
+   <button class="active" data-page="home">HOME</button>
+   <button data-page="games">GAMES</button>
+   <button data-page="register">PLAYER</button>
+   <button id="adminNav" data-page="admin" class="hidden">ADMIN</button>
+  </nav>
+ </div>
+</header>
+
 <main>
 <section id="home">
-<div class="hero"><div class="hero-copy"><div class="kicker">A PETRONAS GHSE WORD CHALLENGE</div><h1>Social<br>Performance<br>Games.</h1><p>Explore important GHSE topics through two interactive word games. Each player receives a randomly assigned puzzle version for each category.</p><div class="row"><button class="btn yellow" onclick="show('games')">START PLAYING →</button><button class="btn outline" onclick="show('register')">PLAYER PROFILE</button></div></div><div class="hero-art"><div class="symbols">🧩 🔎 🏆</div><strong>THINK · FIND · SOLVE</strong></div></div>
-<div class="section"><div class="section-head"><div><div class="kicker">TWO CHALLENGES</div><h2>Choose your game</h2></div><span class="chip">2 CATEGORIES · 2 VERSIONS EACH</span></div><div class="cards">
-<article class="game-card"><div class="emoji">🧩</div><h3>Crossword Challenge</h3><p>Answer clues about PETRONAS CoCHR and the ILO Forced Labour Indicators.</p><span class="chip">RANDOM PUZZLE ASSIGNMENT</span><button class="btn purple" onclick="begin('cross')">PLAY CROSSWORD</button></article>
-<article class="game-card"><div class="emoji">🔎</div><h3>Word Search Challenge</h3><p>Find GHSE words hidden in a letter grid, from human rights to just transition.</p><span class="chip">RANDOM PUZZLE ASSIGNMENT</span><button class="btn green" onclick="begin('search')">PLAY WORD SEARCH</button></article>
-</div></div>
-<div class="section notice">Supabase-connected competition build. Each category is limited to one recorded attempt per player. Your score is calculated by the database, not accepted as a score value from the browser.</div>
+ <div class="hero">
+  <div class="hero-copy">
+   <div class="kicker">A PETRONAS GHSE WORD CHALLENGE</div>
+   <h1>Social<br>Performance<br>Games.</h1>
+   <p>Explore important GHSE topics through two interactive word games. Each player receives a randomly assigned puzzle version for each category.</p>
+   <div class="row">
+    <button class="btn yellow" onclick="show('games')">START PLAYING →</button>
+    <button class="btn outline" onclick="show('register')">PLAYER PROFILE</button>
+   </div>
+  </div>
+  <div class="hero-art">
+   <div class="symbols">🧩 🔎 🏆</div>
+   <strong>THINK · FIND · SOLVE</strong>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="section-head">
+   <div><div class="kicker">TWO CHALLENGES</div><h2>Choose your game</h2></div>
+   <span class="chip">2 CATEGORIES · 2 VERSIONS EACH</span>
+  </div>
+  <div class="cards">
+   <article class="game-card">
+    <div class="emoji">🧩</div><h3>Crossword Challenge</h3>
+    <p>Answer clues about PETRONAS CoCHR and the ILO Forced Labour Indicators.</p>
+    <span class="chip">RANDOM PUZZLE ASSIGNMENT</span>
+    <button class="btn purple" onclick="begin('cross')">PLAY CROSSWORD</button>
+   </article>
+   <article class="game-card">
+    <div class="emoji">🔎</div><h3>Word Search Challenge</h3>
+    <p>Find GHSE words hidden in a letter grid, from human rights to just transition.</p>
+    <span class="chip">RANDOM PUZZLE ASSIGNMENT</span>
+    <button class="btn green" onclick="begin('search')">PLAY WORD SEARCH</button>
+   </article>
+  </div>
+ </div>
+ <div class="section notice">Supabase-connected competition build. Each category is limited to one recorded attempt per player. Your score is calculated by the database, not accepted as a score value from the browser.</div>
 </section>
 
 <section id="register" class="hidden">
-<div class="panel">
- <div class="kicker">PLAYER PROFILE</div><h2>Player details</h2>
- <p class="muted">Players can register without a password or email verification. Administrator access requires a secure email sign-in link.</p>
- <div class="clue"><label for="player">Display name</label><input id="player" placeholder="Enter your display name"></div>
- <div class="clue"><label for="email">Email address (for competition records)</label><input id="email" type="email" autocomplete="email" autocapitalize="none" placeholder="name@example.com"></div>
- <div class="clue"><label for="department">BD / OPU / Department</label><input id="department" placeholder="e.g. Downstream / PRPC / HSE"></div>
- <div class="row">
-  <button class="btn green" onclick="registerPlayer()">CONTINUE AS PLAYER</button>
-  <button class="btn outline" onclick="logoutPlayer()">LOG OUT</button>
+ <div class="panel">
+  <div class="kicker">PLAYER PROFILE</div>
+  <h2>Player details</h2>
+  <p class="muted">Players can register without a password or email verification. Administrator access requires a secure email sign-in link.</p>
+  <div class="clue">
+   <label for="player">Display name</label>
+   <input id="player" placeholder="Enter your display name">
+  </div>
+  <div class="clue">
+   <label for="email">Email address (for competition records)</label>
+   <input id="email" type="email" autocomplete="email" autocapitalize="none" placeholder="name@example.com">
+  </div>
+  <div class="clue">
+   <label for="department">BD / OPU / Department</label>
+   <input id="department" placeholder="e.g. Downstream / PRPC / HSE">
+  </div>
+  <div class="row">
+   <button class="btn green" onclick="registerPlayer()">CONTINUE AS PLAYER</button>
+   <button class="btn outline" onclick="logoutPlayer()">LOG OUT</button>
+  </div>
+  <p id="profileMsg" class="muted"></p>
+  <div class="panel" style="margin-top:18px;border-color:var(--purple)">
+   <div class="kicker">ADMINISTRATOR ONLY</div>
+   <h3>Administrator sign-in</h3>
+   <p class="muted">Only the authorised administrator email can request an access link.</p>
+   <button class="btn purple" onclick="adminSignIn()">SEND ADMIN SIGN-IN LINK</button>
+  </div>
+  <p id="sessionStatus" class="notice">Checking account status…</p>
  </div>
- <p id="profileMsg" class="muted"></p>
- <div class="panel" style="margin-top:18px;border-color:var(--purple)">
-  <div class="kicker">ADMINISTRATOR ONLY</div><h3>Administrator sign-in</h3>
-  <p class="muted">Only the authorised administrator email can request an access link.</p>
-  <button class="btn purple" onclick="adminSignIn()">SEND ADMIN SIGN-IN LINK</button>
- </div>
- <p id="sessionStatus" class="notice">Checking account status…</p>
-</div>
 </section>
 
 <section id="games" class="hidden">
-<div class="section-head"><div><div class="kicker">GAME CENTRE</div><h2>Select a challenge</h2><p class="muted">The game randomly selects one of the two puzzle versions.</p></div></div>
-<div class="cards"><article class="game-card"><div class="emoji">🧩</div><h3>Crossword</h3><p>Cross & Conquer OR ILO – 11 Forced Labour Indicators.</p><button class="btn purple" onclick="begin('cross')">START CROSSWORD</button></article><article class="game-card"><div class="emoji">🔎</div><h3>Word Search</h3><p>A Journey Through Words OR The Ultimate Word Hunt.</p><button class="btn green" onclick="begin('search')">START WORD SEARCH</button></article></div>
+ <div class="section-head">
+  <div>
+   <div class="kicker">GAME CENTRE</div>
+   <h2>Select a challenge</h2>
+   <p class="muted">The game randomly selects one of the two puzzle versions.</p>
+  </div>
+ </div>
+ <div class="cards">
+  <article class="game-card">
+   <div class="emoji">🧩</div><h3>Crossword</h3>
+   <p>Cross & Conquer OR ILO – 11 Forced Labour Indicators.</p>
+   <button class="btn purple" onclick="begin('cross')">START CROSSWORD</button>
+  </article>
+  <article class="game-card">
+   <div class="emoji">🔎</div><h3>Word Search</h3>
+   <p>A Journey Through Words OR The Ultimate Word Hunt.</p>
+   <button class="btn green" onclick="begin('search')">START WORD SEARCH</button>
+  </article>
+ </div>
 </section>
 
 <section id="admin" class="hidden">
-<div class="section-head">
-<div><div class="kicker">RESTRICTED ACCESS</div><h2>Private Admin Dashboard</h2><p class="muted">Competition results are visible only to authorised administrators.</p></div>
-<div class="row"><button class="btn green" onclick="loadAdminResults()">REFRESH RESULTS</button><button class="btn yellow" onclick="exportAdminCSV()">EXPORT CSV</button></div>
-</div>
-<div id="adminMessage" class="notice">Checking administrator access…</div>
-<div id="adminContent" class="hidden">
-<div class="cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0">
-<div class="panel"><div class="kicker">TOTAL SUBMISSIONS</div><div class="score" style="font-size:34px" id="adminTotal">0</div></div>
-<div class="panel"><div class="kicker">UNIQUE PLAYERS</div><div class="score" style="font-size:34px" id="adminPlayers">0</div></div>
-<div class="panel"><div class="kicker">WINS</div><div class="score" style="font-size:34px" id="adminWins">0</div></div>
-</div>
-<div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0">
-<div class="panel"><div class="kicker">CROSSWORD LEADERBOARD</div><div id="crossRanking" class="muted">No submissions yet.</div></div>
-<div class="panel"><div class="kicker">WORD SEARCH LEADERBOARD</div><div id="searchRanking" class="muted">No submissions yet.</div></div>
-</div>
-<div class="panel">
-<div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap">
-<h3>Player submissions</h3>
-<input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:320px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
-<select id="adminDepartmentFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All departments</option></select>
-<select id="adminGameFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All games</option><option value="cross">Crossword</option><option value="search">Word Search</option></select>
-</div>
-<div style="overflow-x:auto;margin-top:14px">
-<table style="width:100%;border-collapse:collapse;min-width:1000px;font-size:13px">
-<thead><tr style="background:#e8f5f3;text-align:left">
-<th style="padding:11px">Player</th><th style="padding:11px">Email</th><th style="padding:11px">BD / OPU / Department</th><th style="padding:11px">Game</th><th style="padding:11px">Puzzle version</th><th style="padding:11px">Score</th><th style="padding:11px">Time</th><th style="padding:11px">Status</th><th style="padding:11px">Submitted</th>
-</tr></thead><tbody id="adminRows"><tr><td colspan="9" style="padding:16px">No results loaded.</td></tr></tbody>
-</table>
-</div>
-</div>
-</div>
+ <div class="section-head">
+  <div>
+   <div class="kicker">RESTRICTED ACCESS</div>
+   <h2>Private Admin Dashboard</h2>
+   <p class="muted">Competition results are visible only to authorised administrators.</p>
+  </div>
+  <div class="row">
+   <button class="btn green" onclick="loadAdminResults()">REFRESH RESULTS</button>
+   <button class="btn yellow" onclick="exportAdminCSV()">EXPORT CSV</button>
+  </div>
+ </div>
+ <div id="adminMessage" class="notice">Checking administrator access…</div>
+ <div id="adminContent" class="hidden">
+  <div class="cards" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0">
+   <div class="panel"><div class="kicker">TOTAL SUBMISSIONS</div><div class="score" style="font-size:34px" id="adminTotal">0</div></div>
+   <div class="panel"><div class="kicker">UNIQUE PLAYERS</div><div class="score" style="font-size:34px" id="adminPlayers">0</div></div>
+   <div class="panel"><div class="kicker">WINS</div><div class="score" style="font-size:34px" id="adminWins">0</div></div>
+  </div>
+  <div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0">
+   <div class="panel"><div class="kicker">CROSSWORD LEADERBOARD</div><div id="crossRanking" class="muted">No submissions yet.</div></div>
+   <div class="panel"><div class="kicker">WORD SEARCH LEADERBOARD</div><div id="searchRanking" class="muted">No submissions yet.</div></div>
+  </div>
+  <div class="panel">
+   <div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap">
+    <h3>Player submissions</h3>
+    <input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:320px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
+    <select id="adminDepartmentFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All departments</option></select>
+    <select id="adminGameFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px">
+     <option value="">All games</option><option value="cross">Crossword</option><option value="search">Word Search</option>
+    </select>
+   </div>
+   <div style="overflow-x:auto;margin-top:14px">
+    <table style="width:100%;border-collapse:collapse;min-width:1000px;font-size:13px">
+     <thead><tr style="background:#e8f5f3;text-align:left">
+      <th style="padding:11px">Player</th><th style="padding:11px">Email</th><th style="padding:11px">BD / OPU / Department</th><th style="padding:11px">Game</th><th style="padding:11px">Puzzle version</th><th style="padding:11px">Score</th><th style="padding:11px">Time</th><th style="padding:11px">Status</th><th style="padding:11px">Submitted</th>
+     </tr></thead>
+     <tbody id="adminRows"><tr><td colspan="9" style="padding:16px">No results loaded.</td></tr></tbody>
+    </table>
+   </div>
+  </div>
+ </div>
 </section>
 
 <section id="play" class="hidden">
-  <div class="gamebar">
-    <div>
-      <div class="kicker" id="gameKind">CHALLENGE</div>
-      <h2 id="puzzleTitle">Puzzle title</h2>
-      <p class="muted" id="puzzleSubtitle">One randomly assigned puzzle</p>
-    </div>
-    <div class="timer">⏱ <span id="clock">00:00</span></div>
+ <div class="gamebar">
+  <div>
+   <div class="kicker" id="gameKind">CHALLENGE</div>
+   <h2 id="puzzleTitle">Puzzle title</h2>
+   <p class="muted" id="puzzleSubtitle">One randomly assigned puzzle</p>
   </div>
-  <div id="gameArea"></div>
+  <div class="timer">⏱ <span id="clock">00:00</span></div>
+ </div>
+ <div id="gameArea"></div>
 </section>
 
 <section id="result" class="hidden">
-  <div class="panel result">
-    <div style="font-size:48px">🏆</div>
-    <div class="kicker">CHALLENGE COMPLETE</div>
-    <h2 id="resultTitle">Your result</h2>
-    <div class="score" id="score">0%</div>
-    <p id="resultDetails" class="muted"></p>
-    <div class="row" style="justify-content:center">
-      <button class="btn" onclick="show('games')">BACK TO GAMES</button>
-      <button class="btn outline" onclick="show('home')">HOME</button>
-    </div>
+ <div class="panel result">
+  <div style="font-size:48px">🏆</div>
+  <div class="kicker">CHALLENGE COMPLETE</div>
+  <h2 id="resultTitle">Your result</h2>
+  <div class="score" id="score">0%</div>
+  <p id="resultDetails" class="muted"></p>
+  <div class="row" style="justify-content:center">
+   <button class="btn" onclick="show('games')">BACK TO GAMES</button>
+   <button class="btn outline" onclick="show('home')">HOME</button>
   </div>
+ </div>
 </section>
 </main>
-<footer>SOCIAL PERFORMANCE GHSE GAMES · PETRONAS COLOUR PALETTE</footer>
-<script>
 
+<footer>SOCIAL PERFORMANCE GHSE GAMES · PETRONAS COLOUR PALETTE</footer>
+
+<script>
 const SUPABASE_URL = "https://fvoghsyomrhxggzljvmh.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Cdtma2LoVz56wwzOgyMlDA_il0WynU0";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const $=id=>document.getElementById(id);
-let player=localStorage.getItem('ghse_player')||'',email='',dept=localStorage.getItem('ghse_dept')||'',currentUser=null,active=null,startAt=0,clockHandle=null,selected=[],found=[],pickedLetters=[];
+const $ = id => document.getElementById(id);
+let player = localStorage.getItem('ghse_player') || '';
+let email = '';
+let dept = localStorage.getItem('ghse_dept') || '';
+let currentUser = null;
+let active = null;
+let startAt = 0;
+let clockHandle = null;
+let selected = [];
+let found = [];
+let pickedLetters = [];
 
-const cross={
-cochr:{title:'Cross & Conquer',clues:[
-['Across 2','Stakeholders who should be considered in Grievance Mechanism are employee, contractor & ___.','FIVE'],
-['Across 4','For plant that is in operation, SRA shall be reviewed based on risk or at least once every ___ years in consultation with SP TP.','FIVE'],
-['Across 6','Development of CoCHR is based on ___ Standards.','INTERNATIONAL'],
-['Across 7','PETRONAS target for Forced Labour and Child Labour is ___.','ZERO'],
-['Down 1','PETRONAS Contractors Code of Conduct on Human Rights (CoCHR) supports the implementation of the PETRONAS ___ Policy.','HUMAN RIGHTS'],
-['Down 2','CoCHR is a requirement for all PETRONAS ___ and it is stated in the General Terms & Conditions of Contracts.','CONTRACTORS'],
-['Down 3','Social Risk Assessment is part of ___ Risk Assessment.','HSE'],
-['Down 4','In PETRONAS CoCHR, PETRONAS will also look into ___ and Migrant Workers.','FOREIGN'],
-['Down 5','___ refers to a concern or complaint raised by an individual or group on an actual or perceived harm related to business activity.','GRIEVANCE']
-]},
-ilo:{title:'ILO – 11 Forced Labour Indicators',clues:[
-['Across 2','Debts can be compounded as a result of manipulation of accounts, especially when workers are illiterate.','BONDAGE'],
-['Across 8','Abuse of ___: Employer takes advantage of a worker’s vulnerable position.','VULNERABILITY'],
-['Across 9','Victims of forced labour are often isolated in remote locations, denied contact with the outside world.','ISOLATION'],
-['Across 10','Excessive ___: Excessive hours or days beyond the limits prescribed by national law or collective agreement.','OVERTIME'],
-['Across 11','___ of wages: Wages are systematically and deliberately withheld.','WITHHOLDING'],
-['Down 1','___ and sexual violence: Actual physical or sexual violence.','PHYSICAL'],
-['Down 3','___: Failure to deliver what has been promised to the worker.','DECEPTION'],
-['Down 4','Intimidation and ___: Threats of physical violence.','THREATS'],
-['Down 5','Abusive ___ and living conditions.','WORKING'],
-['Down 6','Retention of ___ document: Workers unable to access these items on demand.','IDENTITY'],
-['Down 7','___ of movement: Forced labourers may be locked up and guarded.','RESTRICTION']
-]}
+const cross = {
+ cochr: {
+  title:'Cross & Conquer',
+  clues:[
+   ['Across 2','Stakeholders who should be considered in Grievance Mechanism are employee, contractor & ___.','COMMUNITY'],
+   ['Across 4','For plant that is in operation, SRA shall be reviewed based on risk or at least once every ___ years in consultation with SP TP.','FIVE'],
+   ['Across 6','Development of CoCHR is based on ___ Standards.','INTERNATIONAL'],
+   ['Across 7','PETRONAS target for Forced Labour and Child Labour is ___.','ZERO'],
+   ['Down 1','PETRONAS Contractors Code of Conduct on Human Rights (CoCHR) supports the implementation of the PETRONAS ___ Policy.','HUMAN RIGHTS'],
+   ['Down 2','CoCHR is a requirement for all PETRONAS ___ and it is stated in the General Terms & Conditions of Contracts.','CONTRACTORS'],
+   ['Down 3','Social Risk Assessment is part of ___ Risk Assessment.','HSE'],
+   ['Down 4','In PETRONAS CoCHR, PETRONAS will also look into ___ and Migrant Workers.','FOREIGN'],
+   ['Down 5','___ refers to a concern or complaint raised by an individual or group on an actual or perceived harm related to business activity.','GRIEVANCE']
+  ]
+ },
+ ilo: {
+  title:'ILO – 11 Forced Labour Indicators',
+  clues:[
+   ['Across 2','Debts can be compounded as a result of manipulation of accounts, especially when workers are illiterate.','BONDAGE'],
+   ['Across 8','Abuse of ___: Employer takes advantage of a worker’s vulnerable position.','VULNERABILITY'],
+   ['Across 9','Victims of forced labour are often isolated in remote locations, denied contact with the outside world.','ISOLATION'],
+   ['Across 10','Excessive ___: Excessive hours or days beyond the limits prescribed by national law or collective agreement.','OVERTIME'],
+   ['Across 11','___ of wages: Wages are systematically and deliberately withheld.','WITHHOLDING'],
+   ['Down 1','___ and sexual violence: Actual physical or sexual violence.','PHYSICAL'],
+   ['Down 3','___: Failure to deliver what has been promised to the worker.','DECEPTION'],
+   ['Down 4','Intimidation and ___: Threats of physical violence.','THREATS'],
+   ['Down 5','Abusive ___ and living conditions.','WORKING'],
+   ['Down 6','Retention of ___ document: Workers unable to access these items on demand.','IDENTITY'],
+   ['Down 7','___ of movement: Forced labourers may be locked up and guarded.','RESTRICTION']
+  ]
+ }
 };
 
-const wordsets={
-journey:['DISCRIMINATION','STAKEHOLDERS','HUMANRIGHTS','TRAFFICKING','REMEDIATION','SUPPLYCHAIN','COMMUNITIES','GOVERNANCE','DIVERSITY','INCLUSION','DILIGENCE','SECURITY','RESPECT','LABOUR'],
-ultimate:['JUSTTRANSITION','INDIGENOUS','HUMANRIGHTS','REGULATIONS','ENGAGEMENT','LIVELIHOOD','VULNERABLE','GRIEVANCE','WELLBEING','WORKFORCE','COMMUNITY','SECURITY','SUPPLIER','RISKS']
+const wordsets = {
+ journey:['DISCRIMINATION','STAKEHOLDERS','HUMANRIGHTS','TRAFFICKING','REMEDIATION','SUPPLYCHAIN','COMMUNITIES','GOVERNANCE','DIVERSITY','INCLUSION','DILIGENCE','SECURITY','RESPECT','LABOUR'],
+ ultimate:['JUSTTRANSITION','INDIGENOUS','HUMANRIGHTS','REGULATIONS','ENGAGEMENT','LIVELIHOOD','VULNERABLE','GRIEVANCE','WELLBEING','WORKFORCE','COMMUNITY','SECURITY','SUPPLIER','RISKS']
 };
 
 function show(page){
@@ -232,103 +337,126 @@ function show(page){
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
 
 async function registerPlayer(){
- player=$('player').value.trim();
- email=normalizedEmail();
- dept=$('department').value.trim();
+ player = $('player').value.trim();
+ email = normalizedEmail();
+ dept = $('department').value.trim();
 
  if(!player || !dept){
-  $('profileMsg').textContent='Please enter your display name and BD / OPU / Department.';
-  return;
- }
- if(email && !/^\S+@\S+\.\S+$/.test(email)){
-  $('profileMsg').textContent='Please enter a valid email address or leave it blank.';
+  $('profileMsg').style.color = '#dc2626';
+  $('profileMsg').textContent = 'Please enter your display name and BD / OPU / Department.';
   return;
  }
 
- $('profileMsg').textContent='Creating your player session…';
- let {data,error}=await supabaseClient.auth.getSession();
+ if(email && !/^\S+@\S+\.\S+$/.test(email)){
+  $('profileMsg').textContent = 'Please enter a valid email address or leave it blank.';
+  return;
+ }
+
+ $('profileMsg').style.color = '';
+ $('profileMsg').textContent = 'Creating your player session…';
+
+ let {data,error} = await supabaseClient.auth.getSession();
 
  if(!data.session){
-  const anon=await supabaseClient.auth.signInAnonymously();
+  const anon = await supabaseClient.auth.signInAnonymously();
   if(anon.error){
-   $('profileMsg').textContent='Player registration failed: '+anon.error.message+'. Enable Anonymous Sign-Ins in Supabase Authentication settings.';
+   $('profileMsg').textContent = 'Player registration failed: '+anon.error.message+'. Enable Anonymous Sign-Ins in Supabase Authentication settings.';
    return;
   }
-  currentUser=anon.data.user;
- }else currentUser=data.session.user;
+  currentUser = anon.data.user;
+ }else{
+  currentUser = data.session.user;
+ }
 
  localStorage.setItem('ghse_player',player);
  localStorage.setItem('ghse_dept',dept);
  localStorage.setItem('ghse_email',email);
 
- const saved=await savePlayerProfile();
+ const saved = await savePlayerProfile();
  if(!saved){
-  $('profileMsg').textContent='Your session started, but your player profile could not be saved. Check the players table permissions.';
+  $('profileMsg').textContent = 'Your session started, but your player profile could not be saved. Check the players table permissions.';
   return;
  }
 
- $('profileMsg').textContent='Player registration complete. You can now play without a password or email verification.';
+ $('profileMsg').textContent = 'Player registration complete. You can now play without a password or email verification.';
  await refreshAuth();
 }
 
 async function loginPlayer(){
- $('profileMsg').textContent='Player access does not require a separate login. Click CONTINUE AS PLAYER.';
+ $('profileMsg').textContent = 'Player access does not require a separate login. Click CONTINUE AS PLAYER.';
 }
 
 async function adminSignIn(){
- const address=normalizedEmail();
- if(address!=='nursyahirah1979@gmail.com'){
-  $('profileMsg').textContent='Admin access is restricted to the authorised administrator email.';
+ const address = normalizedEmail();
+
+ if(address !== 'nursyahirah1979@gmail.com'){
+  $('profileMsg').textContent = 'Admin access is restricted to the authorised administrator email.';
   return;
  }
 
- $('profileMsg').textContent='Sending administrator sign-in link…';
- const {error}=await supabaseClient.auth.signInWithOtp({
+ $('profileMsg').textContent = 'Sending administrator sign-in link…';
+
+ const {error} = await supabaseClient.auth.signInWithOtp({
   email:address,
-  options:{shouldCreateUser:false,emailRedirectTo:window.location.origin+window.location.pathname}
+  options:{
+   shouldCreateUser:false,
+   emailRedirectTo:window.location.origin+window.location.pathname
+  }
  });
 
- $('profileMsg').textContent=error
+ $('profileMsg').textContent = error
   ? 'Admin sign-in could not be sent: '+error.message
   : 'Administrator sign-in link sent. Open the email on this device to complete admin sign-in.';
 }
 
 async function savePlayerProfile(){
  if(!currentUser)return false;
- const {error}=await supabaseClient.from('players').upsert({
+
+ const {error} = await supabaseClient.from('players').upsert({
   id:currentUser.id,
   display_name:player,
   organisation:dept,
   email:normalizedEmail()
  },{onConflict:'id'});
- if(error){console.error(error);return false}
+
+ if(error){
+  console.error(error);
+  return false;
+ }
  return true;
 }
 
 async function logoutPlayer(){
- const {error}=await supabaseClient.auth.signOut();
- if(error){$('profileMsg').textContent=error.message;return}
- currentUser=null;
- $('profileMsg').textContent='You have signed out.';
+ const {error} = await supabaseClient.auth.signOut();
+
+ if(error){
+  $('profileMsg').textContent = error.message;
+  return;
+ }
+
+ currentUser = null;
+ $('profileMsg').textContent = 'You have signed out.';
  await refreshAuth();
 }
 
 async function refreshAuth(){
- const {data:{user}}=await supabaseClient.auth.getUser();
- currentUser=user||null;
+ const {data:{user}} = await supabaseClient.auth.getUser();
+ currentUser = user || null;
 
- $('sessionStatus').textContent=currentUser
-  ?(currentUser.is_anonymous?'Player session active. No password or email verification required.':'Signed in as '+(currentUser.email||'user')+'.')
-  :'Not signed in. Continue as a player to play.';
+ $('sessionStatus').textContent = currentUser
+  ? (currentUser.is_anonymous
+    ? 'Player session active. No password or email verification required.'
+    : 'Signed in as '+(currentUser.email||'user')+'.')
+  : 'Not signed in. Continue as a player to play.';
 
  if(currentUser){
-  $('email').value=(currentUser.email||localStorage.getItem('ghse_email')||'').toLowerCase();
-  $('player').value=player||currentUser.user_metadata?.display_name||'';
-  $('department').value=dept||currentUser.user_metadata?.organisation||'';
+  $('email').value = (currentUser.email||localStorage.getItem('ghse_email')||'').toLowerCase();
+  $('player').value = player||currentUser.user_metadata?.display_name||'';
+  $('department').value = dept||currentUser.user_metadata?.organisation||'';
 
-  const adminCheck=currentUser.email==='nursyahirah1979@gmail.com'
-   ?await supabaseClient.rpc('get_admin_results')
-   :{error:true};
+  const adminCheck = currentUser.email==='nursyahirah1979@gmail.com'
+   ? await supabaseClient.rpc('get_admin_results')
+   : {error:true};
 
   $('adminNav').classList.toggle('hidden',!!adminCheck.error);
  }else{
@@ -345,17 +473,18 @@ function setupPlayer(){
 
 async function begin(kind){
  await refreshAuth();
+
  if(!currentUser){
   alert('Please create an account or log in before playing.');
   show('register');
   return;
  }
 
- active={
+ active = {
   kind,
   version:kind==='cross'
-   ?(Math.random()<.5?'cochr':'ilo')
-   :(Math.random()<.5?'journey':'ultimate')
+   ? (Math.random()<.5?'cochr':'ilo')
+   : (Math.random()<.5?'journey':'ultimate')
  };
 
  selected=[];
@@ -363,8 +492,11 @@ async function begin(kind){
  pickedLetters=[];
  startAt=Date.now();
 
- $('gameKind').textContent=kind==='cross'?'CROSSWORD CHALLENGE':'WORD SEARCH CHALLENGE';
- $('puzzleTitle').textContent=kind==='cross'?cross[active.version].title:(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt');
+ $('gameKind').textContent = kind==='cross'?'CROSSWORD CHALLENGE':'WORD SEARCH CHALLENGE';
+ $('puzzleTitle').textContent = kind==='cross'
+  ? cross[active.version].title
+  : (active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt');
+
  $('puzzleSubtitle').textContent='Randomly assigned puzzle · Player: '+player;
 
  renderGame();
@@ -386,20 +518,34 @@ function renderGame(){
 
 function renderCross(){
  const puzzle=cross[active.version];
- const words=puzzle.clues.map((c,i)=>({label:c[0],clue:c[1],answer:norm(c[2]),dir:c[0].startsWith('Across')?'H':'V',id:i}));
- const N=21,grid=Array.from({length:N},()=>Array(N).fill(null)),placed=[];
+ const words=puzzle.clues.map((c,i)=>({
+  label:c[0],
+  clue:c[1],
+  answer:norm(c[2]),
+  dir:c[0].startsWith('Across')?'H':'V',
+  id:i
+ }));
+
+ const N=21;
+ const grid=Array.from({length:N},()=>Array(N).fill(null));
+ const placed=[];
 
  function canPlace(w,r,c,dir){
-  let dr=dir==='V'?1:0,dc=dir==='H'?1:0,intersections=0;
+  let dr=dir==='V'?1:0;
+  let dc=dir==='H'?1:0;
+  let intersections=0;
+
   if(r-dr>=0&&c-dc>=0&&grid[r-dr][c-dc])return null;
   if(r+dr*w.answer.length<N&&c+dc*w.answer.length<N&&grid[r+dr*w.answer.length][c+dc*w.answer.length])return null;
 
   for(let k=0;k<w.answer.length;k++){
    let rr=r+dr*k,cc=c+dc*k;
    if(rr<0||cc<0||rr>=N||cc>=N)return null;
+
    let old=grid[rr][cc];
    if(old&&old.ch!==w.answer[k])return null;
    if(old)intersections++;
+
    if(!old){
     if(dir==='H'){
      if((rr>0&&grid[rr-1][cc])||(rr<N-1&&grid[rr+1][cc]))return null;
@@ -422,6 +568,7 @@ function renderCross(){
    for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(let dir of ['H','V']){
     let intersections=canPlace(w,r,c,dir);
     if(intersections===null||intersections===0)continue;
+
     let score=intersections*100+Math.random()*5;
     if(!best||score>best.score)best={r,c,dir,score};
    }
@@ -429,24 +576,35 @@ function renderCross(){
 
   if(!best){
    outer:for(let dir of ['H','V'])for(let r=1;r<N-1;r++)for(let c=1;c<N-1;c++){
-    if(canPlace(w,r,c,dir)!==null){best={r,c,dir,score:0};break outer}
+    if(canPlace(w,r,c,dir)!==null){
+     best={r,c,dir,score:0};
+     break outer;
+    }
    }
   }
 
   if(!best)continue;
-  let dr=best.dir==='V'?1:0,dc=best.dir==='H'?1:0;
+
+  let dr=best.dir==='V'?1:0;
+  let dc=best.dir==='H'?1:0;
 
   for(let k=0;k<w.answer.length;k++){
    let rr=best.r+dr*k,cc=best.c+dc*k;
    if(!grid[rr][cc])grid[rr][cc]={ch:w.answer[k],answers:[]};
    grid[rr][cc].answers.push(w.id);
   }
+
   placed.push({...w,r:best.r,c:best.c,dr,dc});
  }
 
  let minR=N,minC=N,maxR=0,maxC=0;
  grid.forEach((row,r)=>row.forEach((cell,c)=>{
-  if(cell){minR=Math.min(minR,r);minC=Math.min(minC,c);maxR=Math.max(maxR,r);maxC=Math.max(maxC,c)}
+  if(cell){
+   minR=Math.min(minR,r);
+   minC=Math.min(minC,c);
+   maxR=Math.max(maxR,r);
+   maxC=Math.max(maxC,c);
+  }
  }));
 
  let nums={},num=1;
@@ -462,11 +620,15 @@ function renderCross(){
 
  html+='</div><button class="btn purple" onclick="submitCross()">CHECK CROSSWORD</button></div><aside class="panel"><div class="kicker">CLUES</div><h3>Across</h3><div class="clue-list">';
 
- placed.filter(w=>w.dir==='H').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
+ placed.filter(w=>w.dir==='H').forEach(w=>{
+  html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>';
+ });
 
  html+='</div><h3 style="margin-top:18px">Down</h3><div class="clue-list">';
 
- placed.filter(w=>w.dir==='V').forEach(w=>html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>');
+ placed.filter(w=>w.dir==='V').forEach(w=>{
+  html+='<div class="clue"><b>'+(nums[w.r+','+w.c]||'')+'. '+w.label+'</b><br><span>'+w.clue+'</span></div>';
+ });
 
  html+='</div></aside></div>';
  $('gameArea').innerHTML=html;
@@ -483,6 +645,7 @@ function normalizedEmail(){
 
 function submitCross(){
  let b=window.crossBoard,answers={};
+
  b.placed.forEach(w=>{
   let value='';
   for(let k=0;k<w.answer.length;k++){
@@ -491,19 +654,24 @@ function submitCross(){
   }
   answers[String(w.id)]=norm(value);
  });
+
  finish({answers,total:b.placed.length});
 }
 
 function makeGrid(words){
- const N=18,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[];
+ const N=18;
+ const grid=Array.from({length:N},()=>Array(N).fill(''));
+ const placements=[];
  const dirs=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
 
  for(const word of [...words].sort((a,b)=>b.length-a.length)){
   let options=[];
+
   for(let tries=0;tries<1800;tries++){
    let [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)];
    let r=Math.floor(Math.random()*N),c=Math.floor(Math.random()*N);
    let er=r+dr*(word.length-1),ec=c+dc*(word.length-1);
+
    if(er<0||ec<0||er>=N||ec>=N)continue;
 
    let ok=true;
@@ -511,6 +679,7 @@ function makeGrid(words){
     let ch=grid[r+dr*k][c+dc*k];
     if(ch&&ch!==word[k]){ok=false;break}
    }
+
    if(ok){
     options.push({r,c,dr,dc});
     if(options.length>8)break;
@@ -518,9 +687,12 @@ function makeGrid(words){
   }
 
   if(!options.length)continue;
+
   let p=options[Math.floor(Math.random()*options.length)];
 
-  for(let k=0;k<word.length;k++)grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];
+  for(let k=0;k<word.length;k++){
+   grid[p.r+p.dr*k][p.c+p.dc*k]=word[k];
+  }
 
   placements.push({
    word,
@@ -529,7 +701,9 @@ function makeGrid(words){
  }
 
  const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
- for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];
+ for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+  if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*26)];
+ }
 
  return{grid,placements,N};
 }
@@ -540,7 +714,9 @@ function renderWordSearch(){
 
  let html='<div class="game-layout"><div class="panel"><p class="muted">Select the first letter, then the last letter of a hidden word. Words may run horizontally, vertically or diagonally (slanted), forwards or backwards.</p><div class="letter-grid">';
 
- wordPuzzle.grid.flat().forEach((ch,i)=>html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`);
+ wordPuzzle.grid.flat().forEach((ch,i)=>{
+  html+=`<button class="letter" id="L${i}" onclick="pick(${i})">${ch}</button>`;
+ });
 
  html+='</div><div class="row" style="justify-content:center"><button class="btn green" onclick="clearPick()">CLEAR SELECTION</button><button class="btn" onclick="finishWordSearch()">SUBMIT FOUND WORDS</button></div></div><aside class="panel"><div class="kicker">WORDS TO FIND</div><h3>'+(active.version==='journey'?'A Journey Through Words':'The Ultimate Word Hunt')+'</h3><div class="wordbank">'+words.map(w=>`<span class="wordtag" id="W${w}">${w}</span>`).join('')+'</div><p class="muted" style="margin-top:15px"><b id="foundCount">0</b> / '+words.length+' found</p></aside></div>';
 
@@ -549,6 +725,7 @@ function renderWordSearch(){
 
 function pick(i){
  const N=wordPuzzle.N;
+
  if(pickedLetters.length===0){
   pickedLetters=[i];
   $('L'+i).classList.add('pick');
@@ -572,7 +749,12 @@ function pick(i){
  let str=cells.map(x=>wordPuzzle.grid[Math.floor(x/N)][x%N]).join('');
  let rev=str.split('').reverse().join('');
 
- let hit=wordPuzzle.placements.find(p=>!found.includes(p.word)&&((p.word===str&&sameCells(p.cells,cells))||(p.word===rev&&sameCells(p.cells,[...cells].reverse()))));
+ let hit=wordPuzzle.placements.find(p=>
+  !found.includes(p.word)&&(
+   (p.word===str&&sameCells(p.cells,cells))||
+   (p.word===rev&&sameCells(p.cells,[...cells].reverse()))
+  )
+ );
 
  if(hit){
   found.push(hit.word);
@@ -703,12 +885,18 @@ function rankRows(category){
  for(const r of rows){
   const key=r.player_id||r.email||r.display_name;
   const old=bestByPlayer.get(key);
-  const score=Number(r.score)||0,seconds=Number(r.completion_seconds)||86401;
+  const score=Number(r.score)||0;
+  const seconds=Number(r.completion_seconds)||86401;
 
-  if(!old||score>(Number(old.score)||0)||(score===(Number(old.score)||0)&&seconds<(Number(old.completion_seconds)||86401)))bestByPlayer.set(key,r);
+  if(!old||score>(Number(old.score)||0)||(score===(Number(old.score)||0)&&seconds<(Number(old.completion_seconds)||86401))){
+   bestByPlayer.set(key,r);
+  }
  }
 
- return [...bestByPlayer.values()].sort((a,b)=>(Number(b.score)||0)-(Number(a.score)||0)||(Number(a.completion_seconds)||0)-(Number(b.completion_seconds)||0));
+ return [...bestByPlayer.values()].sort((a,b)=>
+  (Number(b.score)||0)-(Number(a.score)||0)||
+  (Number(a.completion_seconds)||0)-(Number(b.completion_seconds)||0)
+ );
 }
 
 function renderAdminRankings(){
@@ -716,7 +904,11 @@ function renderAdminRankings(){
   const rows=rankRows(category);
   if(!rows.length)return '<p class="muted">No submissions yet.</p>';
 
-  return '<ol style="padding-left:22px;margin:12px 0">'+rows.slice(0,10).map(r=>'<li style="padding:7px 0;border-bottom:1px solid #e3ecea"><b>'+escHTML(r.display_name||'Player')+'</b> — '+escHTML(r.score)+'% <span class="muted">('+escHTML(formatDuration(r.completion_seconds))+')</span></li>').join('')+'</ol><small class="muted">Ranked by highest score, then fastest completion. Best result per player.</small>';
+  return '<ol style="padding-left:22px;margin:12px 0">'+rows.slice(0,10).map(r=>
+   '<li style="padding:7px 0;border-bottom:1px solid #e3ecea"><b>'+
+   escHTML(r.display_name||'Player')+'</b> — '+escHTML(r.score)+
+   '% <span class="muted">('+escHTML(formatDuration(r.completion_seconds))+')</span></li>'
+  ).join('')+'</ol><small class="muted">Ranked by highest score, then fastest completion. Best result per player.</small>';
  };
 
  $('crossRanking').innerHTML=make('cross');
@@ -731,7 +923,10 @@ function renderAdminRows(){
  const rows=adminResults.filter(r=>
   (!department||String(r.organisation||'')===department)&&
   (!game||r.game_category===game)&&
-  [r.display_name,r.email,r.organisation,r.game_category,r.game_id,r.puzzle_version,r.status].some(v=>String(v||'').toLowerCase().includes(filter))
+  [
+   r.display_name,r.email,r.organisation,r.game_category,
+   r.game_id,r.puzzle_version,r.status
+  ].some(v=>String(v||'').toLowerCase().includes(filter))
  );
 
  $('adminRows').innerHTML=rows.length?rows.map(r=>`<tr style="border-bottom:1px solid #dce5e4">
@@ -748,14 +943,18 @@ function renderAdminRows(){
 }
 
 function exportAdminCSV(){
- if(!adminResults.length){alert('There are no results to export yet.');return}
+ if(!adminResults.length){
+  alert('There are no results to export yet.');
+  return;
+ }
 
  const columns=['display_name','email','organisation','game_category','game_id','puzzle_version','score','completion_seconds','status','created_at'];
  const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
  const csv=[columns.join(','),...adminResults.map(r=>columns.map(k=>quote(r[k])).join(','))].join('\r\n');
 
  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
- const url=URL.createObjectURL(blob),a=document.createElement('a');
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
  a.href=url;
  a.download='GHSE_Games_Private_Results.csv';
  a.click();
