@@ -94,10 +94,16 @@ footer{text-align:center;color:#66748a;padding:25px;font-size:12px}
    <div class="panel"><div class="kicker">UNIQUE PLAYERS</div><div class="score" style="font-size:34px" id="adminPlayers">0</div></div>
    <div class="panel"><div class="kicker">WINS</div><div class="score" style="font-size:34px" id="adminWins">0</div></div>
   </div>
+  <div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:18px 0">
+   <div class="panel"><div class="kicker">CROSSWORD LEADERBOARD</div><div id="crossRanking" class="muted">No submissions yet.</div></div>
+   <div class="panel"><div class="kicker">WORD SEARCH LEADERBOARD</div><div id="searchRanking" class="muted">No submissions yet.</div></div>
+  </div>
   <div class="panel">
-   <div class="row" style="justify-content:space-between">
+   <div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap">
     <h3>Player submissions</h3>
-    <input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:360px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
+    <input id="adminFilter" placeholder="Search name, email, department or game…" oninput="renderAdminRows()" style="max-width:320px;width:100%;padding:11px;border:1px solid #b8c9c7;border-radius:9px">
+    <select id="adminDepartmentFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All departments</option></select>
+    <select id="adminGameFilter" onchange="renderAdminRows()" style="padding:11px;border:1px solid #b8c9c7;border-radius:9px"><option value="">All games</option><option value="cross">Crossword</option><option value="search">Word Search</option></select>
    </div>
    <div style="overflow-x:auto;margin-top:14px">
     <table style="width:100%;border-collapse:collapse;min-width:1000px;font-size:13px">
@@ -200,7 +206,7 @@ async function adminSignIn(){
  $('profileMsg').textContent='Sending administrator sign-in link…';
  const {error}=await supabaseClient.auth.signInWithOtp({
   email:address,
-  options:{shouldCreateUser:false,emailRedirectTo:'https://social-performance-ghse-games.nursyahirah1979.workers.dev/'}
+  options:{shouldCreateUser:false,emailRedirectTo:window.location.origin+window.location.pathname}
  });
  $('profileMsg').textContent=error
   ? 'Admin sign-in could not be sent: '+error.message
@@ -322,9 +328,14 @@ async function loadAdminResults(){
  const message = $('adminMessage');
  message.textContent = 'Checking administrator permissions and loading results…';
  $('adminContent').classList.add('hidden');
+ if(!currentUser || currentUser.email!=='nursyahirah1979@gmail.com'){
+  message.textContent='Access denied. Sign in using the authorised administrator account.';
+  $('adminNav').classList.add('hidden');
+  return false;
+ }
  const {data,error} = await supabaseClient.rpc('get_admin_results');
  if(error){
-  message.textContent = 'Administrator access not available: '+error.message+'. Sign in with the authorised administrator account and confirm the admin SQL setup has been run.';
+  message.textContent = 'Administrator access not available: '+error.message+'. Check the admin SQL function and sign-in session.';
   $('adminNav').classList.add('hidden');
   return false;
  }
@@ -335,12 +346,36 @@ async function loadAdminResults(){
  $('adminTotal').textContent = adminResults.length;
  $('adminPlayers').textContent = new Set(adminResults.map(r=>r.player_id || r.email)).size;
  $('adminWins').textContent = adminResults.filter(r=>String(r.status).toUpperCase()==='WIN').length;
+ const departments=[...new Set(adminResults.map(r=>String(r.organisation||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ const depSelect=$('adminDepartmentFilter');
+ const prior=depSelect.value;
+ depSelect.innerHTML='<option value="">All departments</option>'+departments.map(d=>'<option value="'+escHTML(d)+'">'+escHTML(d)+'</option>').join('');
+ if(departments.includes(prior))depSelect.value=prior;
+ renderAdminRankings();
  renderAdminRows();
  return true;
 }
+function rankRows(category){
+ const rows=adminResults.filter(r=>r.game_category===category);
+ const bestByPlayer=new Map();
+ for(const r of rows){
+  const key=r.player_id||r.email||r.display_name;
+  const old=bestByPlayer.get(key);
+  const score=Number(r.score)||0,seconds=Number(r.completion_seconds)||86401;
+  if(!old || score>(Number(old.score)||0) || (score===(Number(old.score)||0) && seconds<(Number(old.completion_seconds)||86401))) bestByPlayer.set(key,r);
+ }
+ return [...bestByPlayer.values()].sort((a,b)=>(Number(b.score)||0)-(Number(a.score)||0)||(Number(a.completion_seconds)||0)-(Number(b.completion_seconds)||0));
+}
+function renderAdminRankings(){
+ const make=(category)=>{const rows=rankRows(category);if(!rows.length)return '<p class="muted">No submissions yet.</p>';return '<ol style="padding-left:22px;margin:12px 0">'+rows.slice(0,10).map((r,i)=>'<li style="padding:7px 0;border-bottom:1px solid #e3ecea"><b>'+escHTML(r.display_name||'Player')+'</b> — '+escHTML(r.score)+'% <span class="muted">('+escHTML(formatDuration(r.completion_seconds))+')</span></li>').join('')+'</ol><small class="muted">Ranked by highest score, then fastest completion. Best result per player.</small>'};
+ $('crossRanking').innerHTML=make('cross');
+ $('searchRanking').innerHTML=make('search');
+}
 function renderAdminRows(){
  const filter = ($('adminFilter')?.value || '').trim().toLowerCase();
- const rows = adminResults.filter(r => [
+ const department=$('adminDepartmentFilter')?.value||'';
+ const game=$('adminGameFilter')?.value||'';
+ const rows = adminResults.filter(r => (!department||String(r.organisation||'')===department) && (!game||r.game_category===game) && [
   r.display_name,r.email,r.organisation,r.game_category,r.game_id,r.puzzle_version,r.status
  ].some(v=>String(v||'').toLowerCase().includes(filter)));
  $('adminRows').innerHTML = rows.length ? rows.map(r=>`<tr style="border-bottom:1px solid #dce5e4">
